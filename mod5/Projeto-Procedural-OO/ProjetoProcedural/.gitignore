@@ -1,0 +1,16 @@
+# Compilados
+*.class
+
+# Logs
+*.log
+
+# Diretórios de build
+/out/
+/target/
+
+# Configurações do IntelliJ
+.idea/
+*.iml
+
+# MacOS
+.DS_Store
