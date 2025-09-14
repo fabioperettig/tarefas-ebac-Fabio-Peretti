@@ -18,7 +18,7 @@ public static void sortearMonstro() {
     else if (chance < 0.85) {sorteadoMonstro = nomeMonstro[2];}
     else {sorteadoMonstro = nomeMonstro[3];}
 }
-```
+````
 
 
 * Ao vencer, o herói restaura sua vida e enfrenta um novo monstro; se perder, o jogo termina.
