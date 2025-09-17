@@ -1,23 +1,24 @@
-## Olá, esta é a lição do Módulo 5 :D ##
+# Curso EBAC: Back-End Java 🎓
 
-### Nesta lição fiz os seguintes processos: ###
+### Repositório dedicado aos projetos aprendidos e solicitados no curso Java Back-End da escola britânica de artes criativas & tecnologia.
 
-– Criei um repositório no GitHub e clonei na minha máquina;
+O repositório é dividido em módulos, com os respectivos projetos feitos e aprendidos. Os projetos são predominante feitos em Java, mas também é possivel encontrar pequenos algoritmos e testes em outras linguagens.
 
-– Criei e editei um README.md atráves do processo touch README.md via Terminal;
 
-– Adicionei o README ao projeto com os métodos add, commit e push origin via Terminal;
+### Índice 
 
-– Criei pasta e subpasta localmente atráves do processo mkdir via Terminal;
+````
+mod5 ✅ 
+├── PrimeiroProjeto;
+├── Projeto-Procedural-OO;
+└── Algoritmo-rotina-matinal (portugol).
 
-– Criei um arquivo java através do método touch PrimeiraClasse.java via Terminal;
+mod6/ 🚧
+├── ;
+├── ;
+└── .
 
-– Acessei o arquivo diretamente pelo Terminal atráves do método nano PrimeiraClasse.java;
+````
 
-– Criei um void main(String[] args) com variável String name = "Fabio";
-
-– Compilei PrimeiraClasse via javac;
-
-– Conferi a sincronia do projeto via git status;
-
-– Adicionei a pasta mod5 e todo seu conteúdo ao GitHub via add > commit > push origin.
+![GitHub top language](https://img.shields.io/github/languages/top/fabioperettig/tarefas-ebac-Fabio-Peretti)
+![GitHub language count](https://img.shields.io/github/languages/count/fabioperettig/tarefas-ebac-Fabio-Peretti)
