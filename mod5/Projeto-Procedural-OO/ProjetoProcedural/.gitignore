@@ -1,16 +1,36 @@
-# Compilados
-*.class
+# ===== SISTEMA (macOS) =====
+.DS_Store
 
-# Logs
+# ===== LOGS =====
 *.log
 
-# Diretórios de build
-/out/
+# ===== BUILD =====
 /target/
+/build/
+/out/
 
-# Configurações do IntelliJ
+# ===== COMPILADOS E CACHE =====
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+# ===== IDEs =====
+# IntelliJ IDEA
 .idea/
 *.iml
 
-# MacOS
-.DS_Store
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Gradle
+.gradle/
+
+# Maven
+.mvn/
+
+# VSCode
+.vscode/
