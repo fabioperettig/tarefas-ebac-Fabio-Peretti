@@ -103,4 +103,10 @@ public class Cafe {
         System.out.println("Adoçado: " + (comAcucar ? "Sim" : "Não"));
     }
 
+    public void esfriar() {
+        if (temperatura >= 50.0) {
+            temperatura -= 5;
+            System.out.println("A temperatura é de " + temperatura + "°C");
+        }
+    }
 }

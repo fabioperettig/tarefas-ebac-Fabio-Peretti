@@ -9,6 +9,9 @@ public class Program1 {
 
         cafe1.status();
 
+        cafe1.esfriar();
+
+        cafe1.status();
 
     }
 }
