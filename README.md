@@ -8,15 +8,14 @@ O repositório é dividido em módulos, com os respectivos projetos feitos e apr
 ### Índice 
 
 ````
-mod5 ✅ 
+mod6 ✅ 
 ├── PrimeiroProjeto;
 ├── Projeto-Procedural-OO;
 └── Algoritmo-rotina-matinal (portugol).
 
-mod6/ 🚧
-├── ;
-├── ;
-└── .
+mod7 
+├── objeto-real-classe;
+└── objeto-real-classe C#.
 
 ````
 
