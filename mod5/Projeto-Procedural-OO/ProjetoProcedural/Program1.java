@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class Program1 {
 
+
     public static String nomeHeroi = "Arthas";
     public static int vidaInicialHeroi = 150;
     public static int vidaHeroi;
@@ -67,6 +68,7 @@ public class Program1 {
     public static void statusCombate() {
         System.out.println(nomeHeroi + " HP: " + vidaHeroi + " | " + sorteadoMonstro + " HP: " + vidaMonstro);
     }
+
 
     public static void sortearMonstro() {
         double chance = random.nextDouble();
