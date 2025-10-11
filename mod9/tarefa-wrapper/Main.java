@@ -1,6 +1,14 @@
-import java.sql.Wrapper;
 import java.util.Scanner;
 
+/**
+ * Classe principal do projeto "Conversor de Wrappers".
+ *
+ * Permite ao usuário digitar um valor primitivo,
+ * convertê-lo em wrapper e realizar novas conversões entre diferentes tipos numéricos.
+ *
+ * @author Fabio Peretti Guimarães
+ * @since Ourtubro de 2025
+ */
 public class Main {
 
     public static void main(String[] args) {
