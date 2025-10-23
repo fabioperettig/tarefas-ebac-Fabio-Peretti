@@ -1,40 +1,36 @@
+import java.util.Scanner;
+
+
+/**
+ * local de intancia das Classes implementadas da interface principal,
+ * podendo inclusive ser instanciadas via Scanner.
+ *
+ * @author fabioperettiguimaraes
+ */
 public class Main {
 
+    static Scanner input = new Scanner(System.in);
+    static String nome;
+    static int escolha;
     public static void main(String[] args) {
 
-        Bladeknight Algalord = new Bladeknight();
+        //exemplos de Classe Instanciada
+        Bladeknight Algalord = new Bladeknight("Algalord");
         SoulMaster Kadaj = new SoulMaster("Kadaj");
-        SoulMaster Mirian = new SoulMaster("Mirian");
 
-        int suaLife = 1000;
+        System.out.println("Aqui estão os aventureiros!");
 
-        boolean gameON = true;
-
-        /*
-        while (gameON) {
-            System.out.printf("Sua vida é %d%n",suaLife);
-
-            Kadaj.ataque();
-            suaLife = suaLife - Kadaj.SMdano;
-
-
-            Kadaj.ataqueEspecial();
-            suaLife = suaLife - Kadaj.SMdano;
-
-            System.out.println(Kadaj + " lhe causou um dano de: " + Kadaj.SMdano);
-            System.out.printf("Sua vida é %d",suaLife);
-
-            if ( suaLife <= 0){
-                gameON = false;
-            }
-
-        } */
-
+        Algalord.intro();
         Kadaj.intro();
-        Algalord.ataque();
-        ComportamentoRPG.credito();
-        Mirian.intro();
 
+        Algalord.objetivo();
+        Kadaj.objetivo();
+
+        Algalord.ataque();
+        Kadaj.ataqueEspecial();
+
+        Algalord.respouso();
+        Kadaj.respouso();
     }
 
 }

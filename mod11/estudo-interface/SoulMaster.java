@@ -1,11 +1,11 @@
+
 public class SoulMaster implements ComportamentoRPG {
+
     private String nome;
-    int SMdano;
 
     public SoulMaster(String nome) {
         this.nome = nome;
     }
-
 
     /**
      * Método para pegar o nome de qualquer objetivo proveniente da Classe,
@@ -25,20 +25,21 @@ public class SoulMaster implements ComportamentoRPG {
 
     @Override
     public void ataque() {
-        System.out.println("O mago ataca lança fireballs nos inimigos!");
-        SMdano = dano;
+        System.out.printf("O mago %s ataca lança fireballs nos inimigos!%n",nome);
+        int SMdano = dano*(int)(Math.random()*3+1);
+        System.out.println(nome + " lhe causou um dano de: " + SMdano);
     }
 
     @Override
     public void ataqueEspecial() {
-        System.out.println("O mago convoca espíritos negros");
-        SMdano = dano * 3;
-        System.out.println(getClass().getSimpleName() + " lhe causou um dano de: " + SMdano);
+        System.out.printf("O mago %s convoca espíritos negros!%n",nome);
+        int SMdano = dano*(int)(Math.random()*10+1);
+        System.out.println(nome + " lhe causou um dano de: " + SMdano);
     }
 
     @Override
     public void respouso() {
-        System.out.println("O mago passa o tempo estudando seus tomos antigos.");
+        System.out.printf("O mago %s passa o tempo estudando seus tomos antigos!%n",nome);
     }
 
     @Override
@@ -48,6 +49,6 @@ public class SoulMaster implements ComportamentoRPG {
 
     @Override
     public void derrota() {
-        System.out.println("O mago sente sua energia drenada de seu corpo.");
+        System.out.printf("O mago %s sente sua energia drenada de seu corpo.%n",nome);
     }
 }

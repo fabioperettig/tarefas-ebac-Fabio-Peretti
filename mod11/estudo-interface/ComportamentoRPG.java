@@ -45,7 +45,7 @@ public interface ComportamentoRPG {
     void derrota();
 
     static void credito(){
-        System.out.println("Fim :)");
+        System.out.println("Desenvolvido por Fabio Peretti Guimarães");
     };
 
 }

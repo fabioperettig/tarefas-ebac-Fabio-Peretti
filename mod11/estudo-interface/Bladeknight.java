@@ -1,8 +1,14 @@
 public class Bladeknight implements ComportamentoRPG {
 
+    private String nome;
+
+    public Bladeknight(String nome) {
+        this.nome = nome;
+    }
+
     @Override
     public String getNome() {
-        return null;
+        return nome;
     }
 
     @Override
@@ -12,12 +18,16 @@ public class Bladeknight implements ComportamentoRPG {
 
     @Override
     public void ataque() {
+        int BKdano = dano * (int)(Math.random()*3+1);
         System.out.println("O guerreiro ataca ferrozmente com sua lâmina incandescente!");
+        System.out.printf("Dano de: %d%n",BKdano);
     }
 
     @Override
     public void ataqueEspecial() {
         System.out.println("O guerreiro lança sua espada que gira violentamente ao seu redor!");
+        int BKdanoEsp = dano * (int)(Math.random()*8+1);
+        System.out.printf("Dano de: %d%n",BKdanoEsp);
     }
 
     @Override
