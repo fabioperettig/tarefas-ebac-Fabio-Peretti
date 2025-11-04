@@ -1,7 +1,11 @@
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Scanner;
+
 
 public class HashSetClass {
+
+    private static Set<String> playlist = new HashSet<>();
 
     /**
      * Um Hash é um estilo de "Lista" que não imprime elementos
@@ -18,7 +22,7 @@ public class HashSetClass {
 
         String mus = "Out of Touch";
 
-        Set<String> playlist = new HashSet<>();
+
         playlist.add("Never Gonna Give You Up");
         playlist.add("Take on Me");
         playlist.add("Everybody Wants to Rule the World");
@@ -27,9 +31,26 @@ public class HashSetClass {
         playlist.add("Out of Touch");
         playlist.add("Owner of a Lonely Heart");
         playlist.add(mus);
-        System.out.println(playlist);
 
-        for (String song : playlist){
+
+    }
+
+
+    //Métodos para adicionar via Scanner em outra Classe
+    public static void addSong(String song) {
+        playlist.add(song);
+    }
+
+    public static boolean checkSong(String song){
+        return playlist.contains(song);
+    };
+
+    public static Set<String> getPlaylist(){
+        return playlist;
+    }
+
+    public static void showPlaylist(){
+        for (String song : HashSetClass.getPlaylist()){
             System.out.println("– "+song);
         }
     }
