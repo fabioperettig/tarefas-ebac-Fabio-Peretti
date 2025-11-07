@@ -40,7 +40,7 @@ public class HashStudyClass {
                 " | Songs: " + songs +
                 "\n";
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
