@@ -1,4 +1,6 @@
-public class mainArrayLinear {
+import java.util.Arrays;
+
+public class arrayLinear {
 
     /**
      * Este estudo mostra a possibilidades de se trabalhar com arrays, podendo ser instanciadas
@@ -28,6 +30,8 @@ public class mainArrayLinear {
         System.out.println("\n-- Impressão de array pre alocada e definida posteriormente: --");
         printArray(array02);//basicamente um método artimético que recebe dois parâmetros INT
 
+        System.out.println(Arrays.toString(array01));//imprime em colchetes graças ao import Arrays para ter to.String
+
     }
 
     /**
@@ -35,11 +39,12 @@ public class mainArrayLinear {
      * criado, sendo apenas necessário aplicar como parâmetro a array desejada.
      * @param array
      */
-    public static void printArray(int[] array){
-        for (int local:array){
-            System.out.println(local);
+    public static void printArray(int[] array) {
+        for (int print : array) {
+            System.out.println(print);
         }
-    };
+    }
 
 
 }
+

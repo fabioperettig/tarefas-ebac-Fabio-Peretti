@@ -1,4 +1,4 @@
-public class mainMatriz {
+public class matriz {
 
     public static void main(String[] args) {
 
