@@ -17,6 +17,7 @@ public class SystemHealthMonitor {
     //private constructor to prevent instantiation outside of this class
     private SystemHealthMonitor(){
         this.serviceStatues = new HashMap<>();
+
         System.out.println("[INFO] Health monitor initialized.");
     }
 
