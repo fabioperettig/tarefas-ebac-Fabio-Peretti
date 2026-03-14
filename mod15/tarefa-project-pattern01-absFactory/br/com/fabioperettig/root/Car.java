@@ -16,7 +16,7 @@ public abstract class Car {
     }
 
     public void describeCar(){
-        System.out.printf("Car:[%s flag | %d horse power | %s | %b]\n",flag,horsePower,fuelSource,insured);
+        System.out.printf("Car:[%s flag | %d horse power | %s | %b]\n",flag,horsePower,fuelSource, insured);
     }
 
 }

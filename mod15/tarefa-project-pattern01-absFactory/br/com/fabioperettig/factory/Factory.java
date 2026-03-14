@@ -1,5 +1,4 @@
 package br.com.fabioperettig.factory;
-
 import br.com.fabioperettig.root.*;
 
 public abstract class Factory {
