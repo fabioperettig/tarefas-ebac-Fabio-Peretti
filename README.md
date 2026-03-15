@@ -8,14 +8,59 @@ O repositório é dividido em módulos, com os respectivos projetos feitos e apr
 ### Índice 
 
 ````
-mod6 ✅ 
-├── PrimeiroProjeto;
-├── Projeto-Procedural-OO;
-└── Algoritmo-rotina-matinal (portugol).
+mod6
+├── primeiroProjeto;
+├── projeto-Procedural-OO;
+└── algoritmo-rotina-matinal (portugol).
 
-mod7 
+mod7
 ├── objeto-real-classe;
 └── objeto-real-classe C#.
+
+mod8
+├── calculo-PI;
+└── calculo-media.
+
+mod9
+├── estudo-wrapper-calculadora-cientifica;
+└── tarefa-wrapper.
+
+mod10
+├── estudo-loop-for;
+├── estudo-swtich-case;
+├── estudo-while;
+├── exemplo-condicional-idade;
+├── exemplo-condicional-String;
+└── tarefa-controle-de-fluxo.
+
+mod11
+├── estudo-interface;
+├── estudo-listas;
+├── estudo-queue;
+├── estudo-set;
+├── projeto-lista;
+└── tarefa-collection.
+
+mod12
+├── estudo-array;
+├── estudo-map;
+└── tarefa-collection-2.
+
+mod13
+├── estudo-agregacao;
+├── estudo-classe-abstrata;
+├── estudo-interface;
+└── tarefa-pessoa-abstrata.
+
+MOD14 - PROJETO
+├── projEBAC1-ClientCRUD;
+└── apache-projEBAC1-CRUD.
+
+mod13
+├── project-pattern-singleton;
+├── project-pattern-builder;
+├── project-pattern-absFactory;
+└── tarefa-project-pattern01-absFactory.
 
 ````
 
