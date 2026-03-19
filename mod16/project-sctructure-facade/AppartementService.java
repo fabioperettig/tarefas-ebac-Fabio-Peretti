@@ -2,11 +2,11 @@
 public class AppartementService implements iAppartement{
 
     @Override
-    public boolean inscriteAppartement(Appartement appartement) {
-        Boolean enregistre = estEnregistre(appartement);
-        Boolean valides = sontChampsValides(appartement);
+    public boolean inscrireAppartement(Appartement appartement) {
+        Boolean dejaEnregistre = estEnregistre(appartement);
+        Boolean estValide = champsSontValides(appartement);
 
-        if (enregistre || !valides){
+        if (dejaEnregistre || !estValide){
             return false;
         }
 
@@ -15,8 +15,8 @@ public class AppartementService implements iAppartement{
     }
 
     /**
-     * C'est ici que la logique d'enregistrement
-     * est implémentée;
+     * Cette méthode implémente
+     * la logique d'enregistrement.
      *
      * @param appartement
      * @return
@@ -27,8 +27,8 @@ public class AppartementService implements iAppartement{
     }
 
     /**
-     * Vérifiez das la base de donnés (SQL)
-     * si l'appartement est déjà enregistré;
+     * Vérifier dans la base de données
+     * si l'appartement est déjà enregistré.
      *
      * @param appartement
      * @return
@@ -41,14 +41,14 @@ public class AppartementService implements iAppartement{
     }
 
     /**
-     * Vérifiez que tous les champs d'inscrition
+     * Vérifiez que tous les champs d'inscription
      * ont été correctement remplis.
      *
      * @param appartement
      * @return
      * @author fabioperettig
      */
-    private Boolean sontChampsValides(Appartement appartement){
+    private Boolean champsSontValides(Appartement appartement){
         return true;
     }
 }

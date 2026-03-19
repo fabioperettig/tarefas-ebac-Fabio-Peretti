@@ -1,5 +1,5 @@
 public interface iAppartement {
 
-    public boolean inscriteAppartement(Appartement appartement);
+    public boolean inscrireAppartement(Appartement appartement);
 
 }
