@@ -1,16 +1,16 @@
 
-public class AppartementService implements iAppartement{
+public class AppartementService implements iApartment{
 
     @Override
-    public boolean inscrireAppartement(Appartement appartement) {
-        Boolean dejaEnregistre = estEnregistre(appartement);
-        Boolean estValide = champsSontValides(appartement);
+    public boolean registerApartment(Apartment apartment) {
+        Boolean registered = isRegistered(apartment);
+        Boolean valid = isValid(apartment);
 
-        if (dejaEnregistre || !estValide){
+        if (registered || !valid){
             return false;
         }
 
-        return inscrireDansLaBase(appartement);
+        return registerInDatabase(apartment);
 
     }
 
@@ -18,11 +18,11 @@ public class AppartementService implements iAppartement{
      * Cette méthode implémente
      * la logique d'enregistrement.
      *
-     * @param appartement
+     * @param apartment
      * @return
      * @author fabioperettig
      */
-    private Boolean inscrireDansLaBase(Appartement appartement){
+    private Boolean registerInDatabase(Apartment apartment){
         return true;
     }
 
@@ -30,11 +30,11 @@ public class AppartementService implements iAppartement{
      * Vérifier dans la base de données
      * si l'appartement est déjà enregistré.
      *
-     * @param appartement
+     * @param apartment
      * @return
      * @author fabioperettig
      */
-    private Boolean estEnregistre(Appartement appartement){
+    private Boolean isRegistered(Apartment apartment){
         //Vérifiez das la base de donnés (SQL)
         // si l'appartement est déjà enregistré;
         return false;
@@ -44,11 +44,11 @@ public class AppartementService implements iAppartement{
      * Vérifiez que tous les champs d'inscription
      * ont été correctement remplis.
      *
-     * @param appartement
+     * @param apartment
      * @return
      * @author fabioperettig
      */
-    private Boolean champsSontValides(Appartement appartement){
+    private Boolean isValid(Apartment apartment){
         return true;
     }
 }
