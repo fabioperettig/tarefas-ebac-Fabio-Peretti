@@ -62,6 +62,13 @@ mod15
 ├── project-pattern-absFactory;
 └── tarefa-project-pattern01-absFactory.
 
+mod16
+├── observerQuest-behavior-study;
+├── project-behavior-observer;
+├── project-behavior-template;
+└── project-structure-facade;
+
+
 ````
 
 ![GitHub top language](https://img.shields.io/github/languages/top/fabioperettig/tarefas-ebac-Fabio-Peretti)
