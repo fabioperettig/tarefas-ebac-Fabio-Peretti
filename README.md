@@ -68,6 +68,9 @@ mod16
 ├── project-behavior-template;
 └── project-structure-facade;
 
+MOD17
+├── generic-study-list;
+└── generic-study-class.
 
 ````
 
