@@ -2,16 +2,16 @@ package com.fabioperettig.crud.dao;
 
 import com.fabioperettig.crud.SingletonMap;
 import com.fabioperettig.crud.dao.generic.GenericDAO;
-import com.fabioperettig.crud.domain.Product;
+import com.fabioperettig.crud.domain.Client;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductDAO extends GenericDAO<Product> implements IProductDAO {
+public class ClientDAO extends GenericDAO<Client> implements IClientDAO {
 
-    public ProductDAO() {
+    public ClientDAO(){
         super();
-        Map<Long, Product> internMap = (Map<Long, Product>) SingletonMap.getInstance().getMap().get(getClassType());
+        Map<Long, Client> internMap = (Map<Long, Client>) SingletonMap.getInstance().getMap().get(getClassType());
         if (internMap == null) {
             internMap = new HashMap<>();
             SingletonMap.getInstance().getMap().put(getClassType(), internMap);
@@ -19,14 +19,14 @@ public class ProductDAO extends GenericDAO<Product> implements IProductDAO {
     }
 
     @Override
-    public Class<Product> getClassType() {
-        return Product.class;
+    public Class<Client> getClassType() {
+        return Client.class;
     }
 
     @Override
-    public void updateData(Product entity, Product registeredEntity) {
+    public void updateData(Client entity, Client registeredEntity) {
         registeredEntity.setName(entity.getName());
         registeredEntity.setCode(entity.getCode());
-        registeredEntity.setBrand(entity.getBrand());
+        registeredEntity.setCountry(entity.getCountry());
     }
 }
