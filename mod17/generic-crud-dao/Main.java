@@ -1,5 +1,6 @@
 import com.fabioperettig.crud.dao.ClientDAO;
 import com.fabioperettig.crud.dao.IClientDAO;
+import com.fabioperettig.crud.domain.Client;
 
 import javax.swing.*;
 
@@ -64,8 +65,35 @@ public class Main {
         return "1".equals(option);
     }
 
-    private static void check
+    private static void register(String data){
+        String[] arrayData = data.split(",");
+        Client client = new Client(arrayData[0], Long.valueOf(arrayData[1]), arrayData[2]);
+        Boolean isRegistered = iClientDAO.create(client);
 
+        if (isRegistered) {
+            JOptionPane.showMessageDialog(null, "Client created with success!",
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Client is already registered.",
+                    "Failure", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
+    private static boolean isRead(String option) {
+        return "2".equals(option);
+    }
+
+    private static void check (String data){
+        Client client = iClientDAO.read(Long.parseLong(data));
+        if (client != null) {
+            JOptionPane.showMessageDialog(null, "Client found: "
+                    + client.toString(),"Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Client not found.",
+                    "Failure", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
     private static boolean isValidOption(String option){
         return "1".equals(option) || "2".equals(option) || "3".equals(option) ||
