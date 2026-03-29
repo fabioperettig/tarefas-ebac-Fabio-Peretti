@@ -4,7 +4,7 @@ import com.fabioperettig.crud.domain.Client;
 
 import javax.swing.*;
 
-public class Main {
+public class Main2 {
 
     private static IClientDAO iClientDAO;
 
