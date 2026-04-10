@@ -17,9 +17,9 @@ This project follows a modular package structure to separate concerns:
 
 ## 🔗 Quick Links
 Check out the main logic here:<br>
-- [Annotation Definition](INSERT_LINK_HERE)
-- [Reflection Engine](INSERT_LINK_HERE)
-- [Custom Exception](INSERT_LINK_HERE)
+- [Annotation Definition](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod18/annotation-quest-java/Java/com/fabioperettig/rpg/annotations/MagicItem.java)
+- [Reflection Engine](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod18/annotation-quest-java/Java/com/fabioperettig/rpg/engine/GameEngine.java)
+- [Custom Exception](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod18/annotation-quest-java/Java/com/fabioperettig/rpg/exceptions/InsuficientManaException.java)
 
 
 ## 🚀 What I Learned
