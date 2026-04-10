@@ -1,3 +1,7 @@
+package com.fabioperettig.rpg.entities;
+
+import com.fabioperettig.rpg.annotations.MagicItem;
+import com.fabioperettig.rpg.annotations.Skill;
 
 public class Hero {
 

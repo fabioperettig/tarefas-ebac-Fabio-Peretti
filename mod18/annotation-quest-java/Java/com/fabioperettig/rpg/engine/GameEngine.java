@@ -1,11 +1,17 @@
+package com.fabioperettig.rpg.engine;
+import com.fabioperettig.rpg.exceptions.*;
+
+import com.fabioperettig.rpg.annotations.MagicItem;
+import com.fabioperettig.rpg.annotations.Skill;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class GameEngine {
 
     public static void processAnnotations(Object character) throws Exception{
-        System.out.println("––– Hero Status –––");
+        System.out.println("––– com.fabioperettig.rpg.entities.Hero Status –––");
 
         int totalAttack = 0;
 
@@ -31,7 +37,7 @@ public class GameEngine {
 
     }
 
-    public static void useSkill(Object character, String methodName) throws Exception{
+    public static void useSkill(Object character, String methodName) throws InsuficientManaException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         Method method = character.getClass().getDeclaredMethod(methodName);
 
@@ -42,6 +48,7 @@ public class GameEngine {
             int heroMana = (int) getMana.invoke(character);
 
             System.out.printf("Preparing to use %s", skill.name());
+
 
             if (heroMana >= skill.manaCost()){
 
@@ -54,7 +61,7 @@ public class GameEngine {
 
             } else {
 
-                System.out.printf("There's no enough mana for %s.", skill.name());
+                throw new InsuficientManaException("Not enough mana! You need " + skill.manaCost() + ".");
 
             }
 

@@ -1,3 +1,8 @@
+package com.fabioperettig.rpg;
+
+import com.fabioperettig.rpg.engine.GameEngine;
+import com.fabioperettig.rpg.entities.Hero;
+
 public class Main {
 
     public static void main(String[] args){

@@ -1,3 +1,5 @@
+package com.fabioperettig.rpg.annotations;
+
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
