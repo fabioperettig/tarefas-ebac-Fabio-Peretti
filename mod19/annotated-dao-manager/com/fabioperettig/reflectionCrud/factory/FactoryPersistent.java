@@ -1,6 +1,7 @@
 package com.fabioperettig.reflectionCrud.factory;
 
 import com.fabioperettig.reflectionCrud.domain.Persistent;
+import com.fabioperettig.reflectionCrud.exception.InvalidDataException;
 
 public interface FactoryPersistent {
 
@@ -10,6 +11,6 @@ public interface FactoryPersistent {
      * @param data record data in the database
      * @return Persistent object
      */
-    Persistent createObject(String[] data);
+    Persistent createObject(String[] data) throws InvalidDataException;
 
 }

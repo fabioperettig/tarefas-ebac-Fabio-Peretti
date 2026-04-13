@@ -1,16 +1,17 @@
-import com.fabioperettig.reflectionCrud.dao.ClientDAO;
+import com.fabioperettig.reflectionCrud.dao.ClientMapDAO;
 import com.fabioperettig.reflectionCrud.dao.IClientDAO;
+import com.fabioperettig.reflectionCrud.dao.IProductDAO;
 import com.fabioperettig.reflectionCrud.domain.Client;
+import com.fabioperettig.reflectionCrud.exception.KeyNotFoundException;
 
 import javax.swing.*;
 
 public class Main {
 
     private static IClientDAO iClientDAO;
+    private static IProductDAO iProductDAO;
 
-    public static void main(String[] args) {
-
-        iClientDAO = new ClientDAO();
+    public static void main(String[] args) throws KeyNotFoundException {
 
         String option = JOptionPane.showInputDialog(null,
                 "Enter 1 to create, 2 to read, 3 to update," +
@@ -79,7 +80,7 @@ public class Main {
         return "1".equals(option);
     }
 
-    private static void register(String data){
+    private static void register(String data) throws KeyNotFoundException {
         String[] arrayData = data.split(",");
         Client client = new Client(arrayData[0], Long.valueOf(arrayData[1]), arrayData[2]);
         Boolean isRegistered = iClientDAO.create(client);
@@ -113,7 +114,7 @@ public class Main {
         return "3".equals(option);
     }
 
-    private static void update (String option){
+    private static void update (String option) throws KeyNotFoundException {
         String data = JOptionPane.showInputDialog(null,
                 "Enter the user's information separated by commas, as in the example: Name, ID, Country.",
                 "Update", JOptionPane.INFORMATION_MESSAGE);

@@ -1,7 +1,9 @@
 package com.fabioperettig.reflectionCrud.factory;
 
+import com.fabioperettig.reflectionCrud.domain.Client;
 import com.fabioperettig.reflectionCrud.domain.Persistent;
 import com.fabioperettig.reflectionCrud.domain.Product;
+import com.fabioperettig.reflectionCrud.exception.InvalidDataException;
 
 public class ProductFactory implements FactoryPersistent{
     /**
@@ -11,15 +13,17 @@ public class ProductFactory implements FactoryPersistent{
      * @return Persistent object
      */
     @Override
-    public Persistent createObject(String[] data) {
-        if (data == null || data.length < 3){
-            return null;
-        }
+    public Persistent createObject(String[] data) throws InvalidDataException {
 
         String name = data[0];
         Long code = Long.valueOf(data[1]);
-        String brand = data[0];
+        String country = data[2];
 
-        return new Product(name, code, brand);
+        try{
+            return new Product(name, code, country);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidDataException("Invalid data.");
+        }
+
     }
 }

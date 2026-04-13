@@ -2,6 +2,7 @@ package com.fabioperettig.reflectionCrud.dao;
 
 import com.fabioperettig.reflectionCrud.SingletonMap;
 import com.fabioperettig.reflectionCrud.dao.generic.GenericDAO;
+import com.fabioperettig.reflectionCrud.dao.IClientDAO;
 import com.fabioperettig.reflectionCrud.domain.Client;
 
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.Map;
 
 public class ClientMapDAO extends GenericDAO<Client> implements IClientDAO {
 
-    public ClientDAO(){
+    public ClientMapDAO(){
         super();
         Map<Long, Client> internMap = (Map<Long, Client>) SingletonMap.getInstance().getMap().get(getClassType());
         if (internMap == null) {

@@ -6,6 +6,6 @@ package com.fabioperettig.reflectionCrud.domain;
  */
 public interface Persistent {
 
-    public Long getCode();
+    //public Long getCode();
 
 }

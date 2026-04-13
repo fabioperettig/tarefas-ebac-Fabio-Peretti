@@ -1,11 +1,14 @@
 package com.fabioperettig.reflectionCrud.domain;
 
+import com.fabioperettig.reflectionCrud.annotation.TypeKey;
+
 import java.util.Objects;
 
 public class Client implements Persistent{
 
-    private String name;
+    @TypeKey("getCode")
     private Long code;
+    private String name;
     private String country;
 
     /// ctor
@@ -18,19 +21,19 @@ public class Client implements Persistent{
     public String getName() {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
+    public Long getCode() {
+        return this.code;
     }
-
-    public void setCode(Long code) {
-        this.code = code;
-    }
-
     public String getCountry() {
         return country;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setCode(Long code) {
+        this.code = code;
+    }
     public void setCountry(String country) {
         this.country = country;
     }
@@ -54,10 +57,5 @@ public class Client implements Persistent{
                 ", code=" + code +
                 ", country='" + country + '\'' +
                 '}';
-    }
-
-    @Override
-    public Long getCode() {
-        return this.code;
     }
 }

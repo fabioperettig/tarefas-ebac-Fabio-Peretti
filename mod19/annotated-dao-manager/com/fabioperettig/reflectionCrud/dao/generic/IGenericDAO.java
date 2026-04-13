@@ -1,4 +1,4 @@
-package com.fabioperettig.reflectionCrud.dao;
+package com.fabioperettig.reflectionCrud.dao.generic;
 
 import com.fabioperettig.reflectionCrud.domain.*;
 import com.fabioperettig.reflectionCrud.exception.KeyNotFoundException;
