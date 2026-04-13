@@ -7,7 +7,7 @@ import com.fabioperettig.reflectionCrud.domain.Client;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientDAO extends GenericDAO<Client> implements IClientDAO {
+public class ClientMapDAO extends GenericDAO<Client> implements IClientDAO {
 
     public ClientDAO(){
         super();

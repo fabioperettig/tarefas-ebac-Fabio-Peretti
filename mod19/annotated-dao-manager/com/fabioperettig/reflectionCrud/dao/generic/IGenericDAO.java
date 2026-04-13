@@ -1,6 +1,7 @@
-package com.fabioperettig.reflectionCrud.dao.generic;
+package com.fabioperettig.reflectionCrud.dao;
 
 import com.fabioperettig.reflectionCrud.domain.*;
+import com.fabioperettig.reflectionCrud.exception.KeyNotFoundException;
 
 import java.util.Collection;
 
@@ -12,9 +13,9 @@ import java.util.Collection;
  */
 public interface IGenericDAO <T extends Persistent> {
 
-    public Boolean create(T entity);
+    public Boolean create(T entity) throws KeyNotFoundException;
     public T read (Long value);
-    public void update (T entity);
+    public void update (T entity) throws KeyNotFoundException;
     public void delete (Long value);
 
     /**
