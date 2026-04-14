@@ -1,3 +1,4 @@
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 # Curso EBAC: Back-End Java 🎓
 
 ### Repositório dedicado aos projetos aprendidos e solicitados no curso Java Back-End da escola britânica de artes criativas & tecnologia.
@@ -68,10 +69,17 @@ mod16
 ├── project-behavior-template;
 └── project-structure-facade;
 
-MOD17
+mod17
 ├── generic-study-list;
 └── generic-study-class.
 
+mod18
+├── annotation-quest-java;
+└── tarefa-annotation.
+
+mod19
+├── annotated-dao-manager;
+└── tarefa-reflect-annotation.
 ````
 
 ![GitHub top language](https://img.shields.io/github/languages/top/fabioperettig/tarefas-ebac-Fabio-Peretti)
