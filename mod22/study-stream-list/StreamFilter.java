@@ -28,6 +28,9 @@ public class StreamFilter {
 
         Stream<User> InstancePredicateMethod = list.stream().filter(InstancePredicate);
 
+        /// Printing a Stream -> forReach n Reference Method
+        streamDefaultMethod.forEach(System.out::println);
+
     }
 
 }

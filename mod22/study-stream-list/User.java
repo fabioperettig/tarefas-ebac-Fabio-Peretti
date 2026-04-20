@@ -42,4 +42,13 @@ public class User {
         return List.of(user1, user2, user3, user4, user5);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
