@@ -20,7 +20,7 @@ A Stream works like an assembly line, containing specific steps:
 
 <br>
 
-## 📚 Operations' Study (part II - [click here for check part I](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod22/study-stream-comparing/README.md))
+## 📚 Operations' Study (part II - [click here for check part I](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod22/study-stream-list/README.md))
 
 3. **sorted & Comparator** -> Defines the elements' order. By default, the order is descending, but it's possible to reverse the order using the operator ***.reversed()***.
 
