@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 public class Monsters {
 
@@ -34,6 +35,7 @@ public class Monsters {
     }
 
     public List<Monsters> monstersList(){
+        Monsters m0 = new Monsters("m0", "Zombie", 3,0);
         Monsters m1 = new Monsters("m1", "Zombie", 5,0);
         Monsters m2 = new Monsters("m2", "Chuckie", 15,2);
         Monsters m3 = new Monsters("m3", "Mummy", 18,6);
@@ -41,7 +43,7 @@ public class Monsters {
         Monsters m5 = new Monsters("m5", "Chainsaw", 25,25);
         Monsters m6 = new Monsters("m6", "Clone Bulb", 3,0);
 
-        return List.of(m1,m2,m3,m4,m5,m6);
+        return List.of(m0,m1,m2,m3,m4,m5,m6);
     }
 
     @Override
@@ -52,5 +54,17 @@ public class Monsters {
                 ", atk=" + atk +
                 ", def=" + def +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Monsters monsters = (Monsters) o;
+        return Objects.equals(id, monsters.id) && Objects.equals(name, monsters.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }
