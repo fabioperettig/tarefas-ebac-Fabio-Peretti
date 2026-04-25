@@ -10,17 +10,17 @@ import com.fabioperettig.service.ClienteService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.UnexpectedException;
+
 public class ServiceTest {
-    private IClienteDAO iClienteDAO = new ClienteMockDAO();
+    private IClienteDAO iClienteDAO = new ClienteDAO();
 
     ClienteService service = new ClienteService(iClienteDAO);
     ClienteController controller = new ClienteController(service);
 
-    @Test
+    @Test()
     public void cadastroTest(){
-        Cliente cliente = new Cliente("Teste");
-        service.cadastrar(cliente);
-        //Assertions.assertEquals(1, iClienteDAO.trazerLista().size());
+        controller.novoCadastro("ClienteTeste");
     }
 
 

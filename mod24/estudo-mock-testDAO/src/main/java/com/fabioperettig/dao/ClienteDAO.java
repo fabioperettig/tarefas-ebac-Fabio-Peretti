@@ -11,7 +11,8 @@ public class ClienteDAO implements IClienteDAO{
 
     @Override
     public void salvar(Cliente cliente) {
-        listaCliente.add(cliente);
+//        listaCliente.add(cliente);
+        throw new IllegalArgumentException("Precisa de acesso ao banco de dados.");
     }
 
     @Override
