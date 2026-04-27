@@ -15,12 +15,6 @@ public class ClienteService {
 
     public void createService(Cliente cliente){
 
-        boolean idCadastrado = iCliente.read(cliente.getId()).isPresent();
-
-        if (idCadastrado) {
-            throw new IllegalArgumentException("Esta ID já está em uso.");
-        }
-
         if (cliente.getNome() == null || cliente.getNome().isBlank()){
             throw new IllegalArgumentException("O cliente precisa de um nome");
         }

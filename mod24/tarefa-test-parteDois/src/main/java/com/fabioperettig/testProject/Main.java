@@ -1,13 +1,27 @@
 package com.fabioperettig.testProject;
 
-import com.fabioperettig.testProject.model.Cliente;
+import com.fabioperettig.testProject.controller.ClienteController;
+import com.fabioperettig.testProject.dao.ClienteMockDAO;
+import com.fabioperettig.testProject.dao.ICliente;
+import com.fabioperettig.testProject.service.ClienteService;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Cliente cliente1 = new Cliente("fabio","fabio@mail.com");
-        Cliente cliente2 = new Cliente("Larissa","lari@mail.com");
+//        ICliente cliente = new ClienteDAO();
+        ICliente cliente = new ClienteMockDAO();
+        ClienteService service = new ClienteService(cliente);
+        ClienteController controller = new ClienteController(service);
+
+
+        /// create
+        controller.novoCliente("Fabio","fabio@mail.com");
+        controller.novoCliente("Rhaissa", "rha@mail.com");
+        controller.novoCliente("Flavio", "flv@mail.com");
+        controller.novoCliente("Anna", "anna@mail.com");
+
+        controller.listarClientes();
 
     }
 }
