@@ -1,36 +1,37 @@
 package com.fabioperettig.testProject.model;
 
+import com.fabioperettig.testProject.model.Cliente;
+
 public class Contrato {
 
     private int id;
-    private String cliente;
+    private int clienteID;
     private boolean ativo;
 
-    public Contrato(String cliente) {
-        this.cliente = cliente;
+    public Contrato(int clienteID, boolean ativo) {
+        this.clienteID = clienteID;
+        this.ativo = ativo;
     }
 
     public int getId() {
         return id;
+    }
+    public int getClienteID() {
+        return clienteID;
+    }
+    public boolean isAtivo() {
+        return ativo;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public void setClienteID(int clienteID) {
+        this.clienteID = clienteID;
     }
 }

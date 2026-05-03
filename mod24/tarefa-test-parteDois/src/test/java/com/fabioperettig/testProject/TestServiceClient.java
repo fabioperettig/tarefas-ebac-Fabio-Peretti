@@ -39,7 +39,7 @@ public class TestServiceClient {
         ClienteService service = new ClienteService(iCliente);
         Cliente cliente = new Cliente(null, "@mail");
 
-        Assertions.assertThrows(IllegalArgumentException.class,  () -> {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             service.createService(cliente);
         });
     }

@@ -10,7 +10,6 @@ public class ClienteDAO implements ICliente{
 
     private final List<Cliente> clienteList = new ArrayList<>();
     private int contadorID = 1;
-    //para contratos, vamos começar pelo 100 (cliente 1 >>> contrato 100)
 
     @Override
     public void create(Cliente cliente) {
