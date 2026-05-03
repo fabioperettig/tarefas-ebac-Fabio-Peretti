@@ -22,12 +22,6 @@ public class TestServiceClient {
     public void testeServiceCREATEClienteSucesso(){
         Cliente cliente = new Cliente("sucesso", "@mail");
         ClienteService service = new ClienteService(iCliente);
-        /**
-         * Operação separada para testar a validez do nome
-         * e impedir que a Classe Teste tome decisão.
-         * @see testeServiceCREATEClienteNomeInvalido()
-         */
-        //if (cliente.getNome() == null || cliente.getNome().isBlank()){...}
 
         service.createService(cliente);
         Assertions.assertEquals("sucesso", cliente.getNome());
