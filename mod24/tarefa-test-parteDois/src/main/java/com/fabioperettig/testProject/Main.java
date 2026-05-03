@@ -8,11 +8,11 @@ import com.fabioperettig.testProject.dao.ICliente;
 import com.fabioperettig.testProject.dao.IContrato;
 import com.fabioperettig.testProject.service.ClienteService;
 import com.fabioperettig.testProject.service.ContratoService;
-import com.fabioperettig.testProject.service.ErroClientException;
+import com.fabioperettig.testProject.service.ErrorClientException;
 
 public class Main {
 
-    public static void main(String[] args) throws ErroClientException {
+    public static void main(String[] args) throws ErrorClientException {
 
 //        ICliente cliente = new ClienteDAO();
         ICliente cliente = new ClienteMockDAO();

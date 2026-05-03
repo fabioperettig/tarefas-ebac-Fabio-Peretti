@@ -14,10 +14,10 @@ public class ContratoService {
         this.iCliente = iCliente;
     }
 
-    public void createService(Contrato contrato) throws ErroClientException {
+    public void createService(Contrato contrato) throws ErrorClientException {
 
         iCliente.read(contrato.getClienteID())
-                .orElseThrow(() -> new ErroClientException("Cliente não existe."));
+                .orElseThrow(() -> new ErrorClientException("Cliente não existe."));
 
         iContrato.create(contrato);
     }

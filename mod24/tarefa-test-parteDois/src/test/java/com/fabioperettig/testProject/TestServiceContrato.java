@@ -8,12 +8,10 @@ import com.fabioperettig.testProject.model.Cliente;
 import com.fabioperettig.testProject.model.Contrato;
 import com.fabioperettig.testProject.service.ClienteService;
 import com.fabioperettig.testProject.service.ContratoService;
-import com.fabioperettig.testProject.service.ErroClientException;
+import com.fabioperettig.testProject.service.ErrorClientException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.security.Provider;
 
 public class TestServiceContrato {
 
@@ -27,7 +25,7 @@ public class TestServiceContrato {
     }
 
     @Test
-    public void testeServiceCREATEContratoSucesso() throws ErroClientException {
+    public void testeServiceCREATEContratoSucesso() throws ErrorClientException {
         Cliente cliente = new Cliente("name", "@mail");
         Cliente cliente2 = new Cliente("name", "@mail");
         ContratoService service = new ContratoService(iContrato, iCliente);
@@ -43,11 +41,11 @@ public class TestServiceContrato {
     }
 
     @Test
-    public void testeServiceERROsemCLiente() throws ErroClientException {
+    public void testeServiceERROsemCLiente() throws ErrorClientException {
         ContratoService service = new ContratoService(iContrato, iCliente);
         Contrato contrato = new Contrato(1, true);
 
-        Assertions.assertThrows(ErroClientException.class, () -> {
+        Assertions.assertThrows(ErrorClientException.class, () -> {
             service.createService(contrato);
         });
     }

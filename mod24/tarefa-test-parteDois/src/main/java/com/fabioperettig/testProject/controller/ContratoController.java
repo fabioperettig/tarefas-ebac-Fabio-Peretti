@@ -2,7 +2,7 @@ package com.fabioperettig.testProject.controller;
 
 import com.fabioperettig.testProject.model.Contrato;
 import com.fabioperettig.testProject.service.ContratoService;
-import com.fabioperettig.testProject.service.ErroClientException;
+import com.fabioperettig.testProject.service.ErrorClientException;
 
 public class ContratoController {
 
@@ -12,7 +12,7 @@ public class ContratoController {
         this.contratoService = contratoService;
     }
 
-    public void novoContrato(int idCliente) throws ErroClientException {
+    public void novoContrato(int idCliente) throws ErrorClientException {
         Contrato contrato = new Contrato(idCliente,true);
         contratoService.createService(contrato);
     }
