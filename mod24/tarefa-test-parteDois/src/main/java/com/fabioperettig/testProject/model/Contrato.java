@@ -1,7 +1,5 @@
 package com.fabioperettig.testProject.model;
 
-import com.fabioperettig.testProject.model.Cliente;
-
 public class Contrato {
 
     private int id;
