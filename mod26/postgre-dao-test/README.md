@@ -3,13 +3,13 @@
 
 # ☕ Estudo PostgreSQL
 
-O PostgreSQL (ou “Postgres”) é um **Sistema de Gerenciamento de Banco de Dados Relacional (SGBD)** que organiza dados em tabelas, compostas por linhas e colunas, que podem ser relacionadas entre si por meio de chaves, como as famosas chaves primárias e estrangeiras.
+O PostgreSQL (ou “Postgres”) é um **Sistema de Gerenciamento de Banco de Dados Relacional (SGBD)** que organiza dados em tabelas, compostas por linhas e colunas, que podem ser relacionadas entre si.
 
 ## 🖲️ O que é um Banco de Dados?
 
 **Um banco de dados** é um sistema utilizado para armazenar e organizar informações de forma estruturada. Por meio de um **SGBD**, é possível inserir, consultar, atualizar, remover e relacionar dados utilizando a linguagem **SQL** (Structured Query Language), tornando o gerenciamento das informações mais seguro e eficiente.<br><br>
 
-## Tipos de dados no PostgreSQL
+## 📚 Tipos de dados no PostgreSQL
 
 O PostgreSQL oferece uma grande variedade de tipos de dados, desde os mais comuns utilizados no dia a dia até recursos avançados para aplicações específicas. Essa flexibilidade é um dos motivos pelos quais ele é considerado um dos SGBDs mais completos do mercado.
 
@@ -35,9 +35,6 @@ Extensões
 └── PostGIS (dados geográficos)
 ````
 </details>
-<br>
-
->Neste estudo, utilizaremos principalmente os tipos **INT, VARCHAR e TIMESTAMP**, suficientes para compreender os conceitos fundamentais de modelagem e manipulação de dados.
 
 ## 💻 Exemplo prático
 
@@ -52,22 +49,32 @@ O exemplo abaixo demonstra como uma aplicação Java pode realizar operações b
 
 ````java
 public void save (User user) {
+
+    // SQL que será enviada ao PostgreSQL
     String sql = "INSERT INTO users (name, mail) VALUES (?, ?)";
 
+    // Abre a conexão com o banco
     try(Connection connection = DriverManager.getConnection(URL, USER, PASS);
+
+        // Prepara a instrução SQL
         PreparedStatement statement = connection.prepareStatement(sql)) {
 
+        // Substitui os parâmetros "?" pelos valores do objeto User
         statement.setString(1, user.getName());
         statement.setString(2, user.getMail());
+
+        // Executa o INSERT
         statement.executeUpdate();
-
-        System.out.printf("\nUser %s add.", user.getName());
-
+    
     }catch (Exception e) {
         e.printStackTrace();
     }
 }
+````
 
+<details><summary><b>SELECT * FROM</b></summary>
+
+````java
 public List<User> list() {
     List<User> userList = new ArrayList<>();
     String sql = "SELECT * FROM users";
@@ -90,7 +97,12 @@ public List<User> list() {
 
     return userList;
 }
+````
+</details>
 
+<details><summary><b>DELETE FROM ... WHERE NAME = ?</b></summary>
+
+```` java
 public void delete(String name) {
     String sql = "DELETE FROM users WHERE NAME = ?";
 
@@ -107,15 +119,22 @@ public void delete(String name) {
     }
 }
 ````
+</details>
 
+## 🔍 Como o SQL chega ao PostgreSQL
 
-## Comunicação via String
+Quando uma aplicação Java precisa consultar ou modificar dados em um banco PostgreSQL, ela não envia métodos, objetos ou classes Java. Toda a comunicação acontece por meio de comandos SQL escritos em formato de texto (String).
+
+```` java
+String sql = "SELECT * FROM users WHERE id = ?";
+````
+
+Embora seja armazenado como uma String no Java, esse texto representa uma instrução escrita na linguagem SQL, capaz de ser interpretada pelo PostgreSQL. Ao executar o comando, o driver JDBC é responsável por enviar esse texto ao servidor PostgreSQL, que interpreta a consulta, localiza os dados solicitados e devolve o resultado para a aplicação.
 
 <details><summary><b>Comunicação String</b></summary>
 
 ````
 Java
-   │
    │ SQL (String)
    ▼
 JDBC Driver
@@ -128,44 +147,67 @@ Tabelas
 ````
 </details>
 
-<br>Quando você envia um comando para o PostgreSQL, você envia uma String (ex: "SELECT * FROM usuarios;"). Isso acontece por três motivos principais:
+<br>
 
-* Universalidade do SQL: A linguagem SQL (Structured Query Language) é baseada em texto humano para ser universal. Qualquer linguagem de programação sabe criar e ler Strings.
+O PostgreSQL não entende classes, objetos ou métodos Java. A comunicação entre a aplicação e o banco acontece por meio da linguagem SQL, composta por palavras reservadas como SELECT, INSERT, UPDATE, DELETE e WHERE.
 
-* Protocolo de Rede: O driver JDBC empacota a consulta SQL, envia ao servidor PostgreSQL (pela rede ou localmente) e o banco traduz esse texto em instruções internas.
+No lado do Java, essas instruções são armazenadas em uma String. O JDBC atua como intermediário, enviando esse texto ao PostgreSQL, que interpreta o comando SQL e executa a operação solicitada.
 
-* Camada de Abstração: Usar texto evita que o seu programa precise entender como o Postgres gerencia memória internamente. O texto é a interface padronizada.
+## PostgreSQL e JDBC 🤝
+
+Java e PostgreSQL são tecnologias independentes. Enquanto o Java trabalha com classes, objetos e métodos, o PostgreSQL entende apenas comandos escritos na linguagem SQL. Por isso, no Java essas instruções são representadas como Strings e enviadas ao banco por meio do JDBC, responsável por estabelecer a comunicação entre a aplicação e o PostgreSQL.
+
+Em outras palavras, o JDBC é responsável por: abrir a conexão com o banco; enviar a consulta SQL; receber os resultados; disponibilizar os resultados para que a aplicação os converta novamente em objetos Java.
+
+````
+Java
+  │
+  ▼
+SQL (String)
+  │
+  ▼
+JDBC
+  │
+  ▼
+PostgreSQL
+  │
+  ▼
+ResultSet
+  │
+  ▼
+Java
+````
+
+Além da comunicação por meio do JDBC, a combinação entre Java e PostgreSQL é amplamente utilizada no mercado por oferecer uma integração madura, segura e de alto desempenho.
+
+* JPA/Hibernate: Frameworks Java mapeiam classes para tabelas quase sem esforço. O suporte a recursos avançados do Postgres (como JSONB) dentro do Java é excelente.
+
+* Foco em Enterprise: Ambos foram feitos para aguentar sistemas pesados, acessos quase ininterruptos e alta concorrência com grande estabilidade.
+
+* Tipagem Forte: O Java é uma linguagem fortemente tipada e o Postgres é um banco rigidamente tipado, reduzindo drasticamente erros de dados inválidos entre o código e o armazenamento.
+
+* Pool de Conexões: Bibliotecas como HikariCP mantêm conexões abertas para evitar o custo de criar uma nova conexão a cada requisição.
+
+>Como o PostgreSQL utiliza SQL, uma linguagem padrão do mercado, aplicações Java conseguem se comunicar com o banco de forma simples e consistente por meio do JDBC.
 
 ## PostgreSQL x pgAdmin x psql
 
-A relação é de Motor (PostgreSQL) e Painel de Controle (pgAdmin). 
+Embora sejam frequentemente utilizados juntos, **PostgreSQL, pgAdmin e psql** possuem funções diferentes:
 
-PostgreSQL: É o banco de dados real. Ele roda em segundo plano, não tem "cara", é apenas o serviço processando e guardando os dados.
+* **PostgreSQL:** é o Sistema de Gerenciamento de Banco de Dados (SGBD). Ele executa em segundo plano, armazena os dados e processa os comandos SQL enviados pela aplicação.
 
-pgAdmin: É uma ferramenta de interface gráfica (software com telas, botões e menus) feita especificamente para você gerenciar o PostgreSQL visualmente. Com ele, você clica para criar tabelas, visualiza linhas e digita seus comandos SQL sem precisar usar o terminal prego do sistema operacional.
+* **pgAdmin:** é uma interface gráfica desenvolvida para administrar o PostgreSQL. Nele, é possível criar bancos, tabelas e executar consultas por meio de menus e formulários, sendo ideal para uma administração mais visual e amigável para o usuário.
 
-````
-PostgreSQL
-→ O motor do banco.
+* **psql:** é o cliente oficial de linha de comando do PostgreSQL. Com ele, é possível ter acesso completo ao banco de dados, executar comandos SQL, criar tabelas, consultar registros e administrar o servidor, mas, sem depender de interface gráfica, pois tudo é feito via terminal do sistema operacional.
 
-psql
-→ Cliente via terminal.
+## ☑️ Conclusão
 
-pgAdmin
-→ Cliente gráfico.
+O PostgreSQL é um verdadeiro ecossistema de gerenciamento de dados, permitindo armazenar e administrar qualquer tipo de recurso, desde tipos primitivos até dados geoespaciais, diretamente via SQL.
 
-````
+Também possui uma sincronia poderosa quando unido a linguagens tipadas, como o Java, criando um sistema sólido, dinâmico e altamente seguro.
 
-## Vantagens e Sinergia entre PostgreSQL e Java
+Além disso, ele é acessível para todo tipo de profissional: desde o usuário de interface até o de terminal, apresentando e gerenciando dados com clareza, seja pelo clique do mouse ou por linhas de comando.
 
-A combinação de Java com PostgreSQL é um padrão de mercado gigantesco (especialmente no ambiente corporativo). As principais vantagens são:
+----
 
-* Driver JDBC Maduro: O driver que conecta o Java ao Postgres é extremamente otimizado, seguro e atualizado constantemente.
-
-* Ecossistema Spring (JPA/Hibernate): Frameworks Java mapeiam classes do Java para tabelas do Postgres quase sem esforço. O suporte a recursos avançados do Postgres (como JSONB) dentro do Java é excelente.
-
-* Foco em Enterprise: Ambos foram feitos para aguentar sistemas pesados, milhões de acessos e alta concorrência. É um casamento perfeito de estabilidade.
-
-* Tipagem Forte: O Java é uma linguagem fortemente tipada e o Postgres é um banco rigidamente tipado. Isso reduz drasticamente erros de dados inválidos entre o código e o armazenamento.
-
-* Pool de Conexões: Bibliotecas como HikariCP mantêm conexões abertas para evitar o custo de criar uma nova conexão a cada requisição.
+### Fabio peretti Guimarães | Ebac mod 26 | JUL 2026
