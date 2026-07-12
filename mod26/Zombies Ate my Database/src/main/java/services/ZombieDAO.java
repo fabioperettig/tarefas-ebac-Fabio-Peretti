@@ -5,14 +5,14 @@ import model.Character;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLWarning;
 
 public class ZombieDAO {
 
     String SQL_LANGUAGE = "INSERT INTO character (name, hp) VALUES (?, ?)";
-
     Dotenv dotenv = Dotenv.load();
 
-    private final String URL = "jdbc:postgresql://localhost:5432/zombiesatemyneighbors";
+    private final String URL = dotenv.get("URL");
     private final String USER = dotenv.get("USER");
     private final String PASS = dotenv.get("PASS");
 
@@ -25,9 +25,20 @@ public class ZombieDAO {
             statement.setInt(2, character.getHP());
             statement.executeUpdate();
 
+            int affectedRows = statement.executeUpdate();
+            SQLWarning warning = statement.getWarnings();
+
+            while (warning != null) {
+                System.out.println(warning.getMessage());
+                warning = warning.getNextWarning();
+            }
+
+            if (affectedRows > 0) {
+                System.out.println("New creature registered on bestiary.");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS character (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    hp INTEGER NOT NULL
+);

@@ -1,0 +1,16 @@
+ZOMBIE PATHOGEN CLINICAL REPORT
+================================
+
+Pathogen: NZT-VIRUS-2026
+Status: Experimental cure developed
+Risk level: EXTREME
+
+AUTHORIZED PHYSICIAN
+doctor_name=Dr.Tongue
+credential_number=993
+
+WARNING
+Only the physician identified above is authorized
+to release the cure into the database.
+
+================================

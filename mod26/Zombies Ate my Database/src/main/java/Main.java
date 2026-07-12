@@ -1,22 +1,48 @@
-import model.Character;
+import config.ClinicalReportReader;
+import config.CureCredentials;
+import config.DatabaseInitializer;
+import config.ZombieOutbreakConfigDAO;
+import io.github.cdimascio.dotenv.Dotenv;
+import services.Controller;
 import services.ZombieDAO;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 public class Main {
     public static void main(String[] args) {
 
-        ZombieDAO zDAO = new ZombieDAO();
+        DatabaseInitializer initializer = new DatabaseInitializer();
+        initializer.initialize();
 
-        Character c1 = new Character("Zombie", 1);
-        Character c2 = new Character("Chucky", 3);
-        Character c3 = new Character("Mummy", 6);
-        Character c4 = new Character("Werewolf", 8);
-        Character c5 = new Character("Plants", 1);
+        try (Connection connection = openConnection()) {
+            ClinicalReportReader reader = new ClinicalReportReader();
+            CureCredentials credentials = reader.read();
 
-        zDAO.create(c1);
-        zDAO.create(c2);
-        zDAO.create(c3);
-        zDAO.create(c4);
-        zDAO.create(c5);
+            ZombieOutbreakConfigDAO configDAO = new ZombieOutbreakConfigDAO(connection);
+            configDAO.updateCureCredentials(credentials);
 
+            Controller input = new Controller();
+            ZombieDAO zDAO = new ZombieDAO();
+
+            zDAO.create(input.add());
+        } catch (SQLException exception) {
+            throw new RuntimeException(
+                    "Could not connect to the PostgreSQL database.",
+                    exception
+            );
+        }
+    }
+
+    private static Connection openConnection() throws SQLException {
+        Dotenv dotenv = Dotenv.load();
+
+        return DriverManager.getConnection(
+                dotenv.get("URL"),
+                dotenv.get("USER"),
+                dotenv.get("PASS")
+        );
     }
 }
