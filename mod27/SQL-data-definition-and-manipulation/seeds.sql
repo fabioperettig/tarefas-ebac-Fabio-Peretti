@@ -1,7 +1,7 @@
 
 -- Exemplo de INSERT unitário
 INSERT INTO Clientes (nome, idade, sexo, email, data_nascimento)
-VALUES ('Fabio Peretti', 33, 'M', 'fabio@mail.com', '1992-10-31');
+VALUES ('Fabio Peretti', 33, 'M', 'fabio@tsmail.com', '1992-10-31');
 
 -- Exemplo de múltiplos INSERTs
 INSERT INTO Clientes (nome, idade, sexo, email, data_nascimento)
