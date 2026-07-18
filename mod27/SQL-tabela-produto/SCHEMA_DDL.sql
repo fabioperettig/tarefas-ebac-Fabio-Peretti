@@ -1,0 +1,4 @@
+
+ALTER TABLE Produto 
+    ALTER COLUMN preço TYPE DECIMAL(10,2), 
+    ALTER COLUMN em_estoque SET DEFAULT TRUE;
