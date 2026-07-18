@@ -2,25 +2,25 @@
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
 # Exemplo Database SQL – DDL e DML
-Este é um estudo sobre Structured Query Language (SQL), apresentando comandos básicos de criação e manipulação de tabelas, além de inserção emanipulação de dados sob condicionais. Para uma melhor compreensão, o estudo foi dividido o entre comandos de categoria DDL e DML. O estudo também apresenta os comandos utilizados no estudo, além de prints para visualização da manipulação real.
+Este é um estudo sobre Structured Query Language (SQL), apresentando comandos básicos de criação e manipulação de tabelas, além de inserção e manipulação de dados sob condicionais. Para uma melhor compreensão, o estudo foi dividido o entre comandos de categoria DDL e DML.
 
-> A manipulação foi feita não através da interface PgAdmin, mas sim do próprio terminal via PSQL. Como o foco da lição são prints que mostram a manipulação acontecendo fora de IDE/README, é possível conferir resumidamente todos os prints abaixo:
+> A manipulação foi feita não através da interface PgAdmin, mas sim no próprio terminal via PSQL. Como o foco da lição são prints que mostram a manipulação acontecendo fora de IDE/README, é possível conferir resumidamente todos os prints abaixo:
 
-[Print 01 DDL – Criação da tabela Produto](www.google.com);<br>
-[Print 02 DDL – Alteração da tabela Produto](www.google.com);<br>
-[Print 03 DDL – Exclusão da tabela Produto](www.google.com);<br>
-[Print 04 DML – Inserção de dados à tabela](www.google.com);<br>
-[Print 05 DML – Atualização de dados específicos](www.google.com);<br>
-[Print 06 DML – Exclusão de dados sob condicionais](www.google.com).<br>
+[Print 01 DDL – Criação da tabela Produto](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/001.png);<br>
+[Print 02 DDL – Alteração da tabela Produto](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/002.png);<br>
+[Print 03 DDL – Exclusão da tabela Produto](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/003.png);<br>
+[Print 04 DML – Inserção de dados à tabela](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/004.png);<br>
+[Print 05 DML – Atualização de dados específicos](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/005.png);<br>
+[Print 06 DML – Exclusão de dados sob condicionais](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/006.png).<br>
 
 ## 📖 Data Definition Language
 DDL é a categoria de comandos relacionadas à **estrutura do banco de dados**, interagindo diretamente com objetos e tabelas do banco. São comandos que definem onde e como as informações serão armazenadas, preparando o terreno para os comandos do tipo DML.
 
 * **CREATE:** Usado para criar novos objetos, como tabelas, bancos de dados e índices;
-* **ALTER:** Modifica a estrutura de um objeto existente (adicionando uma nova coluna);
+* **ALTER:** Modifica a estrutura de um objeto existente;
 * **DROP:** Remove um objeto do banco de dados permanentemente.
 
-Exemplo de CREATE para a criação de uma tabela, também disponível via PSQL [nesta imagem](www.google.com).
+Exemplo de CREATE para a criação de uma tabela, também disponível via PSQL [aqui](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/001.png).
 ````SQL
 CREATE TABLE Produto(
     id SERIAL PRIMARY KEY,
@@ -32,16 +32,16 @@ CREATE TABLE Produto(
 );
 ````
 
-Note que a tabela criada contém o dado 'preço' no estilo INTEGER, não sendo a melhor escolha para registrar preços por exigirem casas decimais. Além disso, também é possível predefinir um valor padrão como, por exemplo, todo novo registro já ser inserido no database com o valor "em_estoque" como verdadeiro.
+Note que a tabela criada contém o dado 'preço' no estilo **INTEGER**, não sendo a melhor escolha para registrar preços por exigirem casas decimais. Além disso, também é possível predefinir um valor padrão como, por exemplo, todo novo registro já ser inserido no database com o valor "em_estoque" como verdadeiro.
 
-São para mudanças como esta que o comando **ALTER** serve, evitando a exclusão completa da tabela e retrabalho com o TYPE novo. Um exemplo no código abaixo e também disponível via PSQL [nesta imagem](www.google.com).
+São para mudanças como esta que o comando **ALTER** serve, evitando a exclusão completa da tabela e retrabalho com o TYPE novo. Um exemplo no código abaixo e também disponível via PSQL [aqui](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/002.png).
 ````SQL
 ALTER TABLE Produto 
     ALTER COLUMN preço TYPE DECIMAL(10,2), 
     ALTER COLUMN em_estoque SET DEFAULT TRUE;
 ````
 
-Mas, caso seja necessário a exclusão da tabela criada, o comando ***DROP TABLE ...*** resolve facilmente. Um exemplo no código abaixo e também disponível via PSQL [nesta imagem](www.google.com).
+Mas, caso seja necessário a exclusão da tabela criada, o comando ***DROP TABLE ...*** resolve facilmente. Um exemplo no código abaixo e também disponível via PSQL [aqui](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/003.png).
 ````SQL
 DROP TABLE Produto;
 ````
@@ -54,7 +54,7 @@ Após a definição dos campos da tabela, é hora de cuidar da **inserção dos 
 * UPDATE: Altera dados existentes;
 * DELETE: Remove cadastros completos ou dados específicos de uma coluna.
 
-Um pequeno exemplo da inserção de dados, também disponível via PSQL [nesta imagem](www.google.com).
+Um pequeno exemplo da inserção de dados, também disponível via PSQL [aqui](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/004.png).
 ````SQL
 -- Exemplo de INSERT unitário
 INSERT INTO Produto (nome, descrição, preço, estoque) VALUES
@@ -68,9 +68,9 @@ INSERT INTO Produto (nome, descrição, preço, estoque) VALUES
 ('Caixa de Som Sonic', 'Caixa de som portátil bluetooth à prova d água com 20W RMS.', 249, 99),
 ('Câmera CamLink 4K', 'Webcam para streaming com resolução Ultra HD e microfone embutido.', 399, 99);
 ````
-Após a inserção de dados, é importante que seja possível também **atualizar os dados da tabela**, usando então o comando ***UPDATE***, alterando qualquer coluna com o novo dado inserido. Mas, é importante ressaltar que utilizar o comando **sem uma condição pode comprometer todo o database**, pois todos os dados serão atualizados com o mesmo valor. Por isso, é importante o uso do comando ***WHERE***, que limita a mudança de dados apenas em condições específicas.
+Após a inserção de dados, é importante que seja possível também **atualizar os dados da tabela**, usando então o comando ***UPDATE***, alterando qualquer coluna com o novo dado inserido. Mas, é importante ressaltar que: utilizar o comando **sem uma condição pode comprometer todo o database**, pois todos os dados serão atualizados com o mesmo valor. Por isso, é importante o uso do comando ***WHERE***, que limita a mudança de dados apenas em condições específicas.
 
-Um exemplo no código abaixo e também disponível via PSQL [nesta imagem](www.google.com).
+Um exemplo no código abaixo e também disponível via PSQL [aqui](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/005.png).
 ````SQL
 UPDATE Produto SET estoque = 0, em_estoque = FALSE 
 WHERE id IN (6,7, 8, 9);
@@ -85,7 +85,7 @@ O comando ***WHERE*** aceita inúmeros tipos de informação para usar como cond
 
 Além de operadores lógicos como **OR**, **AND**, **NOT**, **BETWEEN** e **LIKE**.
 
-Por fim, caso a intenção seja realmente apagar os dados, basta usar o comando ***DELETE*** também junto à condicional ***WHERE***. 
+Por fim, caso a intenção seja realmente apagar os dados, basta usar o comando ***DELETE*** também junto à condicional ***WHERE***. Um exemplo no código abaixo e também disponível via PSQL [aqui](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/006.png).
 ````SQL
 DELETE FROM Produto WHERE estoque = 0 OR em_estoque = FALSE;
 ````
