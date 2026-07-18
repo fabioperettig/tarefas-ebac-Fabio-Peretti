@@ -67,9 +67,12 @@ mod16
 ├── observerQuest-behavior-study;
 ├── project-behavior-observer;
 ├── project-behavior-template;
+├── project-structure-adapter;
 └── project-structure-facade;
 
 mod17
+├── car-inventory-manager;
+├── generic-crud-dao;
 ├── generic-study-list;
 └── generic-study-class.
 
@@ -80,6 +83,38 @@ mod18
 mod19
 ├── annotated-dao-manager;
 └── tarefa-reflect-annotation.
+
+mod20
+└── estudo-lambda.
+
+mod21
+├── estudo-lambda-02;
+└── tarefa-estudo-lambda.
+
+mod22
+├── study-stream-comparing;
+├── study-stream-list;
+└── tarefa-estudo-stream.
+
+mod23
+├── estudo-Junit-test;
+├── Junit-stream-list;
+└── tarefa-test-parteUm.
+
+mod24
+├── estudo-mock-testDAO;
+└── tarefa-test-parteDois.
+
+MOD25 - PROJETO
+└── projEBAC2-GenericCRUD.
+
+mod26
+├── postgre-dao-test;
+└── Zombies Ate my Database.
+
+mod27
+├── SQL-data-definition-and-manipulation;
+└── SQL-tabela-produto.
 ````
 
 ![GitHub top language](https://img.shields.io/github/languages/top/fabioperettig/tarefas-ebac-Fabio-Peretti)
