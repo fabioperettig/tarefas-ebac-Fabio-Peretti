@@ -16,11 +16,11 @@ Em vez de concentrar todo o código em um único arquivo SQL, optei por dividir 
 <details>
 <summary><b><u>Estrutura do projeto</b></u></summary>
 
-[Cliente.sql]()<br>
-[Produto.sql]()<br>
-[Venda.sql]()<br>
-[Inserts.sql]()<br>
-[Consultas.sql]()<br>
+[Cliente.sql](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/Cliente.sql)<br>
+[Produto.sql](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/Produto.sql)<br>
+[Venda.sql](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/Venda.sql)<br>
+[Inserts.sql](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/Inserts.sql)<br>
+[Consultas.sql](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/Consultas.sql)<br>
 </details>
 <br>
 Além de facilitar a manutenção, essa abordagem torna o processo de criação do banco mais próximo da forma como projetos reais costumam ser organizados.
@@ -28,12 +28,11 @@ Além de facilitar a manutenção, essa abordagem torna o processo de criação 
 
 > Como o foco da lição são prints que mostram a manipulação acontecendo fora de IDE/README, é possível conferir resumidamente todos os prints abaixo:
 
-[Print 01 DDL – Criação da tabela Produto](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/001.png);<br>
-[Print 02 DDL – Alteração da tabela Produto](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/002.png);<br>
-[Print 03 DDL – Exclusão da tabela Produto](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/003.png);<br>
-[Print 04 DML – Inserção de dados à tabela](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/004.png);<br>
-[Print 05 DML – Atualização de dados específicos](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/005.png);<br>
-[Print 06 DML – Exclusão de dados sob condicionais](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod27/SQL-tabela-produto/img/006.png).<br>
+[Print 01 – Tabela Cliente](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/img/001.png);<br>
+[Print 02 – Tabela Produto](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/img/002.png);<br>
+[Print 03 – Tabela Venda](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/img/003.png);<br>
+[Print 04 – JOIN](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/img/004.png);<br>
+[Print 05 – Inicialização \i Consultas.sql](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod28/SQL-tabelas-venda/img/005.png);<br>
 
 ## Estrutura das tabelas
 
