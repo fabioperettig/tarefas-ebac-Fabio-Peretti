@@ -85,8 +85,8 @@ Cada annotations possui uma instrução clara em um projeto DAO.
 |@Id|Define a Primary Key da entidade|
 |@GeneratedValue|Define que o ID será gerado automaticamente|
 |@SequenceGenerator| Configura uma sequence do banco|
-|@ManyToOne|Muitos produtos pertencem a uma categoria -> Objeto|
-|@OneToMany|Uma categoria possui muitos produtos -> <List>|
+|@ManyToOne|Muitos produtos pertencem a uma categoria|
+|@OneToMany|Uma categoria possui muitos produtos (Collection)|
 
 Embora o uso de ORMs seja o padrão atual mais utilizado no mercado, saber como funciona projeto CRUD (DAO genérico, ConnectionFactory, PreparedStatement e ResultSet) totalmente via JDBC é de extrema importância o que acontece por trás do JPA e o que as ORMs estão automatizando.
 
