@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee"
+             xmlns:xsi="http://w3.org"
+             xsi:schemaLocation="https://jakarta.ee https://jakarta.ee/persistence_3_0.xsd"
+             version="3.0">
+
+    <!-- O nome "firstJPA" é a Unidade de Persistência chamada no seu código Java -->
+    <persistence-unit name="firstJPA" transaction-type="RESOURCE_LOCAL">
+
+        <!-- Permite trocar de Hibernato para EclipseLink -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+        </properties>
+
+    </persistence-unit>
+</persistence>
