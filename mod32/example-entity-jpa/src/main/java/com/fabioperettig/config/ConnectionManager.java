@@ -1,5 +1,6 @@
 package com.fabioperettig.config;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -16,14 +17,16 @@ public class ConnectionManager {
             synchronized (EntityManager.class) {
                 if (managerFactory == null) {
 
-                    String url = System.getenv("DB_URL");
-                    String user = System.getenv("DB_USER");
-                    String pass = System.getenv("DB_PASS");
+                    Dotenv dotenv = Dotenv.load();
+
+                    String url = dotenv.get("DB_URL");
+                    String user = dotenv.get("DB_USER");
+                    String pass = dotenv.get("DB_PASS");
 
                     Map<String, String> properties = new HashMap<>();
                     properties.put("jakarta.persistence.jdbc.url", url);
                     properties.put("jakarta.persistence.jdbc.user", user);
-                    properties.put("jakarta.persistence.jdbc.pass", pass);
+                    properties.put("jakarta.persistence.jdbc.password", pass);
 
                     managerFactory = Persistence.createEntityManagerFactory("firstJPA", properties);
                 }
