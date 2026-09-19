@@ -1,13 +1,16 @@
-package com.fabioperettig.config;
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Java Persistence](https://img.shields.io/badge/Java_Persistence_API-FDFFFC?style=for-the-badge)
+![Projeto Curso EBAC](https://img.shields.io/badge/Projeto--Curso--EBAC-235789?style=for-the-badge)
 
-import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+# Exemplo Persistência de Entidade via JPA
 
-import java.util.HashMap;
-import java.util.Map;
+## ConnectionManager.class
 
+Para utilizar a `EntityManager` sem deixar os dados do database expostos no [persistence.xml](src/main/resources/META-INF/persistence.xml), criei a classe
+*ConnectionManager* que se encarrega das instanciações de EntityManager com dados declarados em variáveis de ambiente (via ***Dotenv***).
+Além disso, as instanciações são criadas em ***padrão Singleton com Double-Checked Locking***, garantindo que as *threads* enxergem a factory corretamente.
+
+```java
 public class ConnectionManager {
 
     private static volatile EntityManagerFactory managerFactory;
@@ -34,5 +37,5 @@ public class ConnectionManager {
         }
         return managerFactory.createEntityManager();
     }
-
 }
+```

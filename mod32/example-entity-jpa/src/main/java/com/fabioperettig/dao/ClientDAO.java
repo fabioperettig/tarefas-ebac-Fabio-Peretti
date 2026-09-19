@@ -3,16 +3,13 @@ package com.fabioperettig.dao;
 import com.fabioperettig.config.ConnectionManager;
 import com.fabioperettig.domain.Client;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import java.util.List;
 
 public class ClientDAO implements IClientDAO {
+
     @Override
     public Client create(Client client) {
-
-        ///testar se é viável uma abstract com parâmetro ENTITY para evitar boilerplate
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
         entityManager.getTransaction().begin();
@@ -29,7 +26,6 @@ public class ClientDAO implements IClientDAO {
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
         entityManager.getTransaction().begin();
-        ///aqqui também é viável um abstract Entity
         Client client = entityManager.find(Client.class, id);
         entityManager.getTransaction().commit();
 
