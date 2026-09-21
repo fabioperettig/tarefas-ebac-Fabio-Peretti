@@ -10,8 +10,9 @@
         <!-- Permite trocar de Hibernate para EclipseLink -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>com.fabioperettig.domain.Client</class>
-        <class>com.fabioperettig.domain.Product</class>
+        <class>com.fabioperettig.domain.Item</class>
+        <class>com.fabioperettig.domain.Hero</class>
+
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />

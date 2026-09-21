@@ -29,6 +29,10 @@ public class Item {
     @Column(name = "DANO")
     private Integer damage;
 
+    @ManyToOne
+    @JoinColumn(name = "HERO_ID")
+    private Hero hero;
+
 
 
     /// Getters n Setters

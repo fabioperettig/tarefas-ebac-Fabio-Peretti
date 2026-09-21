@@ -1,56 +1,56 @@
 package com.fabioperettig.dao;
 
 import com.fabioperettig.config.ConnectionManager;
-import com.fabioperettig.domain.Item;
+import com.fabioperettig.domain.Hero;
 import jakarta.persistence.EntityManager;
 
-public class ItemDAO {
+public class HeroDAO {
 
-    public Item create(Item item) {
+    public Hero create(Hero hero) {
 
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
         entityManager.getTransaction().begin();
-        entityManager.persist(item);
+        entityManager.persist(hero);
         entityManager.getTransaction().commit();
 
         entityManager.close();
 
-        return item;
+        return hero;
     }
 
-    public Item readById(Long id) {
+    public Hero readById(Long id) {
 
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
         entityManager.getTransaction().begin();
-        Item item = entityManager.find(Item.class, id);
+        Hero hero = entityManager.find(Hero.class, id);
         entityManager.getTransaction().commit();
 
         entityManager.close();
 
-        return item;
+        return hero;
     }
 
-    public Item update(Item item) {
+    public Hero update(Hero hero) {
 
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
         entityManager.getTransaction().begin();
-        item = entityManager.merge(item);
+        hero = entityManager.merge(hero);
         entityManager.getTransaction().commit();
         entityManager.close();
 
-        return item;
+        return hero;
     }
 
-    public void delete(Item item) {
+    public void delete(Hero hero) {
 
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
         entityManager.getTransaction().begin();
-        item = entityManager.merge(item);
-        entityManager.remove(item);
+        hero = entityManager.merge(hero);
+        entityManager.remove(hero);
         entityManager.getTransaction().commit();
 
         entityManager.close();
