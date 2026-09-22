@@ -7,7 +7,7 @@ import java.util.List;
 public interface IProdutoDao {
 
     public Produto create(Produto produto);
-    public Produto readByCode(String ProdutoCodigo);
+    public Produto readById(Long id);
     public Produto update(Produto produto);
     public void delete(Produto produto);
 

@@ -7,7 +7,7 @@ import java.util.List;
 public interface IMatriculaDao {
 
     public Matricula create(Matricula matricula);
-    public Matricula readByCode(String MatriculaCodigo);
+    public Matricula readById(Long id);
     public Matricula update(Matricula matricula);
     public void delete(Matricula matricula);
 

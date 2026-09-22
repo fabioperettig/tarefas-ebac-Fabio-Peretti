@@ -7,7 +7,7 @@ import java.util.List;
 public interface ICursoDao {
 
     public Curso create(Curso curso);
-    public Curso readByCode(String CursoCodigo);
+    public Curso readById(Long id);
     public Curso update(Curso curso);
     public void delete(Curso curso);
 
