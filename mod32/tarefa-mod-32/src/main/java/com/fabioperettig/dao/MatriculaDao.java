@@ -40,8 +40,8 @@ public class MatriculaDao implements IMatriculaDao {
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
         entityManager.getTransaction().begin();
-        entityManager.getTransaction().commit();
         matricula = entityManager.merge(matricula);
+        entityManager.getTransaction().commit();
 
         entityManager.close();
 
@@ -54,9 +54,9 @@ public class MatriculaDao implements IMatriculaDao {
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
         entityManager.getTransaction().begin();
-        entityManager.getTransaction().commit();
         matricula = entityManager.merge(matricula);
         entityManager.remove(matricula);
+        entityManager.getTransaction().commit();
 
         entityManager.close();
     }
@@ -73,6 +73,7 @@ public class MatriculaDao implements IMatriculaDao {
         return matriculas;
     }
 
+    @Override
     public List<Curso> findByFilter(String nome, String codigo, String categoria) {
 
         EntityManager entityManager = ConnectionManager.getEntityManager();
@@ -99,7 +100,10 @@ public class MatriculaDao implements IMatriculaDao {
 
         param.forEach(query::setParameter);
 
-        return query.getResultList();
+        List<Curso> cursos = query.getResultList();
+        entityManager.close();
+
+        return cursos;
     }
 
 }

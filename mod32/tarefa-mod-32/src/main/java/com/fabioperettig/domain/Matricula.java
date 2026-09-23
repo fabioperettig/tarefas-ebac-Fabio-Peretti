@@ -18,14 +18,14 @@ public class Matricula {
     private String codigo;
 
     @Column(name = "DATA_MATRICULA", nullable = false)
-    private Instant dataMatricula;
+    private Instant dataMatricula = Instant.now();
 
     @Column(name = "VALOR", nullable = false)
     private Double valor;
 
     @ColumnDefault("True")
     @Column(name = "STATUS", nullable = false)
-    private Boolean status;
+    private Boolean status = true;
 
     @ManyToOne
     @JoinColumn(
@@ -54,10 +54,6 @@ public class Matricula {
 
     public Instant getDataMatricula() {
         return dataMatricula;
-    }
-
-    public void setDataMatricula(Instant dataMatricula) {
-        this.dataMatricula = dataMatricula;
     }
 
     public Double getValor() {
