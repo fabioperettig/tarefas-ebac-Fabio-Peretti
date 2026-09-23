@@ -4,6 +4,7 @@ import com.fabioperettig.dao.IMatriculaDao;
 import com.fabioperettig.dao.MatriculaDao;
 import com.fabioperettig.domain.Curso;
 import com.fabioperettig.domain.Matricula;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,29 @@ public class MatriculaDaoTest {
 
     private IMatriculaDao matriculaDao;
     private ICursoDao cursoDao;
+    private final List<Matricula> matriculasCriadas = new ArrayList<>();
+    private final List<Curso> cursosCriados = new ArrayList<>();
 
     public MatriculaDaoTest() {
         matriculaDao = new MatriculaDao();
         cursoDao = new CursoDao();
+    }
+
+    @AfterEach
+    public void removerMatriculasCriadas() {
+        for (Matricula matricula : matriculasCriadas) {
+            Matricula encontrado = matriculaDao.readById(matricula.getId());
+            if (encontrado != null) {
+                matriculaDao.delete(encontrado);
+            }
+        }
+        /// As matrículas precisam ser removidas antes dos cursos que elas referenciam.
+        for (Curso curso : cursosCriados) {
+            Curso encontrado = cursoDao.readById(curso.getId());
+            if (encontrado != null) {
+                cursoDao.delete(encontrado);
+            }
+        }
     }
 
     @Test
@@ -31,6 +51,7 @@ public class MatriculaDaoTest {
         matricula.setCurso(curso);
 
         matriculaDao.create(matricula);
+        matriculasCriadas.add(matricula);
         Assertions.assertNotNull(matricula.getId());
     }
 
@@ -45,6 +66,7 @@ public class MatriculaDaoTest {
         matricula.setCurso(curso);
 
         matriculaDao.create(matricula);
+        matriculasCriadas.add(matricula);
         Assertions.assertNotNull(matricula);
         Assertions.assertNotNull(matricula.getId());
 
@@ -68,6 +90,7 @@ public class MatriculaDaoTest {
         matricula.setCurso(cursoFront);
 
         matriculaDao.create(matricula);
+        matriculasCriadas.add(matricula);
         Assertions.assertNotNull(matricula);
         Assertions.assertSame("frontend", cursoFront.getCategoria());
 
@@ -90,6 +113,7 @@ public class MatriculaDaoTest {
         matricula.setCurso(curso);
 
         matriculaDao.create(matricula);
+        matriculasCriadas.add(matricula);
         Assertions.assertNotNull(matricula);
         Assertions.assertNotNull(matricula.getId());
 
@@ -179,7 +203,9 @@ public class MatriculaDaoTest {
         matricula2.setCurso(curso);
 
         matriculaDao.create(matricula1);
+        matriculasCriadas.add(matricula1);
         matriculaDao.create(matricula2);
+        matriculasCriadas.add(matricula2);
 
         listaMatriculas.add(matricula1);
         listaMatriculas.add(matricula2);
@@ -193,7 +219,9 @@ public class MatriculaDaoTest {
         curso.setCodigo(codigo);
         curso.setNome(nome);
 
-        return cursoDao.create(curso);
+        Curso cadastrado = cursoDao.create(curso);
+        cursosCriados.add(cadastrado);
+        return cadastrado;
 
     }
 }

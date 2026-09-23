@@ -1,6 +1,8 @@
 package com.fabioperettig.dao;
 
 import com.fabioperettig.config.ConnectionManager;
+import com.fabioperettig.domain.Curso;
+import com.fabioperettig.domain.Matricula;
 import com.fabioperettig.domain.Produto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -42,7 +44,7 @@ public class ProdutoDao implements IProdutoDao {
         entityManager.getTransaction().commit();
         entityManager.close();
 
-        return null;
+        return produto;
     }
 
     @Override
@@ -56,7 +58,6 @@ public class ProdutoDao implements IProdutoDao {
         entityManager.getTransaction().commit();
         entityManager.close();
 
-
     }
 
     @Override
@@ -64,11 +65,11 @@ public class ProdutoDao implements IProdutoDao {
 
         EntityManager entityManager = ConnectionManager.getEntityManager();
 
-        entityManager.getTransaction().begin();
-        entityManager.getTransaction().commit();
+        List<Produto> produtos = entityManager.createQuery(
+                "SELECT m FROM Produto m", Produto.class).getResultList();
         entityManager.close();
 
-        return List.of();
+        return produtos;
     }
 
     public Produto findByCode(String codigoProduto) {
@@ -78,9 +79,12 @@ public class ProdutoDao implements IProdutoDao {
         String jpql = "SELECT p FROM Produto p WHERE p.codigo = :codigo";
 
         TypedQuery<Produto> query = entityManager.createQuery(jpql, Produto.class);
+
         query.setParameter("codigo", codigoProduto);
+
+        Produto produto = query.getSingleResult();
         entityManager.close();
 
-        return query.getSingleResult();
+        return produto;
     }
 }

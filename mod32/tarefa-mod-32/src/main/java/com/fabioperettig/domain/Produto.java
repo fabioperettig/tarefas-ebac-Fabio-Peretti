@@ -16,10 +16,10 @@ public class Produto {
     private long id;
 
     @Column(name = "CODIGO", length = 10, nullable = false, unique = true)
-    private String code;
+    private String codigo;
 
     @Column(name = "NAME", length = 50, nullable = false)
-    private String name;
+    private String nome;
 
     @Column(name = "VALUE", nullable = false)
     private double value;
@@ -35,19 +35,19 @@ public class Produto {
     }
 
     public String getCode() {
-        return code;
+        return codigo;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCode(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getName() {
-        return name;
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String nome) {
+        this.nome = nome;
     }
 
     public double getValue() {

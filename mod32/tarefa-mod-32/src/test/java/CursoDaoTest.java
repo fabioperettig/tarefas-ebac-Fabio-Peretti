@@ -1,6 +1,7 @@
 import com.fabioperettig.dao.CursoDao;
 import com.fabioperettig.dao.ICursoDao;
 import com.fabioperettig.domain.Curso;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,10 +10,21 @@ import java.util.List;
 
 public class CursoDaoTest {
 
-    private ICursoDao cursoDao;
+    private final ICursoDao cursoDao;
+    private final List<Curso> cursosCriados = new ArrayList<>();
 
     public CursoDaoTest() {
         cursoDao = new CursoDao();
+    }
+
+    @AfterEach
+    public void removerCursosCriados() {
+        for (Curso curso : cursosCriados) {
+            Curso encontrado = cursoDao.readById(curso.getId());
+            if (encontrado != null) {
+                cursoDao.delete(encontrado);
+            }
+        }
     }
 
     @Test
@@ -23,6 +35,7 @@ public class CursoDaoTest {
         curso.setNome("Java OOP");
 
         cursoDao.create(curso);
+        cursosCriados.add(curso);
         Assertions.assertNotNull(curso);
         Assertions.assertNotNull(curso.getId());
     }
@@ -35,6 +48,7 @@ public class CursoDaoTest {
         curso.setNome("Backend DAO");
 
         cursoDao.create(curso);
+        cursosCriados.add(curso);
         Assertions.assertNotNull(curso);
         Assertions.assertNotNull(curso.getId());
 
@@ -52,6 +66,7 @@ public class CursoDaoTest {
         curso.setNome("JPA");
 
         cursoDao.create(curso);
+        cursosCriados.add(curso);
         Assertions.assertNotNull(curso);
         Assertions.assertNotNull(curso.getId());
 
@@ -71,6 +86,7 @@ public class CursoDaoTest {
         curso.setNome("JDBC");
 
         cursoDao.create(curso);
+        cursosCriados.add(curso);
         Assertions.assertNotNull(curso);
         Assertions.assertNotNull(curso.getId());
 
@@ -123,9 +139,13 @@ public class CursoDaoTest {
         curso4.setNome("Java - Implementando com Generics");
 
         cursoDao.create(curso1);
+        cursosCriados.add(curso1);
         cursoDao.create(curso2);
+        cursosCriados.add(curso2);
         cursoDao.create(curso3);
+        cursosCriados.add(curso3);
         cursoDao.create(curso4);
+        cursosCriados.add(curso4);
 
         listaCursos.add(curso1);
         listaCursos.add(curso2);
