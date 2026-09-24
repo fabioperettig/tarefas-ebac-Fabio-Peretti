@@ -17,14 +17,75 @@ public class Carro {
     @Column(name = "NOME", nullable = false, unique = true)
     private String nome;
 
-    @Column(name = "NOME", nullable = false)
+    @Column(name = "ANO", nullable = false)
     private int ano;
 
     @Column(name = "MODELO", nullable = false)
     private String modelo;
 
+    @ManyToOne
+    @JoinColumn(name = "id_marca_fk", foreignKey = @ForeignKey(name = "fk_marca_carro"),
+    referencedColumnName = "nome", nullable = false)
     private Marca marca;
 
+    @OneToOne
     private Acessorio acessorio;
 
+
+    ///getter_setter
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public Acessorio getAcessorio() {
+        return acessorio;
+    }
+
+    public void setAcessorio(Acessorio acessorio) {
+        this.acessorio = acessorio;
+    }
 }

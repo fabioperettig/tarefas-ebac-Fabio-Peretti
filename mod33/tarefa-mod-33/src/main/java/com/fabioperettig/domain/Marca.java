@@ -19,10 +19,10 @@ public class Marca {
     @Column(name = "NOME", nullable = false, unique = true)
     private String nome;
 
-    @Column(name = "NOME", nullable = false)
-    private int fundada;
+    @Column(name = "ANO", nullable = false)
+    private int ano;
 
-    @Column(name = "NOME", nullable = false)
+    @Column(name = "ORIGEM", nullable = false)
     private String origem;
 
     @OneToMany(mappedBy = "carro")
@@ -54,12 +54,12 @@ public class Marca {
         this.nome = nome;
     }
 
-    public int getFundada() {
-        return fundada;
+    public int getAno() {
+        return ano;
     }
 
-    public void setFundada(int fundada) {
-        this.fundada = fundada;
+    public void setAno(int ano) {
+        this.ano = ano;
     }
 
     public String getOrigem() {
@@ -77,5 +77,4 @@ public class Marca {
     public void setCarros(List<Carro> carros) {
         this.carros = carros;
     }
-
 }
