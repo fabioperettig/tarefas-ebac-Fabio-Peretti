@@ -25,7 +25,7 @@ public class Marca {
     @Column(name = "ORIGEM", nullable = false)
     private String origem;
 
-    @OneToMany(mappedBy = "carro")
+    @OneToMany(mappedBy = "marca")
     private List<Carro> carros;
 
 
@@ -34,9 +34,9 @@ public class Marca {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getCodigo() {
         return codigo;

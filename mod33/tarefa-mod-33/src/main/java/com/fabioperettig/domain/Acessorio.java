@@ -2,6 +2,8 @@ package com.fabioperettig.domain;
 
 import jakarta.persistence.*;
 
+@Entity
+@Table(name = "TB_ACESSORIO")
 public class Acessorio {
 
     @Id
@@ -12,12 +14,66 @@ public class Acessorio {
     @Column(name = "CODIGO", nullable = false, unique = true)
     private String codigo;
 
-    @Column(name = "NOME", nullable = false, unique = true)
+    @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "NOME", nullable = false)
-    private int ano;
+    @Column(name = "VALOR", nullable = false)
+    private double valor;
 
-    @Column(name = "MODELO", nullable = false)
-    private String modelo;
+    @Column(name = "CATEGORIA", nullable = false)
+    private String categoria;
+
+    @OneToOne
+    @JoinColumn(name = "nome_carro_fk", foreignKey = @ForeignKey(name = "fk_carro_acessorio"),
+            referencedColumnName = "NOME", nullable = false)
+    private Carro carro;
+
+    ///getter_setter
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Carro getCarro() {
+        return carro;
+    }
+
+    public void setCarro(Carro carro) {
+        this.carro = carro;
+    }
 }

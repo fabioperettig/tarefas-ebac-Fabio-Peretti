@@ -14,7 +14,7 @@ public class Carro {
     @Column(name = "CODIGO", nullable = false, unique = true)
     private String codigo;
 
-    @Column(name = "NOME", nullable = false, unique = true)
+    @Column(name = "NOME", nullable = false)
     private String nome;
 
     @Column(name = "ANO", nullable = false)
@@ -24,11 +24,13 @@ public class Carro {
     private String modelo;
 
     @ManyToOne
-    @JoinColumn(name = "id_marca_fk", foreignKey = @ForeignKey(name = "fk_marca_carro"),
-    referencedColumnName = "nome", nullable = false)
+    @JoinColumn(name = "nome_marca_fk", foreignKey = @ForeignKey(name = "fk_marca_carro"),
+    referencedColumnName = "NOME", nullable = false)
     private Marca marca;
 
     @OneToOne
+    @JoinColumn(name = "nome_acessorio_fk", foreignKey = @ForeignKey(name = "fk_acessorio_carro"),
+            referencedColumnName = "NOME", nullable = false)
     private Acessorio acessorio;
 
 
