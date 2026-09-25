@@ -65,7 +65,6 @@ public class MarcaDao implements IMarcaDao {
      */
     @Override
     public List<Marca> createAll(Marca... marcas) {
-
         EntityManager em = EntityManagerSingleton.getEntityManager();
         em.getTransaction().begin();
 

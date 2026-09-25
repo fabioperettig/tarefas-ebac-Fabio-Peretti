@@ -28,19 +28,13 @@ public class Carro {
     referencedColumnName = "NOME", nullable = false)
     private Marca marca;
 
-    @OneToOne
-    @JoinColumn(name = "nome_acessorio_fk", foreignKey = @ForeignKey(name = "fk_acessorio_carro"),
-            referencedColumnName = "NOME", nullable = false)
+    @OneToOne(mappedBy = "carro", optional = true)
     private Acessorio acessorio;
 
 
     ///getter_setter
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getCodigo() {

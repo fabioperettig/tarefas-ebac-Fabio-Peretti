@@ -23,18 +23,15 @@ public class Acessorio {
     @Column(name = "CATEGORIA", nullable = false)
     private String categoria;
 
-    @OneToOne
-    @JoinColumn(name = "nome_carro_fk", foreignKey = @ForeignKey(name = "fk_carro_acessorio"),
-            referencedColumnName = "NOME", nullable = false)
+    @OneToOne(optional = false)
+    @JoinColumn(name = "carro_id",
+            foreignKey = @ForeignKey(name = "fk_carro_acessorio"),
+            unique = true, nullable = false)
     private Carro carro;
 
     ///getter_setter
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getCodigo() {

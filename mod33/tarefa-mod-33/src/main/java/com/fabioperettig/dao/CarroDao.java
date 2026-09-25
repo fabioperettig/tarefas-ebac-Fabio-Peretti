@@ -2,6 +2,7 @@ package com.fabioperettig.dao;
 
 import com.fabioperettig.config.EntityManagerSingleton;
 import com.fabioperettig.domain.Carro;
+import com.fabioperettig.domain.Marca;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -69,12 +70,24 @@ public class CarroDao implements ICarroDao {
         return carros;
     }
 
-    /// metodos extras
-    ///
-    /// @param carros
+    /**
+     * Metodo de estudos extras para createDAO com vários objetos.
+     *
+     * @author fabioperettig
+     */
     @Override
     public List<Carro> createAll(Carro... carros) {
-        return List.of();
+        EntityManager em = EntityManagerSingleton.getEntityManager();
+        em.getTransaction().begin();
+
+        for (Carro carro : carros) {
+            em.persist(carro);
+        }
+
+        em.getTransaction().commit();
+        em.close();
+
+        return List.of(carros);
     }
 
     @Override
