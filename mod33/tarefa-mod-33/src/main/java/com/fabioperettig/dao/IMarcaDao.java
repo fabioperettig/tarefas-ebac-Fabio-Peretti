@@ -5,16 +5,8 @@ import com.fabioperettig.domain.Marca;
 
 import java.util.List;
 
-public interface IMarcaDao {
+public interface IMarcaDao extends IGenericDao<Marca, Long> {
 
-    public Marca create(Marca marca);
-    public Marca read (Long id);
-    public Marca update(Marca marca);
-    public void delete(Marca marca);
-
-    public List<Marca> findAll();
-
-    ///metodos extras
     List<Marca> createAll(Marca... marcas);
     public void deleteAll(Marca... marcas);
 }

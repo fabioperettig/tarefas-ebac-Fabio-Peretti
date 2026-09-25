@@ -84,10 +84,7 @@ public class MarcaDao implements IMarcaDao {
 
         EntityManager em = EntityManagerSingleton.getEntityManager();
 
-        List<Marca> marcas = em.createQuery(
-                "SELECT m FROM Marca m",
-                Marca.class
-        ).getResultList();
+        List<Marca> marcas = em.createQuery("SELECT m FROM Marca m", Marca.class).getResultList();
         em.close();
 
         return marcas;
@@ -101,7 +98,7 @@ public class MarcaDao implements IMarcaDao {
 
         for (Marca marca : marcas) {
             Marca mDel = em.merge(marca);
-            em.persist(mDel);
+            em.remove(mDel);
         }
 
         em.getTransaction().commit();
