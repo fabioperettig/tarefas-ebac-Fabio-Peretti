@@ -14,4 +14,7 @@ public interface IMarcaDao {
 
     public List<Marca> findAll();
 
+    ///metodos extras
+    List<Marca> createAll(Marca... marcas);
+    public void deleteAll(Marca... marcas);
 }
