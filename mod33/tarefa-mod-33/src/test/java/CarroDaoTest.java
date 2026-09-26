@@ -181,6 +181,15 @@ public class CarroDaoTest {
 
     }
 
+    /// Metodo JPQL
+    @Test
+    public void buscarCarroPorCodigoJPQL() {
+        listarCarros();
+        Carro carro = carroDao.findyByCode("CRR008");
+
+        Assertions.assertNotNull(carro);
+        Assertions.assertEquals("CRR008", carro.getCodigo());
+    }
 
 
     public Marca criarMarcaTeste(String nome, String codigo) {
