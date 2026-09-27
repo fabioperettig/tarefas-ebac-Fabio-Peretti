@@ -7,7 +7,7 @@
 
 ## 🎲 Relacional vs Não Relacional
 
-Um Banco de Dados **Relacional**, organiza os dados em tabelas com linhas e colunas tendo como principais recursos de busca as ***Chaves Primárias*** e, para relação de tables, as ***Chaves Estrangeiras***. O exemplo mais conhecido de Banco de Dados relacional, utilizado no curso até então, é o `PostgreSQL`.
+Um Banco de Dados **Relacional**, organiza os dados em tabelas com linhas e colunas tendo como principais recursos de busca as ***Chaves Primárias*** e, para relação de tabelas, as ***Chaves Estrangeiras***. O exemplo mais conhecido de Banco de Dados relacional, utilizado no curso até então, é o `PostgreSQL`.
 
 ### | TB_PRODUTO |
 
@@ -43,18 +43,17 @@ Graças a essa característica, são facilmente espalhados por servidores difere
 ```
 >Aqui, o foco principal é a escalabilidade do Banco de Dados e a velocidade de leitura dos dados peristidos.
 
-## Redis
+## ⚡️ Redis
 
 O `Redis` (Remote Dictionary Server) é uma estrutura de dados que trabalha principalmente **em memória RAM**, ao contrário dos Bancos de Dados tradicionais que persistem dados em disco rígido. Por causa de sua estrutura em RAM, é ideal para cenários que exigem **baixa latência**, atuando com **Sistemas de Cache**.
 
 Ele funciona salvando dados associados a uma chave única (padrão CHAVE-VALOR). No entanto, o "valor" não precisa ser apenas um texto simples, mas sim, estruturas complexas como ***strings, listas, hashes e etc***.
 
-- 
 
 Exemplo para executar no `redis-cli`, conectado a um Redis:
 
 ```sql
-SET cliente:1:nome "Fábio"
+SET cliente:1:nome "Fabio"
 GET cliente:1:nome
 
 SET cache:produto:10:preco "59.90" EX 60
@@ -63,7 +62,7 @@ GET cache:produto:10:preco
 
 > **POSSIBILIDADE DE PERSISTÊNCIA:** Embora funcione na RAM, o Redis pode salvar cópias dos dados no disco, ou registrar cada alteração em um histórico. Isso garante que os dados não sejam totalmente perdidos se o servidor for reiniciado.
 
-## Cassandra
+## 🕸️ Cassandra
 
 Já o `Apache Cassandra` é um banco de dados NoSQL de alto desempenho, projetado para lidar com **volumes massivos de dados** sem limites de armazenamento, garantindo um bom desempenho com multi-threading.
 
