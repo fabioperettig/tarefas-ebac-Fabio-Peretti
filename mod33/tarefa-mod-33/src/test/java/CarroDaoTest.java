@@ -191,7 +191,6 @@ public class CarroDaoTest {
         Assertions.assertEquals("CRR008", carro.getCodigo());
     }
 
-
     public Marca criarMarcaTeste(String nome, String codigo) {
         Marca marca = new Marca();
         marca.setNome(nome);
@@ -204,5 +203,4 @@ public class CarroDaoTest {
 
         return marcaTeste;
     }
-
 }

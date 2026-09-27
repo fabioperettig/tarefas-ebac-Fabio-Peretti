@@ -10,9 +10,9 @@ e possui diferentes tipo de implementação para buscas específicas.
 
 | **Entidade** | **Conexão** | **Tipo de busca** |
 |--------------|-------------|-------------------|
-| Carro        | @ManyToOne  | Raw SQL           |
-| Marca        | @OneToMany  | Srtrigbuilder     |
-| Acessório    | @OneToOne   | JPA Criteria  |
+| Marca        | @OneToMany  | `findById()`        |
+| Carro        | @ManyToOne  | JPQL              |
+| Acessório    | @OneToOne   | Criteria          |
 
 
 ## Modelo Entidade

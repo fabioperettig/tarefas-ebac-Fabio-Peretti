@@ -51,7 +51,10 @@ public class AcessorioDaoTest {
     @Test
     public void cadastrarAcessorio() {
 
-        Carro carro = criarCarroTest();
+        Carro carro = criarCarroTest(
+                "CarroTeste", "CRR000",
+                "MarcaTeste", "MAR000");
+
         Assertions.assertNotNull(carro);
 
         Acessorio acessorio = new Acessorio();
@@ -69,7 +72,10 @@ public class AcessorioDaoTest {
     @Test
     public void buscarAcessorioPorId() {
 
-        Carro carro = criarCarroTest();
+        Carro carro = criarCarroTest(
+                "CarroTeste", "CRR000",
+                "MarcaTeste", "MAR000");
+
         Assertions.assertNotNull(carro);
 
         Acessorio acessorio = new Acessorio();
@@ -92,7 +98,10 @@ public class AcessorioDaoTest {
     @Test
     public void atualizarAcessorio() {
 
-        Carro carro = criarCarroTest();
+        Carro carro = criarCarroTest(
+                "CarroTeste", "CRR000",
+                "MarcaTeste", "MAR000");
+
         Assertions.assertNotNull(carro);
 
         Acessorio acessorio = new Acessorio();
@@ -117,7 +126,10 @@ public class AcessorioDaoTest {
     @Test
     public void removerAcessorio() {
 
-        Carro carro = criarCarroTest();
+        Carro carro = criarCarroTest(
+                "CarroTeste", "CRR000",
+                "MarcaTeste", "MAR000");
+
         Assertions.assertNotNull(carro);
 
         Acessorio acessorio = new Acessorio();
@@ -137,12 +149,55 @@ public class AcessorioDaoTest {
         Assertions.assertNull(aResultDEL);
     }
 
+    @Test
+    public void listarAcessoriosEmCarros() {
+
+        List<Acessorio> listaAcessorios = new ArrayList<>();
+
+        Carro c1 = criarCarroTest(
+                "CarroTeste1", "CRR001",
+                "MarcaTeste1", "MAR001");
+
+        Carro c2 = criarCarroTest(
+                "CarroTeste2", "CRR002",
+                "MarcaTeste2", "MAR002");
+
+        Carro c3 = criarCarroTest(
+                "CarroTeste3", "CRR003",
+                "MarcaTeste3", "MAR003");
+
+        Assertions.assertNotNull(c1);
+        Assertions.assertNotNull(c2);
+        Assertions.assertNotNull(c3);
+
+        Acessorio a1 = criarAcessorioTeste(c1, "ACS001");
+        Acessorio a2 = criarAcessorioTeste(c2, "ACS002");
+        Acessorio a3 = criarAcessorioTeste(c3, "ACS003");
+
+        listaAcessorios.add(a1);
+        listaAcessorios.add(a2);
+        listaAcessorios.add(a3);
+
+        acessorioDao.findAll();
+        Assertions.assertNotNull(listaAcessorios);
+        Assertions.assertSame(a2, listaAcessorios.get(1));
+    }
+
+    /// Metodo JPQL
+    @Test
+    public void buscarAcessorioPorCodigoCriteriaAPI() {
+        listarAcessoriosEmCarros();
+        Acessorio acessorio = acessorioDao.findyByCode("ACS002");
+
+        Assertions.assertNotNull(acessorio);
+        Assertions.assertEquals("ACS002", acessorio.getCodigo());
+    }
 
     ///auxiliares
-    public Marca criarMarcaTeste() {
+    public Marca criarMarcaTeste(String nome, String codigo) {
         Marca marca = new Marca();
-        marca.setNome("Toyota");
-        marca.setCodigo("MAR001");
+        marca.setNome(nome);
+        marca.setCodigo(codigo);
         marca.setAno(1950);
         marca.setOrigem("OrigemTeste");
 
@@ -152,12 +207,12 @@ public class AcessorioDaoTest {
         return marcaTeste;
     }
 
-    public Carro criarCarroTest() {
+    public Carro criarCarroTest(String nomeCarro, String codigoCarro, String nomeMarca, String codigoMarca) {
         Carro carro = new Carro();
-        Marca marca = criarMarcaTeste();
+        Marca marca = criarMarcaTeste(nomeMarca, codigoMarca);
         carro.setMarca(marca);
-        carro.setNome("Corolla");
-        carro.setCodigo("CRR001");
+        carro.setNome(nomeCarro);
+        carro.setCodigo(codigoCarro);
         carro.setAno(2015);
         carro.setModelo("Sedan");
 
@@ -165,5 +220,19 @@ public class AcessorioDaoTest {
         carrosCriados.add(carro);
 
         return carroTeste;
+    }
+
+    public Acessorio criarAcessorioTeste(Carro carro, String codigo) {
+        Acessorio acessorio = new Acessorio();
+        acessorio.setNome("Alarme");
+        acessorio.setCodigo(codigo);
+        acessorio.setCategoria("Segurança");
+        acessorio.setValor(199.00);
+        acessorio.setCarro(carro);
+
+        Acessorio acessorioTeste = acessorioDao.create(acessorio);
+        acessoriosCriados.add(acessorioTeste);
+
+        return acessorioTeste;
     }
 }

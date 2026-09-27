@@ -68,7 +68,8 @@ public class AcessorioDao implements IAcessorioDao {
 
         EntityManager em = EntityManagerSingleton.getEntityManager();
 
-        List<Acessorio> acessorios = em.createQuery("SELECT c FROM Carro c", Acessorio.class).getResultList();
+        List<Acessorio> acessorios =
+                em.createQuery("SELECT a FROM Acessorio a", Acessorio.class).getResultList();
         em.close();
 
         return acessorios;
