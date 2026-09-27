@@ -5,55 +5,55 @@
 
 # 📚☕️ Tarefa Módulo 34 - Banco de dados Não Relacional
 
-## Relacional vs Não Relacional
+## 🎲 Relacional vs Não Relacional
 
-Um banco **relacional**, como o PostgreSQL, organiza dados em tabelas com linhas e colunas. Chaves primárias identificam registros; chaves estrangeiras podem ligar tabelas e garantir que essas referências sejam válidas. Usamos SQL para consultar e manipular os dados. [Conceitos do PostgreSQL](https://www.postgresql.org/docs/16/tutorial-concepts.html).
+Um Banco de Dados **Relacional**, organiza os dados em tabelas com linhas e colunas tendo como principais recursos de busca as ***Chaves Primárias*** e, para relação de tables, as ***Chaves Estrangeiras***. O exemplo mais conhecido de Banco de Dados relacional, utilizado no curso até então, é o `PostgreSQL`.
 
-Imagine uma loja com duas tabelas:
+### | TB_PRODUTO |
 
-| clientes: id | nome |
-| --- | --- |
-| 1 | Fábio |
+| codigo | id | nome | valor | qtd_estoque |
+| --- | --- | --- | --- | --- |
+| PROD001 | 1 | Cama King | 799.00 | 8 |
+| PROD002 | 2 | Mesa de Jantar | 450.00 | 15 | 
 
-| pedidos: id | cliente_id | total |
-| --- | --- | --- |
-| 101 | 1 | 150.00 |
-| 102 | 1 | 80.00 |
+>O foco principal é ter um Banco de Dados "rígido" e organizado na melhor estrutura possível, garantindo que os dados estejam 100% corretos e evitando quaisquer duplicações.
 
-O nome fica em `clientes`, e os pedidos fazem referência ao cliente. Separar informações assim ajuda a evitar repetição: é uma ideia da **normalização**. Um `JOIN` reúne os dados na consulta:
+---
+
+Já um Banco de Dados **Não Relacional**, ou ***NoSQL***, é um sistema que persiste e organiza dados **sem usar o formato tradicional de tabelas com linhas e colunas**.
+
+Por isso, ele funciona sem um esquema fixo, sendo possível salvar dados de diferentes formas sem definir uma estrutura rígida. Os dados de um DB NoSQL podem persistir como arquivos JSON, pares de chave-valor, ou grafos. 
+
+Graças a essa característica, são facilmente espalhados por servidores diferentes quando o volume de dados cresce muito.
+
+### Exemplo de um tipo de dadoNoSQL persistido (JSON)
 
 ```sql
-SELECT c.nome, p.id, p.total
-FROM clientes c
-JOIN pedidos p ON p.cliente_id = c.id;
+{
+  "_id": "user_98765",
+  "nome": "Fabio Peretti",
+  "email": "fabioperettig@mail.com",
+  "ativo": true,
+  "perfil": {
+    "idade": 34,
+    "cidade": "São Paulo",
+    "interesses": ["Java", "COBOL", "Jakarta Persistence"]
+  }
+}
 ```
+>Aqui, o foco principal é a escalabilidade do Banco de Dados e a velocidade de leitura dos dados peristidos.
 
-**NoSQL** é um termo usado para diferentes modelos não relacionais, frequentemente interpretado como “Not Only SQL”. Não é um único tipo de banco: existem modelos de chave-valor, documentos, grafos e famílias de colunas.
+## Redis
 
-Neste estudo, veremos Redis, com chaves associadas a estruturas de dados, e Cassandra, com tabelas distribuídas modeladas conforme as consultas. **NoSQL não significa ausência de estrutura:** Cassandra tem tabelas e tipos definidos, mas não oferece o modelo de relacionamentos do PostgreSQL. [Tipos do Redis](https://redis.io/docs/latest/develop/data-types/) e [modelagem do Cassandra](https://cassandra.apache.org/doc/stable/cassandra/developing/data-modeling/intro.html).
+O `Redis` (Remote Dictionary Server) é uma estrutura de dados que trabalha principalmente **em memória RAM**, ao contrário dos Bancos de Dados tradicionais que persistem dados em disco rígido. Por causa de sua estrutura em RAM, é ideal para cenários que exigem **baixa latência**, atuando com **Sistemas de Cache**.
 
-## 2. PostgreSQL: transações e relacionamentos
+Ele funciona salvando dados associados a uma chave única (padrão CHAVE-VALOR). No entanto, o "valor" não precisa ser apenas um texto simples, mas sim, estruturas complexas como ***strings, listas, hashes e etc***.
 
-Além das consultas com relacionamentos, o PostgreSQL oferece transações: várias operações podem formar uma unidade que é confirmada com `COMMIT` ou desfeita com `ROLLBACK`.
-
-Por exemplo, registrar um pedido e atualizar seu estoque dentro da mesma transação permite confirmar as duas alterações juntas. Se houver um problema antes da confirmação, elas podem ser desfeitas.
-
-As propriedades **ACID** descrevem garantias de transações:
-
-- **Atomicidade:** todas as operações da transação são confirmadas, ou nenhuma.
-- **Consistência:** as regras de integridade definidas no banco são preservadas.
-- **Isolamento:** controla a interação entre transações simultâneas; há diferentes níveis.
-- **Durabilidade:** alterações confirmadas devem persistir, conforme as garantias e configurações do banco.
-
-Isso não significa que todo NoSQL seja incapaz de oferecer transações: as garantias variam entre produtos e operações. [Transações no PostgreSQL](https://www.postgresql.org/docs/current/tutorial-transactions.html).
-
-## 3. Redis: acesso rápido por chave
-
-O Redis trabalha principalmente com dados **em memória RAM**, favorecendo operações de baixa latência. Pense em uma chave como `cliente:1:nome` associada ao valor `Fábio`. Ele também oferece estruturas como hashes, listas, conjuntos e conjuntos ordenados. [Visão geral do Redis](https://redis.io/about/) e [tipos de dados](https://redis.io/docs/latest/develop/data-types/).
+- 
 
 Exemplo para executar no `redis-cli`, conectado a um Redis:
 
-```text
+```sql
 SET cliente:1:nome "Fábio"
 GET cliente:1:nome
 
@@ -61,29 +61,18 @@ SET cache:produto:10:preco "59.90" EX 60
 GET cache:produto:10:preco
 ```
 
-O primeiro `GET` retorna o nome. No segundo exemplo, `EX 60` faz a chave expirar após 60 segundos: esse prazo é chamado de **TTL** (*Time To Live*). Após expirar, a chave não será encontrada. [Comando SET](https://redis.io/docs/latest/commands/set/).
+> **POSSIBILIDADE DE PERSISTÊNCIA:** Embora funcione na RAM, o Redis pode salvar cópias dos dados no disco, ou registrar cada alteração em um histórico. Isso garante que os dados não sejam totalmente perdidos se o servidor for reiniciado.
 
-Aplicações típicas incluem cache, sessões de usuários, contadores e rankings. Um **cache** guarda uma cópia temporária de uma informação para acelerar acessos repetidos. Exemplo didático:
+## Cassandra
 
-1. A aplicação Java procura o preço no Redis.
-2. Se encontrar, utiliza o valor armazenado.
-3. Se não encontrar, consulta o PostgreSQL e guarda uma cópia no Redis com TTL.
+Já o `Apache Cassandra` é um banco de dados NoSQL de alto desempenho, projetado para lidar com **volumes massivos de dados** sem limites de armazenamento, garantindo um bom desempenho com multi-threading.
 
-É preciso decidir como atualizar ou invalidar esse cache quando o preço mudar: até lá, a cópia pode estar desatualizada.
+Essa robustez é graças a uma **arquitetura descentralizada**: os dados são espalhados em ***nodes***, garantindo que o sistema continue operando, caso um node perca a conexão.
 
-**Redis não é apenas cache e não significa “nunca salva em disco”.** Pode usar snapshots RDB e registro de operações AOF. A possibilidade de perder alterações em uma falha depende da configuração de persistência. [Persistência do Redis](https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/).
-
-## 4. Cassandra: dados distribuídos em grande escala
-
-O Apache Cassandra é um banco NoSQL de **famílias de colunas** (*wide-column*), projetado para distribuir dados entre servidores. Cada instância é um **nó**; o conjunto forma um **cluster**. Replicação mantém cópias dos dados em diferentes nós.
-
-Seu foco inclui grandes volumes, muitas escritas e disponibilidade. Crescer adicionando máquinas é chamado de **escalabilidade horizontal**. A continuidade durante falhas depende da replicação e das configurações de leitura e escrita. [Introdução oficial ao Cassandra](https://cassandra.apache.org/_/cassandra-basics).
-
-No Cassandra, começamos pela pergunta: **“Quais consultas a aplicação precisa fazer?”** A estrutura é desenhada para atendê-las. Não há `JOIN` nem chaves estrangeiras; repetir dados entre tabelas pode ser intencional, prática chamada **desnormalização**.
-
-Ele usa **CQL**, uma linguagem parecida com SQL. Exemplo didático, supondo um *keyspace* (espaço que agrupa tabelas) já selecionado:
+A sintaxe do Cassandra (CQL), é bastante parecida com a sintaxe SQL, embora o modelo de modelagem de dados seja diferente.
 
 ```sql
+///exemplo CQL
 CREATE TABLE pedidos_por_cliente (
     cliente_id int,
     pedido_id int,
@@ -97,34 +86,33 @@ VALUES (1, 101, 150.00);
 SELECT * FROM pedidos_por_cliente WHERE cliente_id = 1;
 ```
 
-Aqui, `cliente_id` é a **chave de partição**: agrupa pedidos e determina sua distribuição. `pedido_id` é a **chave de clustering**: distingue e ordena pedidos dentro da partição.
+Neste exemplo, a sintaxe é idêntica ao SQL, mas, a Primary Key possui um significado diferente:
 
-Essa tabela atende à consulta por cliente. Consultar apenas por `pedido_id` pode exigir outra modelagem. Em produção, também é preciso limitar o crescimento das partições, por exemplo agrupando por cliente e período. [Modelagem e chaves no Cassandra](https://cassandra.apache.org/doc/stable/cassandra/developing/data-modeling/intro.html).
+#### 🔑 PRIMARY KEY (cliente_id, pedido_id)
 
-O Cassandra permite configurar o **nível de consistência** por operação: quantas réplicas precisam responder. Isso influencia latência, disponibilidade e visibilidade dos dados recentes. Aqui, “consistência” trata da concordância entre réplicas, diferente da consistência das regras de integridade em ACID. [Consistência no Cassandra](https://cassandra.apache.org/_/cassandra-basics).
+- **Postgre (SQL):** a combinação dos dois valores deve ser única, e ambos são obrigatórios. Não distribui automaticamente os dados em partições.
 
-## 5. Comparação para fixar
+- **Cassandra (CQL):** `cliente_id` é a chave de partição e `pedido_id` é a chave de clustering, que distingue e ordena os pedidos dentro da partição.
 
-| Aspecto | PostgreSQL | Redis | Cassandra |
+Em ambos os DBs, a combinação `cliente_id` e `pedido_id` identifica um registro. Porém, no Cassandra essa definição **também orienta a distribuição e a organização dos dados**.
+
+## ☕ Integração com Java: frameworks e JPA
+
+Os três bancos conseguem trabalhar com **Jakarta Persistence**, mas alguns precisam de módulos extras dedicado.
+
+| Banco | Integração | Uso típico | Compatibilidade com JPA |
 | --- | --- | --- | --- |
-| Modelo principal | Relacional | Chave-valor com estruturas de dados | Famílias de colunas |
-| Acesso básico | SQL | Comandos como `SET` e `GET` | CQL |
-| Organização | Tabelas, relações e restrições | Chaves e valores de diferentes tipos | Tabelas organizadas por partições |
-| Destaque | Relacionamentos e transações | Operações rápidas em memória | Distribuição e grande volume de escritas |
-| Exemplo de uso | Clientes, pedidos e estoque | Cache de produtos e sessões | Histórico massivo de eventos |
+| **PostgreSQL** | **Spring Data, JPA + Hibernate ORM** | Entidades, relacionamentos e transações em tabelas relacionais. | É o banco mais adequado para trabalhar com JPA puro. |
+| **Redis** | **Spring Data Redis** | Chaves e estruturas de dados, cache e repositórios Redis. | Necessita de APIs e mapeamento próprios do módulo Redis. |
+| **Cassandra** | **Spring Data Cassandra** | Tabelas distribuídas, consultas CQL e repositórios Cassandra. | Necessita de APIs e mapeamento próprios do módulo Cassandra. |
 
-A tabela sintetiza as características das documentações citadas acima; os usos são exemplos, não regras exclusivas.
+>O Jakarta Persistence é uma especificação de persistência **relacional**.
 
-**Não existe um vencedor universal.** NoSQL não é automaticamente mais rápido, e um banco relacional também pode crescer e atender muitos usuários. O resultado depende das consultas, do modelo, da infraestrutura e das garantias necessárias.
+>O Hibernate implementa JPA em ótima compatibilidade com PostgreSQL, mas não tão recomendado para Redis e Cassandra.
 
-Em um exemplo de loja, PostgreSQL poderia guardar pedidos, Redis acelerar consultas e Cassandra armazenar um grande histórico de eventos. Não é obrigatório usar os três: cada banco acrescenta trabalho de operação e manutenção.
+>O Spring Data é, atualmente, o mais indicado para ambos os tipo de dados, sejam relacionais, sejam não relacionais.
 
-## 6. Perguntas de revisão
 
-1. Como uma chave estrangeira ajuda a manter a integridade dos dados?
-2. O que acontece quando uma chave com TTL expira no Redis?
-3. Por que um preço em cache pode ficar desatualizado?
-4. Por que precisamos conhecer as consultas antes de modelar no Cassandra?
-5. Qual é a diferença entre uma chave de partição e uma chave de clustering?
+------
 
-Se você consegue explicar essas respostas com suas palavras, já tem uma boa base para começar a praticar!
+**Fabio Peretti Guimarães | tarefa Ebac mod 34 | SET 2026**
