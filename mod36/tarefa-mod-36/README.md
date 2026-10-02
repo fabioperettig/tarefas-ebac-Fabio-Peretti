@@ -11,9 +11,9 @@ Para isso, escolhi utilizar os BD PostgreSQL como Banco Relacional e MongoDB com
 | objetivo                                            | Observações                                       |
 |-----------------------------------------------------|---------------------------------------------------|
 | Cadastrar uma Entidade em dois databases diferentes | Provavelmente DAOs dedicados para cada DB         |
-| Trabalahr com SQl e NoSQL                           | PostgreSQL e MongoDB                              |
+| Trabalhar com SQl e NoSQL                           | PostgreSQL e MongoDB                              |
 | Integrar databases via Docker                       | Praticar Docker via .yml com variávis de ambiente |
-| Integrar databases via Docker                       |                                                   |
+| Implementar Conexões dedicadas                      | EntityManager para JPA e Datastore para Mongo     |
 
 ## Entidade Interface e Concretas
 
@@ -101,7 +101,7 @@ volumes:
   mongodb_data:
 ```
 
-## 🏭Factories de Conexão
+## 🏭 Factories de Conexão
 
 Cada tipo de banco de dados precisa de um padrão de construção própria, sendo o JPA construído com `EntityManager`
 e o Mongo construído com `Datastore`. Porém, é possivel ver que ambos podem ser construídos com a mesma pattern
@@ -170,7 +170,7 @@ public class MongoConnection {
     }
 }
 ```
->No caso de conexões com `MongoClient`, a URI já contém USER e PASS embutidas nos dados. 
+>Neste projeto, a URI contém USER e PASS já embutidas nos dados. 
 
 ## ⚙️ DAOs
 
