@@ -17,7 +17,7 @@ Para isso, escolhi utilizar os BD PostgreSQL como Banco Relacional e MongoDB com
 
 ## Entidade Interface e DTOs
 
-Escolhi trabalhar com uma entidade simples `Cliente` estruturada no padrão de anotações `Jakarta Persistence`
+Escolhi trabalhar com uma entidade simples `ClienteJPA` estruturada no padrão de anotações `Jakarta Persistence`
 para o PostgreSQL, e também no padrão de anotações `Morphia` para o Mongo, mas ambas implementando a mesma interface ICliente.
 
 ```java
