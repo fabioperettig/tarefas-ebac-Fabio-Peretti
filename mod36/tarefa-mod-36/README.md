@@ -101,6 +101,81 @@ volumes:
   mongodb_data:
 ```
 
+## 🏭Factories de Conexão
+
+Cada tipo de banco de dados precisa de um padrão de construção própria, sendo o JPA construído com `EntityManager`
+e o Mongo construído com `Datastore`. Porém, é possivel ver que ambos podem ser construídos com a mesma pattern
+`Singleton` e ter as variáveis de ambiente implementadas via `.env`.
+
+### 🐘 Factory EntityManager (Jakarta Persistence)
+```java
+///Estrutura EntityManagerFactory Jakarta Persistence
+public class EntityManagerJPA {
+
+    private static volatile EntityManagerFactory emFactory;
+
+    public static EntityManager getEntitymanager() {
+
+        if (emFactory == null) {
+            synchronized (EntityManagerJPA.class) {
+                if (emFactory == null) {
+                    Dotenv dotenv = Dotenv.load();
+
+                    String url = dotenv.get("DB_URL");
+                    String user = dotenv.get("DB_USER");
+                    String pass = dotenv.get("DB_PASS");
+
+                    Map<String, String> input = new HashMap<>();
+                    input.put("jakarta.persistence.jdbc.url", url);
+                    input.put("jakarta.persistence.jdbc.user", user);
+                    input.put("jakarta.persistence.jdbc.password", pass);
+
+                    emFactory = Persistence.createEntityManagerFactory("postgresdb", input);
+
+                }
+            }
+        }
+         return emFactory.createEntityManager();
+    }
+}
+```
+
+### 🌱 Factory Datastore (Mongo DB)
+```java
+///Estrutura Datastore MongoClient
+public class MongoConnection {
+
+    private static MongoClient mongoClient;
+    private static volatile Datastore mongoDatastore;
+
+    public static Datastore getDatastore() {
+
+        if (mongoDatastore == null) {
+            synchronized (MongoConnection.class) {
+                if (mongoDatastore == null) {
+                    
+                    Dotenv dotenv = Dotenv.load();
+                    String uri = dotenv.get("MONGO_URI");
+                    mongoClient = MongoClients.create(uri);
+
+                    MorphiaConfig mConfig = MorphiaConfig
+                            .load().database("mongodb")
+                            .packages(List.of("com.fabioperettig.domain"));
+
+                    mongoDatastore = Morphia.createDatastore(mongoClient, mConfig);
+                }
+            }
+        }
+        return mongoDatastore;
+    }
+}
+```
+>No caso de conexões com `MongoClient`, a URI já contém USER e PASS embutidas nos dados. 
+
+## ⚙️ DAOs
+
+EM CONTRUÇÃO 🚧
+
 ------
 
 **Fabio Peretti Guimarães | tarefa Ebac mod 36 | OUT 2026**

@@ -8,14 +8,14 @@ import jakarta.persistence.Persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConnectionManager {
+public class EntityManagerJPA {
 
     private static volatile EntityManagerFactory emFactory;
 
     public static EntityManager getEntitymanager() {
 
         if (emFactory == null) {
-            synchronized (ConnectionManager.class) {
+            synchronized (EntityManagerJPA.class) {
                 if (emFactory == null) {
                     Dotenv dotenv = Dotenv.load();
 
