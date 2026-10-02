@@ -1,7 +1,7 @@
 package com.fabioperettig.domain;
 
-public interface ICliente {
-    public Long getId();
+public interface ICliente<ID> {
+    public ID getId();
     public String getNome();
     public void setNome(String nome);
     public Long getCpf();

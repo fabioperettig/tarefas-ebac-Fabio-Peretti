@@ -1,14 +1,20 @@
 package com.fabioperettig.domain;
 
-public class ClienteMorphia implements ICliente{
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
+import org.bson.types.ObjectId;
 
-    private Long id;
+@Entity("clientes")
+public class ClienteMorphia implements ICliente<ObjectId> {
+
+    @Id
+    private ObjectId id;
     private String nome;
     private Long cpf;
     private String email;
 
     @Override
-    public Long getId() {
+    public ObjectId getId() {
         return id;
     }
 

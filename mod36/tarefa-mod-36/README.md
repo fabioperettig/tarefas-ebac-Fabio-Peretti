@@ -15,22 +15,52 @@ Para isso, escolhi utilizar os BD PostgreSQL como Banco Relacional e MongoDB com
 | Integrar databases via Docker                       | Praticar Docker via .yml com variávis de ambiente |
 | Integrar databases via Docker                       |                                                   |
 
-## Entidade Interface e DTOs
+## Entidade Interface e Concretas
 
 Escolhi trabalhar com uma entidade simples `ClienteJPA` estruturada no padrão de anotações `Jakarta Persistence`
-para o PostgreSQL, e também no padrão de anotações `Morphia` para o Mongo, mas ambas implementando a mesma interface ICliente.
+com identificador `Long` para o PostgreSQL, e também no padrão de anotações `Morphia` com identificador `ObjectId`
+para o Mongo, mas ambas implementando a mesma interface `ICliente<ID>`.
 
 ```java
-//Padrão Jakarta Persistence
-public static void main(String[] args) {
-    System.out.println("HelloWorld");
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "TB_CLIENTE")
+public class ClienteJPA implements ICliente<Long> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cliente_seq")
+    @SequenceGenerator(name = "cliente_seq", sequenceName = "sq_cliente", initialValue = 1, allocationSize = 1)
+    private Long id;
+
+    @Column(name = "NOME", nullable = false)
+    private String nome;
+
+    @Column(name = "CPF", nullable = false, unique = true)
+    private Long cpf;
+
+    @Column(name = "EMAIL", nullable = false)
+    private String email;
+
+    ///getter e setters {...}
 }
 ```
 
 ```java
-//Padrão Morphia
-public static void main(String[] args) {
-    System.out.println("HelloWorld");
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
+import org.bson.types.ObjectId;
+
+@Entity("clientes")
+public class ClienteMorphia implements ICliente<ObjectId> {
+
+    @Id
+    private ObjectId id;
+    private String nome;
+    private Long cpf;
+    private String email;
+    
+    ///getter e setters {...}
 }
 ```
 
