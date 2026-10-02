@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: shop-postgres
+    environment:
+      POSTGRES_DB: postgresdb
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongodb:
+    image: mongo:8.0
+    container_name: shop-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  postgres_data:
+  mongodb_data:
