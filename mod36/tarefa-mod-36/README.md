@@ -8,9 +8,12 @@
 Este projeto simples serve como introdução para projetos DAO que utilizam dois databases diferentes para a persistência de Entidades.
 Para isso, escolhi utilizar os BD PostgreSQL como Banco Relacional e MongoDB como Banco Não Relacional.
 
+Para entender melhor e determinar os objetivos deste projeto, pedi um esclarecimento do `Amigobô` que respondeu as
+infos descritas no Markdown [Resposta-Amigobo-Ebac](Resposta-Amigobo-Ebac.md)
+
 | objetivo                                      | Observações                                                              |
 |-----------------------------------------------|--------------------------------------------------------------------------|
-| Trabalhar com SQl e NoSQL                     | PostgreSQL e MongoDB                                                     |
+| Trabalhar com SQL e NoSQL                     | PostgreSQL e MongoDB                                                     |
 | Cadastrar uma Entidade em dois DBs diferentes | DAOs dedicados para cada JPA (EntityManager) e Mongo (Morphia Datastore) |
 | Integrar databases via Docker                 | Praticar Docker via .yml com variávis de ambiente                        |
 | Implementar Conexões dedicadas                | EntityManager para JPA e Datastore para Mongo                            |
