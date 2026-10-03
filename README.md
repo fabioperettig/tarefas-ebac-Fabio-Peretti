@@ -10,7 +10,7 @@ O repositório é dividido em módulos, com os respectivos projetos feitos e apr
 
 ````
 mod6
-├── primeiroProjeto;
+├── [primeiroProjeto](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/tree/main/mod06/PrimeiroProjeto)
 ├── projeto-Procedural-OO;
 └── algoritmo-rotina-matinal (portugol).
 
