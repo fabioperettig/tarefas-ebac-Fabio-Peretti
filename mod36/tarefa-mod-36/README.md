@@ -315,13 +315,13 @@ public class DaoMongo implements IGenericDAO<ClienteMorphia, ObjectId> {
 
 Ambos os sistemas passaram por testes dos métodos CRUD via `JUnit` API, seguindo as boas práticas de desenvolvimento.
 
-| DaoJPATest                 |    | DaoMongoTest 🚧            |    |
+| 🐘 DaoJPATest              |    | 🌱 DaoMongoTest            |    |
 |----------------------------|----|----------------------------|----|
-| `cadastrarEntidadeTeste()` | ✅ | `cadastrarEntidadeTeste()` |  |
-| `buscarEntidadeTeste()`    | ✅ | `buscarEntidadeTeste()`    |  |
-| `alterarEntidadeTeste()`   | ✅ | `alterarEntidadeTeste()`   |  |
-| `deletarEntidadeTeste()`   | ✅ | `deletarEntidadeTeste()`   |  |
-| `buscarTodosTeste()`       | ✅ | `buscarTodosTeste()`       |  |
+| `cadastrarEntidadeTeste()` | ✅ | `cadastrarEntidadeTeste()` | ✅ |
+| `buscarEntidadeTeste()`    | ✅ | `buscarEntidadeTeste()`    | ✅ |
+| `alterarEntidadeTeste()`   | ✅ | `alterarEntidadeTeste()`   | ✅ |
+| `deletarEntidadeTeste()`   | ✅ | `deletarEntidadeTeste()`   | ✅ |
+| `buscarTodosTeste()`       | ✅ | `buscarTodosTeste()`       | ✅ |
 
 ------
 

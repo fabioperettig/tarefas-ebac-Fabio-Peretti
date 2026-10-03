@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class DaoJPATest {
 
     private final IGenericDAO<ClienteJPA, Long> daoJPA = new DaoJPA();
-
     private final List<ClienteJPA> clientesCriados = new ArrayList<>();
 
     @AfterEach
@@ -36,8 +36,14 @@ public class DaoJPATest {
         daoJPA.cadastrarEntidade(cliente);
         clientesCriados.add(cliente);
 
-        Assertions.assertNotNull(cliente);
-        Assertions.assertEquals(1234567890L,cliente.getCpf());
+        Assertions.assertNotNull(cliente.getId());
+
+        ClienteJPA cSalvo = daoJPA.buscarEntidadePorID(cliente.getId());
+
+        Assertions.assertNotNull(cSalvo);
+        Assertions.assertEquals(cliente.getNome(), cSalvo.getNome());
+        Assertions.assertEquals(cliente.getCpf(), cSalvo.getCpf());
+        Assertions.assertEquals(cliente.getEmail(), cSalvo.getEmail());
     }
 
     @Test
@@ -73,8 +79,11 @@ public class DaoJPATest {
         cliente.setCpf(1234567890L);
         daoJPA.alterarEntidade(cliente);
 
-        Assertions.assertSame("Fabio Peretti", cliente.getNome());
-        Assertions.assertEquals(1234567890L, cliente.getCpf());
+        ClienteJPA cAlterado = daoJPA.buscarEntidadePorID(cliente.getId());
+
+        Assertions.assertNotNull(cAlterado);
+        Assertions.assertEquals("Fabio Peretti", cAlterado.getNome());
+        Assertions.assertEquals(1234567890L, cAlterado.getCpf());
     }
 
     @Test
@@ -98,8 +107,6 @@ public class DaoJPATest {
     @Test
     public void buscarTodosTeste() {
 
-        List<ClienteJPA> jpaList = new ArrayList<>();
-
         ClienteJPA cliente1 = new ClienteJPA();
         cliente1.setNome("Fabio Peretti");
         cliente1.setCpf(1234567890L);
@@ -116,20 +123,21 @@ public class DaoJPATest {
         cliente3.setEmail("lauracx@mail.com");
 
         daoJPA.cadastrarEntidade(cliente1);
-        daoJPA.cadastrarEntidade(cliente2);
-        daoJPA.cadastrarEntidade(cliente3);
-
-        jpaList.add(cliente1);
-        jpaList.add(cliente2);
-        jpaList.add(cliente3);
-
-        ///lista AfterEach
         clientesCriados.add(cliente1);
+
+        daoJPA.cadastrarEntidade(cliente2);
         clientesCriados.add(cliente2);
+
+        daoJPA.cadastrarEntidade(cliente3);
         clientesCriados.add(cliente3);
 
-        Assertions.assertNotNull(jpaList);
-        Assertions.assertEquals(3, jpaList.size());
-        Assertions.assertSame(cliente2, jpaList.get(1));
+        Collection<ClienteJPA> listaBusca = daoJPA.buscarTodos();
+
+        for (ClienteJPA criado : clientesCriados) {
+            Assertions.assertTrue(
+                    listaBusca.stream()
+                            .anyMatch(c -> c.getId().equals(criado.getId()))
+            );
+        }
     }
 }
