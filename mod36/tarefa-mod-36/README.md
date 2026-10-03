@@ -172,9 +172,143 @@ public class MongoConnection {
 ```
 >Neste projeto, a URI contém USER e PASS já embutidas nos dados. 
 
-## ⚙️ DAOs
+## ⚙️ Classes DAO<T, ID>
 
-EM CONTRUÇÃO 🚧
+Assim como as Entidades compartilham uma mesma interface, a camada DAO do projeto também implementam uma mesma
+interface genérica `IGenericDAO<T, ID>`, para que cada entidade possua uma Classe DAO dedicada com o tipo correto
+de identificador, além de posssibilitar expansão para outras entidades.
+
+### 🐘 DAO Jakarta Persistence
+
+A Camada DAO JPA é implementada com métodos da `EntityManagar`, possui identificador do tipo `Long` e método
+de listagem via Criteria API.
+
+```java
+public class DaoJPA implements IGenericDAO<ClienteJPA, Long> {
+
+    @Override
+    public ClienteJPA cadastrarEntidade(ClienteJPA cliente) {
+
+        EntityManager em = EntityManagerJPA.getEntitymanager();
+        em.getTransaction().begin();
+        em.persist(cliente);
+        em.getTransaction().commit();
+        em.close();
+
+        return cliente;
+    }
+
+    @Override
+    public ClienteJPA buscarEntidadePorID(Long id) {
+
+        EntityManager em = EntityManagerJPA.getEntitymanager();
+
+        ClienteJPA jpaResult = em.find(ClienteJPA.class, id);
+        em.close();
+
+        return jpaResult;
+    }
+
+    @Override
+    public ClienteJPA alterarEntidade(ClienteJPA cliente) {
+
+        EntityManager em = EntityManagerJPA.getEntitymanager();
+
+        em.getTransaction().begin();
+        cliente = em.merge(cliente);
+        em.getTransaction().commit();
+        em.close();
+
+        return cliente;
+    }
+
+    @Override
+    public void deletarEntidade(ClienteJPA cliente) {
+
+        EntityManager em = EntityManagerJPA.getEntitymanager();
+
+        em.getTransaction().begin();
+        cliente = em.merge(cliente);
+        em.remove(cliente);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    @Override
+    public Collection<ClienteJPA> buscarTodos() {
+
+        EntityManager em = EntityManagerJPA.getEntitymanager();
+        CriteriaBuilder cBuilder = em.getCriteriaBuilder();
+
+        CriteriaQuery<ClienteJPA> cQuerry = cBuilder.createQuery(ClienteJPA.class);
+        Root<ClienteJPA> rootJPA = cQuerry.from(ClienteJPA.class);
+        cQuerry.select(rootJPA);
+
+        return em.createQuery(cQuerry).getResultList();
+    }
+}
+```
+
+### 🌱 DAO Mongo Datastore
+
+Já a Camada DAO Mongo é implementada com métodos da `Datastore`, possui identificador do tipo `ObjectId` e método
+de listagem via MorphiaCursor.
+
+```java
+public class DaoMongo implements IGenericDAO<ClienteMorphia, ObjectId> {
+
+    @Override
+    public ClienteMorphia cadastrarEntidade(ClienteMorphia cliente) {
+
+        Datastore datastore = MongoConnection.getDatastore();
+        cliente = datastore.save(cliente);
+        return cliente;
+    }
+
+    @Override
+    public ClienteMorphia buscarEntidadePorID(ObjectId id) {
+
+        Datastore datastore = MongoConnection.getDatastore();
+        ClienteMorphia cliente = datastore.find(ClienteMorphia.class)
+                .filter(Filters.eq("_id", id)).first();
+
+        return cliente;
+    }
+
+    @Override
+    public ClienteMorphia alterarEntidade(ClienteMorphia cliente) {
+
+        if (cliente.getId() == null) {
+            throw new IllegalArgumentException("O cliente precisa ter ID para ser alterado.");
+        }
+
+        Datastore datastore = MongoConnection.getDatastore();
+        cliente = datastore.save(cliente);
+        return cliente;
+    }
+
+    @Override
+    public void deletarEntidade(ClienteMorphia cliente) {
+
+        if (cliente.getId() == null) {
+            throw new IllegalArgumentException("O cliente precisa ter ID para ser excluído.");
+        }
+
+        Datastore datastore = MongoConnection.getDatastore();
+        datastore.delete(cliente);
+    }
+
+    @Override
+    public Collection<ClienteMorphia> buscarTodos() {
+
+        Datastore datastore = MongoConnection.getDatastore();
+
+        try (MorphiaCursor<ClienteMorphia> cursor = datastore.find(ClienteMorphia.class).iterator()) {
+            return cursor.toList();
+        }
+    }
+}
+```
 
 ------
 
