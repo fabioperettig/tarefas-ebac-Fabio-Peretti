@@ -63,12 +63,18 @@ public class DaoJPA implements IGenericDAO<ClienteJPA, Long> {
     public Collection<ClienteJPA> buscarTodos() {
 
         EntityManager em = EntityManagerJPA.getEntitymanager();
-        CriteriaBuilder cBuilder = em.getCriteriaBuilder();
 
-        CriteriaQuery<ClienteJPA> cQuerry = cBuilder.createQuery(ClienteJPA.class);
-        Root<ClienteJPA> rootJPA = cQuerry.from(ClienteJPA.class);
-        cQuerry.select(rootJPA);
+        try {
+            CriteriaBuilder cBuilder = em.getCriteriaBuilder();
 
-        return em.createQuery(cQuerry).getResultList();
+            CriteriaQuery<ClienteJPA> cQuerry = cBuilder.createQuery(ClienteJPA.class);
+            Root<ClienteJPA> rootJPA = cQuerry.from(ClienteJPA.class);
+            cQuerry.select(rootJPA);
+
+            return em.createQuery(cQuerry).getResultList();
+        } finally {
+            em.close();
+        }
+
     }
 }

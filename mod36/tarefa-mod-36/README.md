@@ -8,12 +8,13 @@
 Este projeto simples serve como introdução para projetos DAO que utilizam dois databases diferentes para a persistência de Entidades.
 Para isso, escolhi utilizar os BD PostgreSQL como Banco Relacional e MongoDB como Banco Não Relacional.
 
-| objetivo                                            | Observações                                       |
-|-----------------------------------------------------|---------------------------------------------------|
-| Cadastrar uma Entidade em dois databases diferentes | Provavelmente DAOs dedicados para cada DB         |
-| Trabalhar com SQl e NoSQL                           | PostgreSQL e MongoDB                              |
-| Integrar databases via Docker                       | Praticar Docker via .yml com variávis de ambiente |
-| Implementar Conexões dedicadas                      | EntityManager para JPA e Datastore para Mongo     |
+| objetivo                                      | Observações                                                              |
+|-----------------------------------------------|--------------------------------------------------------------------------|
+| Trabalhar com SQl e NoSQL                     | PostgreSQL e MongoDB                                                     |
+| Cadastrar uma Entidade em dois DBs diferentes | DAOs dedicados para cada JPA (EntityManager) e Mongo (Morphia Datastore) |
+| Integrar databases via Docker                 | Praticar Docker via .yml com variávis de ambiente                        |
+| Implementar Conexões dedicadas                | EntityManager para JPA e Datastore para Mongo                            |
+| Realizar testes de métodos CRUD               | Classe de testes dedicadas `DaoJPATest` e `DaoMongoTest`                 |
 
 ## Entidade Interface e Concretas
 
@@ -309,6 +310,18 @@ public class DaoMongo implements IGenericDAO<ClienteMorphia, ObjectId> {
     }
 }
 ```
+
+## ✅ JUnit
+
+Ambos os sistemas passaram por testes dos métodos CRUD via `JUnit` API, seguindo as boas práticas de desenvolvimento.
+
+| DaoJPATest                 |    | DaoMongoTest 🚧            |    |
+|----------------------------|----|----------------------------|----|
+| `cadastrarEntidadeTeste()` | ✅ | `cadastrarEntidadeTeste()` |  |
+| `buscarEntidadeTeste()`    | ✅ | `buscarEntidadeTeste()`    |  |
+| `alterarEntidadeTeste()`   | ✅ | `alterarEntidadeTeste()`   |  |
+| `deletarEntidadeTeste()`   | ✅ | `deletarEntidadeTeste()`   |  |
+| `buscarTodosTeste()`       | ✅ | `buscarTodosTeste()`       |  |
 
 ------
 
