@@ -4,6 +4,7 @@
 ![Hibernate](https://img.shields.io/badge/Hibernate-%232c2c2c.svg?style=for-the-badge&logo=Hibernate&logoColor=white)
 ![Curso EBAC](https://img.shields.io/badge/Curso--EBAC-f2f0ef?style=for-the-badge)
 
+
 # 📚☕️ Tarefa Módulo 37
 
 Este projeto apresenta mais um sistema DAO simples, mas com uma bilbioteca mais expandida para mostrar a capacidade
@@ -131,6 +132,33 @@ public class Filme {
     Double nota;
 }
 ```
+
+### Picocli < /dependency>
+
+`Picocli` é utilizado para estruturar a interface CLI do projeto, permitindo criar comandos, parâmetros e opções de
+terminal por meio de anotações. Ele substitui menus manuais com `Scanner` e `Switch`, deixando a entrada da aplicação
+mais organizada e modular.
+
+```java
+import picocli.CommandLine.Command;
+
+@Command(
+        name = "PicocliBlockbuster",
+        description = "CLI para gerenciamento de filmes",
+        mixinStandardHelpOptions = true,
+        version = "PicocliBlockbuster CLI 1.0",
+        subcommands = {
+                CadastarFilmeCommand.class
+        }
+)
+public class PicocliCommnand  implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("Bem-vindo ao Blockbuster CLI!");
+    }
+}
+```
+
 
 </details>
 

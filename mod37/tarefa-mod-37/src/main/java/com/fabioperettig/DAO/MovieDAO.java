@@ -3,6 +3,7 @@ package com.fabioperettig.DAO;
 import com.fabioperettig.config.ConfigManager;
 import com.fabioperettig.domain.Filme;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -72,6 +73,25 @@ public class MovieDAO implements IGenericDAO<Filme, Long> {
             cQuerry.select(rootJPA);
 
             return entityManager.createQuery(cQuerry).getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public Filme buscarPorTitulo(String nomeFilme) {
+
+        EntityManager entityManager = ConfigManager.getEntityInstance();
+
+        try {
+            CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Filme> cQuerry = cBuilder.createQuery(Filme.class);
+
+            Root<Filme> rootJPA = cQuerry.from(Filme.class);
+            cQuerry.select(rootJPA).where(cBuilder.equal(rootJPA.get("nome"), nomeFilme));
+            TypedQuery<Filme> typedQuery = entityManager.createQuery(cQuerry);
+
+            return entityManager.createQuery(cQuerry).getSingleResult();
         } finally {
             entityManager.close();
         }
