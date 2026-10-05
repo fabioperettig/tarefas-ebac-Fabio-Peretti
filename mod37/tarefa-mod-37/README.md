@@ -10,11 +10,14 @@
 Este projeto apresenta mais um sistema DAO simples, mas com uma bilbioteca mais expandida para mostrar a capacidade
 do de gerenciamento de depencências via `Maven` e das possibilidades que as `libraries` oferecem.
 
-## Maven
+## 🧠 Maven
 
 Escolhi trabalhar com uma entidade simples `ClienteJPA` estruturada no padrão de anotações `Jakarta Persistence`
 com identificador `Long` para o PostgreSQL, e também no padrão de anotações `Morphia` com identificador `ObjectId`
 para o Mongo, mas ambas implementando a mesma interface `ICliente<ID>`.
+
+<details>
+<summary>POM.xml</summary>
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -28,9 +31,9 @@ para o Mongo, mas ambas implementando a mesma interface `ICliente<ID>`.
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <lombok.version>1.18.46</lombok.version>
     </properties>
 
     <dependencies>
@@ -66,17 +69,70 @@ para o Mongo, mas ambas implementando a mesma interface `ICliente<ID>`.
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.46</version>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/info.picocli/picocli -->
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.7.7</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.5</version>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
 ```
+</details>
 
-Com as dependências escolhidas, é possível construir um projeto seguro, com estrutura robusta e evitar Boilerplates,
-cada dependência possui um papel fundamental e podem ser analisadas mais a fundo logo abaixo da tabela.
+## 💭 Dependências vs Plugins
 
+**Dependências** são bibliotecas utilizadas pelo código do projeto, tanto na `compilação`, na `execução` quanto
+nos `testes`, conforme definidas em seu `escopo` e ficam na área `<dependencies>`.
+
+**Plugins** é a área para configurar e gerenciar as ferramentas que executam as tarefas reais do seu projeto,
+como `compilar` o código, rodar testes, empacotar arquivos `(JAR/WAR)` e fazer o deploy da aplicação.
+
+| Característica | 	Dependências (<dependencies>)                                           | 	Plugins (<plugins>)                                            |
+|----------------|-------------------------------------------------------------------------|----------------------------------------------------------------|
+| O que são?     | Bibliotecas de terceiros que seu código precisa para funcionar.	         | Ferramentas que ajudam a construir ou gerenciar o projeto.     |
+| Onde vão?      | Elas são empacotadas junto com o seu sistema final (vão para produção).	 | Rodam apenas na sua máquina ou no servidor de build (CI/CD).   |
+| Exemplo        | Driver do banco de dados (MySQL), Spring Boot, JUnit, Gson.	             | Compilador Java, gerador de documentação, plugin do SonarQube. |
+
+
+## 📚 Dependências escolhidas
+
+Com as dependências escolhidas, é possível construir um projeto seguro, com estrutura robusta e evitar Boilerplates.
+Escolhi utilizar **dependências que já utilizo no meu dia a dia**, mas também busquei dependências novas e testá-las
+levemente apenas para experimentação para manter o foco principal do projeto: trabalhar com gestão de dependências.
+
+Listei abaixo as dependências escolhidas com um breve resumo, mostrando seu papel. Mas também podem ser analisadas
+mais a fundo logo abaixo da tabela.
 
 | 📚 Dependência | 🎯 Utilidade                                                                                                                                      |
 |--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -133,7 +189,7 @@ public class Filme {
 }
 ```
 
-### Picocli < /dependency>
+### Picocli ⌨️  < /dependency>
 
 `Picocli` é utilizado para estruturar a interface CLI do projeto, permitindo criar comandos, parâmetros e opções de
 terminal por meio de anotações. Ele substitui menus manuais com `Scanner` e `Switch`, deixando a entrada da aplicação
@@ -159,6 +215,45 @@ public class PicocliCommnand  implements Runnable {
 }
 ```
 
+### Dotenv 🛡️ < /dependency>
+
+`Dotenv` é uma dependência excelente para projetos que possuem dados sensíveis como `Login`, `Senha`, `Tokens` e etc.
+É perfeito para trabalhar com persistência de dados, mantendo a URL, USER e PASS declaradas em Variáveis de Ambiente e
+protegidas pelo `.gitignore`.
+
+```java
+public class ConfigManager {
+
+    private static volatile EntityManagerFactory emFactory;
+
+    public static EntityManager getEntityInstance() {
+
+        if (emFactory == null) {
+            synchronized (ConfigManager.class) {
+                if (emFactory == null){
+
+                    ///Exemplo de proteção de dados em EntityManager através do Dotenv
+                    Dotenv env = Dotenv.load();
+
+                    String url = env.get("DB_URL");
+                    String user = env.get("DB_USER");
+                    String pass = env.get("DB_PASS");
+
+                    Map<String, String> prop = new HashMap<>();
+                    prop.put("jakarta.persistence.jdbc.url", url);
+                    prop.put("jakarta.persistence.jdbc.user", user);
+                    prop.put("jakarta.persistence.jdbc.password", pass);
+
+                    emFactory = Persistence.createEntityManagerFactory("postgresmovdb", prop);
+                }
+            }
+        }
+
+        return emFactory.createEntityManager();
+    }
+
+}
+```
 
 </details>
 

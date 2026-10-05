@@ -10,7 +10,7 @@ import jakarta.persistence.criteria.Root;
 
 import java.util.Collection;
 
-public class MovieDAO implements IGenericDAO<Filme, Long> {
+public class FilmeDAO implements IGenericDAO<Filme, Long> {
     @Override
     public Filme cadastrarEntidade(Filme filme) {
 

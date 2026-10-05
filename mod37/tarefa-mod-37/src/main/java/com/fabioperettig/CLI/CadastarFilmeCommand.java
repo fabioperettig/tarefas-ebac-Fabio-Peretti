@@ -1,6 +1,7 @@
 package com.fabioperettig.CLI;
 
 import com.fabioperettig.domain.Filme;
+import com.fabioperettig.service.FilmeService;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -9,6 +10,8 @@ import picocli.CommandLine.Option;
         description = "Cadastra um novo filme"
 )
 public class CadastarFilmeCommand implements Runnable {
+
+    private final FilmeService filmeService = new FilmeService();
 
     @Option(
             names = {"-c", "--codigo"},
@@ -60,6 +63,9 @@ public class CadastarFilmeCommand implements Runnable {
         filme.setTempoEmMin(tempoEmMin);
         filme.setNota(nota);
 
+        filmeService.cadastrar(filme);
+        System.out.println("Filme cadastrado com sucesso!");
+        System.out.println("-----------------------------");
         System.out.println(filme);
     }
 }
