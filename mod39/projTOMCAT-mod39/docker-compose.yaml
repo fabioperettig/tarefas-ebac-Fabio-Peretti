@@ -1,5 +1,9 @@
 services:
   tomcat:
+    #Também é possivel utilizar `image: tomcat:11.0-jdk17`.
+    #Netse caso, build: + "." é o comando para encontrar um diretório/contexto
+    #e utilizar o dockerfille que encontrar. O sinal "." aponta para o mesmo
+    #diretório que o docker-compose está.
     build: .
     ports:
       - "8080:8080"
@@ -11,7 +15,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-
 
   postgres:
     image: postgres:15
