@@ -75,6 +75,7 @@ public class LivroDAO implements IGenericDAO<Livro, Long> {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
+            throw e;
         } finally {
             entityManager.close();
         }
