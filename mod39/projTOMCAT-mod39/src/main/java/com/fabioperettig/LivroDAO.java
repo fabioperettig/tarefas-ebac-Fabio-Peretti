@@ -1,4 +1,4 @@
-package com.fabioperettig.dao;
+package com.fabioperettig;
 
 import com.fabioperettig.config.ConfigManager;
 import com.fabioperettig.domain.Livro;
@@ -15,44 +15,69 @@ public class LivroDAO implements IGenericDAO<Livro, Long> {
     public Livro cadastrarEntidade(Livro livro) {
         EntityManager entityManager = ConfigManager.getEntityInstance();
 
-        entityManager.getTransaction().begin();
-        entityManager.persist(livro);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(livro);
+            entityManager.getTransaction().commit();
 
-        return livro;
+            return livro;
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public Livro buscarEntidade(Long id) {
         EntityManager entityManager = ConfigManager.getEntityInstance();
 
-        Livro livroBusca =  entityManager.find(Livro.class, id);
-        entityManager.close();
-
-        return livroBusca;
+        try {
+            return entityManager.find(Livro.class, id);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public Livro alterarEntidade(Livro livro) {
         EntityManager entityManager = ConfigManager.getEntityInstance();
 
-        entityManager.getTransaction().begin();
-        entityManager.merge(livro);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(livro);
+            entityManager.getTransaction().commit();
 
-        return livro;
+            return livro;
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public void deletarEntidade(Livro livro) {
         EntityManager entityManager = ConfigManager.getEntityInstance();
 
-        entityManager.getTransaction().begin();
-        livro = entityManager.merge(livro);
-        entityManager.remove(livro);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            livro = entityManager.merge(livro);
+            entityManager.remove(livro);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
@@ -88,3 +113,25 @@ public class LivroDAO implements IGenericDAO<Livro, Long> {
         }
     }
 }
+
+// MODELO PADRÃO ROLLBACK JPA
+//
+//try {
+//     manager.getTransaction().begin();
+//
+//     // Suas operações aqui (ex: manager.persist(objeto);)
+//
+//     manager.getTransaction().commit();
+// } catch (Exception e) {
+//     if (manager.getTransaction().isActive()) {
+//         manager.getTransaction().rollback(); // Desfaz as alterações no banco
+//     }
+//     e.printStackTrace();
+// } finally {
+//     if (manager != null && manager.isOpen()) {
+//         manager.close(); // Fecha o EntityManager
+//     }
+//     if (factory != null && factory.isOpen()) {
+//         factory.close();
+//     }
+// }

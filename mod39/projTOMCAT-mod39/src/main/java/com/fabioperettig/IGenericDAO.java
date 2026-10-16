@@ -1,4 +1,4 @@
-package com.fabioperettig.dao;
+package com.fabioperettig;
 
 import java.util.Collection;
 

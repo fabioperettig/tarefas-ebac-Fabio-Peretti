@@ -19,7 +19,7 @@ public class ConfigManager {
                 if (emFactory==null) {
                     Dotenv env = Dotenv.load();
 
-                    String url = env.get("POSTGRES_DB");
+                    String url = env.get("DB_URL");
                     String user = env.get("POSTGRES_USER");
                     String pass = env.get("POSTGRES_PASSWORD");
 
