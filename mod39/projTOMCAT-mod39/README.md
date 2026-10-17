@@ -3,7 +3,7 @@
 ![Curso EBAC](https://img.shields.io/badge/Curso--EBAC-070600?style=for-the-badge)
 
 
-# 📚☕️ Tarefa Módulo 37 - Projeto Tomcat
+# 📚☕️ Tarefa Módulo 39 - Projeto Tomcat
 
 Projeto DAO monolítico, implementado em padrão JPA, com persistência PostgreSQL, interatividade JSF e servidor Tomcat.
  

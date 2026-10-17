@@ -7,6 +7,8 @@
     <groupId>com.fabioperettig</groupId>
     <artifactId>projTOMCAT-mod39</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <!--WAR é o pacote que irá para o ambiente (TomCat, Wildfly, etc.)-->
 
 
     <properties>
@@ -51,5 +53,21 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>Livros</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.5.1</version>
+
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
