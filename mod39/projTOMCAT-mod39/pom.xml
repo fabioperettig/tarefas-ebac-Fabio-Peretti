@@ -52,10 +52,28 @@
             <version>1.18.46</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Implementação Jakarta Faces: Mojarra -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.faces</artifactId>
+            <version>4.1.18</version>
+        </dependency>
+        <!-- Implementação CDI para containers Servlet -->
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
+            <version>6.0.4.Final</version>
+        </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>16.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>Livros</finalName>
+        <finalName>livros</finalName>
 
         <plugins>
             <plugin>
