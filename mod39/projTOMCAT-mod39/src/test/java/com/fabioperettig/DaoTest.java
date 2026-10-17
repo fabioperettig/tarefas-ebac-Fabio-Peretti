@@ -1,5 +1,7 @@
 package com.fabioperettig;
 
+import com.fabioperettig.dao.IGenericDAO;
+import com.fabioperettig.dao.LivroDAO;
 import com.fabioperettig.domain.Livro;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

@@ -1,8 +1,9 @@
-package com.fabioperettig;
+package com.fabioperettig.dao;
 
 import com.fabioperettig.config.ConfigManager;
 import com.fabioperettig.domain.Livro;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -109,6 +110,8 @@ public class LivroDAO implements IGenericDAO<Livro, Long> {
 
             TypedQuery<Livro> typedQuery = entityManager.createQuery(query);
             return typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         } finally {
             entityManager.close();
         }
