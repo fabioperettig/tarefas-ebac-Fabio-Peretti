@@ -5,8 +5,181 @@
 
 # 📚☕️ Tarefa Módulo 39 - Projeto Tomcat
 
-Projeto DAO monolítico, implementado em padrão JPA, com persistência PostgreSQL, interatividade JSF e servidor Tomcat.
+Projeto DAO monolítico, implementado em padrão JPA, com persistência PostgreSQL, interatividade JSF e ambiente `Tomcat`.
+A implementação é um sistema de cadastro de livros, com interface em template `Primefaces`.
  
+Este projeto serviu para reforçar a base dos meus estudos em `Docker`, sendo de construção de imagem com `Dockerfille`,
+mapeamento de portas e construção de ambiente Servlet e database com `Docker-compose`.
+
+> O estudo está documentado ao final do README.
+
+## 📖 Minha Library DAO
+
+O projeto possui o mesmo padrão de camadas DAO implementado em `JPA/Hibernate` já apresentado em outros módulos do
+curso. Então, decidi destacar as partes que mais sofreram mudanças no projeto, graças a inclusão do `JavaServer Faces`.  
+
+<details><summary>LivroController</summary>
+
+````java
+@Named("livroController") //Disponibiliza o bean no xhtml como #{livroController}
+@ViewScoped
+public class LivroController implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private static final Logger LOG = Logger.getLogger(LivroController.class.getName());
+
+    @Inject
+    private IService<Livro, Long> livroService;
+
+    private List<Livro> livros;
+
+    @PostConstruct
+    public void init() {
+        carregarLivros();
+    }
+    
+    ///restante dos metodos de controle
+}
+````
+
+| Anotação       | Função                                                                                          |
+|----------------|-------------------------------------------------------------------------------------------------|
+| @Named         | Transforma a classe Java em um `CDI Bean`, dando a ela um nome acessível para a camada `.xhtml` |
+| @ViewScoped    | Garante que os dados do Controller permaneçam vivos enquanto o usuário estiver interagindo      |
+| @Inject        | Delega a responsabilidade de instanciação de `Entidade` ao servidor                             |
+| @PostConstruct | Ideal para carregar dados, buscar parâmetros e preparar o estado inicial da tela  corretamente  |
+
+</details>
+
+<details><summary>index.xhtml</summary>
+
+````xhtml
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="primefaces"
+      lang="pt-BR">
+
+<h:head>
+    <title>Biblioteca</title>
+</h:head>
+
+<h:body>
+    <p:panel header="Minha library DAO">
+
+        <h:form id="formLista">
+            <p:dataTable id="tabelaLivros"
+                         value="#{livroController.livros}"
+                         var="livro"
+                         emptyMessage="Nenhum livro cadastrado.">
+
+                <p:column headerText="Código">
+                    <h:outputText value="#{livro.codigo}" />
+                </p:column>
+
+                <p:column headerText="Título">
+                    <h:outputText value="#{livro.titulo}" />
+                </p:column>
+
+                <p:column headerText="Autor">
+                    <h:outputText value="#{livro.autor}" />
+                </p:column>
+
+                <p:column headerText="Sinopse">
+                    <h:outputText value="#{livro.sinopse}" />
+                </p:column>
+
+                <p:column headerText="Nota">
+                    <h:outputText value="#{livro.nota}" />
+                </p:column>
+
+                <p:column headerText="Ações">
+                    <p:commandButton value="Deletar"
+                                     action="#{livroController.deletar(livro)}"
+                                     process="@this"
+                                     update="@form :formCadastro"
+                                     resetValues="true" />
+
+                    <!-- GAP -->
+                    <p:spacer width="8" height="1" />
+
+                    <p:commandButton value="Editar"
+                                     action="#{livroController.editar(livro)}"
+                                     process="@this"
+                                     update=":formCadastro"
+                                     resetValues="true" />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+        <h:form id="formCadastro">
+
+            <p:panel header="Cadastrar livro">
+
+                <p:messages id="mensagens" showDetail="true" />
+
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel for="codigo" value="Código" />
+                    <p:inputText id="codigo"
+                                 value="#{livroController.novoLivro.codigo}"
+                                 required="true"
+                                 requiredMessage="Informe o código."
+                                 converterMessage="O código deve ser um número inteiro." />
+
+                    <p:outputLabel for="titulo" value="Título" />
+                    <p:inputText id="titulo"
+                                 value="#{livroController.novoLivro.titulo}"
+                                 maxlength="255"
+                                 required="true"
+                                 requiredMessage="Informe o título." />
+
+                    <p:outputLabel for="autor" value="Autor" />
+                    <p:inputText id="autor"
+                                 value="#{livroController.novoLivro.autor}"
+                                 maxlength="255"
+                                 required="true"
+                                 requiredMessage="Informe o autor." />
+
+                    <p:outputLabel for="sinopse" value="Sinopse" />
+                    <p:inputTextarea id="sinopse"
+                                     value="#{livroController.novoLivro.sinopse}"
+                                     rows="4"
+                                     cols="40"
+                                     maxlength="255" />
+
+                    <p:outputLabel for="nota" value="Nota" />
+                    <p:inputNumber id="nota"
+                                   value="#{livroController.novoLivro.nota}"
+                                   decimalPlaces="1" />
+
+                </p:panelGrid>
+
+                <p:commandButton
+                        value="#{empty livroController.novoLivro.id
+                               ? 'Cadastrar' : 'Salvar alterações'}"
+                        action="#{livroController.salvar}"
+                        process="@form"
+                        update="@form :formLista:tabelaLivros" />
+                <p:spacer width="8" height="1" />
+                <p:commandButton value="Cancelar"
+                                 action="#{livroController.cancelar}"
+                                 process="@this"
+                                 update="@form"
+                                 resetValues="true" />
+            </p:panel>
+
+        </h:form>
+
+    </p:panel>
+</h:body>
+
+</html>
+````
+
+</details>
+
 ## Contruindo Tomcat com [docker-compose](docker-compose.yaml)
 
 ```yaml
@@ -108,7 +281,54 @@ No projeto, o Compose define explicitamente o endereço interno para o Tomcat:
 environment:
   DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:?Defina POSTGRES_DB}
 ```
+### Variaveis de Ambiente
 
+Assim como a Classe [ConfigManager](src/main/java/com/fabioperettig/config/ConfigManager.java), as variaveis
+de ambiente também precisam ser mencionadas, através da sessão `enviroment`, tanto para o serviço Tomcat, quando
+para o Postgres.
+
+```yaml
+services:
+  tomcat:
+    build: .
+    ports:
+      - "8080:8080"
+
+    #VAR DE AMBIENTE TOMCAT 
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:?Defina POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:?Defina POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD}
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:15
+    
+    #VAR DE AMBIENTE POSTGRES
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Defina POSTGRES_DB no .env}
+      POSTGRES_USER: ${POSTGRES_USER:?Defina POSTGRES_USER no .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD no .env}
+
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\"" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres_data:
+```
 
 ------
 
