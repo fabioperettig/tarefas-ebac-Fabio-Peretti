@@ -96,9 +96,39 @@ public class LivroController implements Serializable {
     }
 
     public void editar(Livro livro) {
-        novoLivro = livroService
-                .findById(livro.getId())
-                .orElseThrow(() ->new IllegalStateException("Livro não encontrado."));
+        Livro encontrado;
+
+        try {
+            encontrado = livroService
+                    .findById(livro.getId())
+                    .orElse(null);
+        } catch (RuntimeException e) {
+            LOG.log(Level.SEVERE, "Falha ao carregar livro para edição.", e);
+
+            FacesContext.getCurrentInstance().validationFailed();
+
+            mensagem(
+                    FacesMessage.SEVERITY_ERROR,
+                    "Não foi possível carregar o livro",
+                    "Tente novamente."
+            );
+
+            return;
+        }
+
+        if (encontrado == null) {
+            FacesContext.getCurrentInstance().validationFailed();
+
+            mensagem(
+                    FacesMessage.SEVERITY_WARN,
+                    "Livro não encontrado",
+                    "Recarregue a página para atualizar a listagem."
+            );
+
+            return;
+        }
+
+        novoLivro = encontrado;
     }
 
 

@@ -203,12 +203,27 @@ Os prints estão separados por categoria, com suas principais exceptions.
     <img src="prints-projeto/print04.png">
 </div>
 <div>
+    <p>Exception ERROR - Código como String (tipagem incorreta)</p>
+    <img src="prints-projeto/print07.png">
+</div>
+<div>
     <p>Exception WARNING - Código já cadastrado</p>
     <img src="prints-projeto/print05.png">
 </div>
 <div>
     <p>Cadastro efetuado</p>
     <img src="prints-projeto/print06.png">
+</div>
+</details>
+
+<details><summary>Prints - Edição</summary>
+<div>
+    <p>Exception campo obrigatório para Alteração - Código</p>
+    <img src="prints-projeto/print08.png">
+</div>
+<div>
+    <p>Exception WARNING - Tentativa de alteração com código já cadastrado</p>
+    <img src="prints-projeto/print09.png">
 </div>
 </details>
 
