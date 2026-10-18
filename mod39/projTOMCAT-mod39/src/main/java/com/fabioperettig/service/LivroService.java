@@ -2,14 +2,21 @@ package com.fabioperettig.service;
 
 import com.fabioperettig.dao.IGenericDAO;
 import com.fabioperettig.domain.Livro;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Optional;
 
-public class LivroService implements IService<Livro, Long> {
 
+@Dependent
+public class LivroService implements IService<Livro, Long>, Serializable {
+
+    private static final long serialVersionUID = 1L;
     private final IGenericDAO<Livro, Long> livroDAO;
 
+    @Inject
     public LivroService(IGenericDAO<Livro, Long> livroDAO) {
         this.livroDAO = livroDAO;
     }

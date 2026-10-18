@@ -2,6 +2,7 @@ package com.fabioperettig.dao;
 
 import com.fabioperettig.config.ConfigManager;
 import com.fabioperettig.domain.Livro;
+import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -9,9 +10,14 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public class LivroDAO implements IGenericDAO<Livro, Long> {
+@Dependent
+public class LivroDAO implements IGenericDAO<Livro, Long>, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Override
     public Livro cadastrarEntidade(Livro livro) {
         EntityManager entityManager = ConfigManager.getEntityInstance();

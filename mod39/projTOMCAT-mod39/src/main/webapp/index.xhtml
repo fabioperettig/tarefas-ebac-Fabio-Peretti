@@ -9,8 +9,113 @@
 </h:head>
 
 <h:body>
-    <p:panel header="Minha biblioteca DAO">
-        <h:outputText value="Tomcat, Faces e PrimeFaces funcionando!" />
+    <p:panel header="Minha library DAO">
+
+        <h:form id="formLista">
+            <p:dataTable id="tabelaLivros"
+                         value="#{livroController.livros}"
+                         var="livro"
+                         emptyMessage="Nenhum livro cadastrado.">
+
+                <p:column headerText="Código">
+                    <h:outputText value="#{livro.codigo}" />
+                </p:column>
+
+                <p:column headerText="Título">
+                    <h:outputText value="#{livro.titulo}" />
+                </p:column>
+
+                <p:column headerText="Autor">
+                    <h:outputText value="#{livro.autor}" />
+                </p:column>
+
+                <p:column headerText="Sinopse">
+                    <h:outputText value="#{livro.sinopse}" />
+                </p:column>
+
+                <p:column headerText="Nota">
+                    <h:outputText value="#{livro.nota}" />
+                </p:column>
+
+                <p:column headerText="Ações">
+                    <p:commandButton value="Deletar"
+                                     action="#{livroController.deletar(livro)}"
+                                     process="@this"
+                                     update="@form :formCadastro"
+                                     resetValues="true" />
+
+                    <!-- GAP -->
+                    <p:spacer width="8" height="1" />
+
+                    <p:commandButton value="Editar"
+                                     action="#{livroController.editar(livro)}"
+                                     process="@this"
+                                     update=":formCadastro"
+                                     resetValues="true" />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+        <h:form id="formCadastro">
+
+            <p:panel header="Cadastrar livro">
+
+                <p:messages id="mensagens" showDetail="true" />
+
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel for="codigo" value="Código" />
+                    <p:inputText id="codigo"
+                                 value="#{livroController.novoLivro.codigo}"
+                                 required="true"
+                                 requiredMessage="Informe o código."
+                                 converterMessage="O código deve ser um número inteiro." />
+
+                    <p:outputLabel for="titulo" value="Título" />
+                    <p:inputText id="titulo"
+                                 value="#{livroController.novoLivro.titulo}"
+                                 maxlength="255"
+                                 required="true"
+                                 requiredMessage="Informe o título." />
+
+                    <p:outputLabel for="autor" value="Autor" />
+                    <p:inputText id="autor"
+                                 value="#{livroController.novoLivro.autor}"
+                                 maxlength="255"
+                                 required="true"
+                                 requiredMessage="Informe o autor." />
+
+                    <p:outputLabel for="sinopse" value="Sinopse" />
+                    <p:inputTextarea id="sinopse"
+                                     value="#{livroController.novoLivro.sinopse}"
+                                     rows="4"
+                                     cols="40"
+                                     maxlength="255" />
+
+                    <p:outputLabel for="nota" value="Nota" />
+                    <p:inputNumber id="nota"
+                                   value="#{livroController.novoLivro.nota}"
+                                   decimalPlaces="1" />
+
+                </p:panelGrid>
+
+                <p:commandButton
+                        value="#{empty livroController.novoLivro.id
+                               ? 'Cadastrar' : 'Salvar alterações'}"
+                        action="#{livroController.salvar}"
+                        process="@form"
+                        update="@form :formLista:tabelaLivros" />
+                <p:spacer width="8" height="1" />
+                <p:commandButton value="Cancelar"
+                                 action="#{livroController.cancelar}"
+                                 process="@this"
+                                 update="@form"
+                                 resetValues="true" />
+            </p:panel>
+
+        </h:form>
+
     </p:panel>
 </h:body>
 

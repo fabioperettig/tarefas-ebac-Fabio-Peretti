@@ -17,7 +17,10 @@ public class ConfigManager {
         if (emFactory==null) {
             synchronized (ConfigManager.class) {
                 if (emFactory==null) {
-                    Dotenv env = Dotenv.load();
+
+                    /// O Compose fornece variáveis de ambiente e não copia o .env para a imagem,
+                    /// então este é o metodo necessário;
+                    Dotenv env = Dotenv.configure().ignoreIfMissing().load();
 
                     String url = env.get("DB_URL");
                     String user = env.get("POSTGRES_USER");
