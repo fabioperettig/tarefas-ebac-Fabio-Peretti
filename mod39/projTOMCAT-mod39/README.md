@@ -46,7 +46,7 @@ public class LivroController implements Serializable {
 |----------------|-------------------------------------------------------------------------------------------------|
 | @Named         | Transforma a classe Java em um `CDI Bean`, dando a ela um nome acessível para a camada `.xhtml` |
 | @ViewScoped    | Garante que os dados do Controller permaneçam vivos enquanto o usuário estiver interagindo      |
-| @Inject        | Delega a responsabilidade de instanciação de `Entidade` ao servidor                             |
+| @Inject        | Solicita ao CDI uma dependência compatível, como o Service                                      |
 | @PostConstruct | Ideal para carregar dados, buscar parâmetros e preparar o estado inicial da tela  corretamente  |
 
 </details>
@@ -95,12 +95,18 @@ public class LivroController implements Serializable {
 
                 <p:column headerText="Ações">
                     <p:commandButton value="Deletar"
+                                     styleClass="ui-button-danger"
                                      action="#{livroController.deletar(livro)}"
                                      process="@this"
                                      update="@form :formCadastro"
-                                     resetValues="true" />
+                                     resetValues="true">
 
-                    <!-- GAP -->
+                        <p:confirm header="Confirmar exclusão"
+                                   message="Deseja excluir o livro &quot;#{livro.titulo}&quot;?"
+                                   escape="true" />
+                    </p:commandButton>
+
+                    <!-- GAP entre botoes -->
                     <p:spacer width="8" height="1" />
 
                     <p:commandButton value="Editar"
@@ -111,13 +117,28 @@ public class LivroController implements Serializable {
                 </p:column>
 
             </p:dataTable>
+            <p:confirmDialog global="true"
+                             responsive="true"
+                             width="350">
+
+                <p:commandButton value="Cancelar"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-no" />
+
+                <p:spacer width="8" height="1" />
+
+                <p:commandButton value="Sim, excluir"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-yes ui-button-danger" />
+
+            </p:confirmDialog>
         </h:form>
 
         <h:form id="formCadastro">
 
             <p:panel header="Cadastrar livro">
 
-                <p:messages id="mensagens" showDetail="true" />
+                <p:messages id="mensagens" showSummary="false" showDetail="true" />
 
                 <p:panelGrid columns="2">
 
@@ -227,6 +248,17 @@ Os prints estão separados por categoria, com suas principais exceptions.
 </div>
 </details>
 
+<details><summary>Prints - Exclusão</summary>
+<div>
+    <p>Janela de confirmação para exclusão de livro</p>
+    <img src="prints-projeto/print10.png">
+</div>
+<div>
+    <p>Livro excluído</p>
+    <img src="prints-projeto/print11.png">
+</div>
+</details>
+
 ## Contruindo Tomcat com [docker-compose](docker-compose.yaml)
 
 ```yaml
@@ -320,7 +352,7 @@ O endereço de `DB_URL` pode ter valores diferentes em cada processo:
 | 📡 Aplicação dentro do container Tomcat (servidor) | `environment` do serviço no Compose | `jdbc:postgresql://postgres:5432/postgresbookdb` |
 
 O nome `postgres` é o nome do serviço, **definido na rede do Compose**. O teste local usa a porta publicada em `localhost`
-e o Tomcat, `localhost` usa a porta `PostgreSQL`.
+e o Tomcat usa a porta `postgres:5432`.
 
 No projeto, o Compose define explicitamente o endereço interno para o Tomcat:
 

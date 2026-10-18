@@ -39,10 +39,16 @@
 
                 <p:column headerText="Ações">
                     <p:commandButton value="Deletar"
+                                     styleClass="ui-button-danger"
                                      action="#{livroController.deletar(livro)}"
                                      process="@this"
                                      update="@form :formCadastro"
-                                     resetValues="true" />
+                                     resetValues="true">
+
+                        <p:confirm header="Confirmar exclusão"
+                                   message="Deseja excluir o livro &quot;#{livro.titulo}&quot;?"
+                                   escape="true" />
+                    </p:commandButton>
 
                     <!-- GAP -->
                     <p:spacer width="8" height="1" />
@@ -55,6 +61,21 @@
                 </p:column>
 
             </p:dataTable>
+            <p:confirmDialog global="true"
+                             responsive="true"
+                             width="350">
+
+                <p:commandButton value="Cancelar"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-no" />
+
+                <p:spacer width="8" height="1" />
+
+                <p:commandButton value="Sim, excluir"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-yes ui-button-danger" />
+
+            </p:confirmDialog>
         </h:form>
 
         <h:form id="formCadastro">
