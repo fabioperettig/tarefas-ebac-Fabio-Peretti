@@ -2,6 +2,7 @@ package com.fabioperettig.dao;
 
 import com.fabioperettig.config.ConfigManager;
 import com.fabioperettig.domain.Livro;
+import com.fabioperettig.exception.CodigoDuplicadoExc;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -9,6 +10,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -17,6 +19,7 @@ import java.util.Collection;
 public class LivroDAO implements IGenericDAO<Livro, Long>, Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final String CODIGO_DUPLICADO_EXC = "ukepbmm1dm38kh3jl100l32n6jj";
 
     @Override
     public Livro cadastrarEntidade(Livro livro) {
@@ -32,6 +35,11 @@ public class LivroDAO implements IGenericDAO<Livro, Long>, Serializable {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
+
+            if (isCodigoDuplicado(e)) {
+                throw new CodigoDuplicadoExc(livro.getCodigo(), e);
+            }
+
             throw e;
         } finally {
             entityManager.close();
@@ -63,6 +71,10 @@ public class LivroDAO implements IGenericDAO<Livro, Long>, Serializable {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
+            if (isCodigoDuplicado(e)) {
+                throw new CodigoDuplicadoExc(livro.getCodigo(), e);
+            }
+
             throw e;
         } finally {
             entityManager.close();
@@ -122,6 +134,31 @@ public class LivroDAO implements IGenericDAO<Livro, Long>, Serializable {
             entityManager.close();
         }
     }
+
+    ///auxiliares
+    private boolean isCodigoDuplicado(Throwable erro) {
+        Throwable causa = erro;
+
+        while (causa != null) {
+
+            if (causa instanceof ConstraintViolationException violacao) {
+                boolean duplicidade =
+                        "23505".equals(violacao.getSQLState());
+
+                boolean restricaoDoCodigo =
+                        CODIGO_DUPLICADO_EXC.equalsIgnoreCase(
+                                violacao.getConstraintName()
+                        );
+
+                if (duplicidade && restricaoDoCodigo) {
+                    return true;
+                }
+            }
+            causa = causa.getCause();
+        }
+        return false;
+    }
+
 }
 
 // MODELO PADRÃO ROLLBACK JPA

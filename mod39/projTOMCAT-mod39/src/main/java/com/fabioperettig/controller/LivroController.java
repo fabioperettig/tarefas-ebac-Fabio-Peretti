@@ -1,6 +1,7 @@
 package com.fabioperettig.controller;
 
 import com.fabioperettig.domain.Livro;
+import com.fabioperettig.exception.CodigoDuplicadoExc;
 import com.fabioperettig.service.IService;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
@@ -58,6 +59,15 @@ public class LivroController implements Serializable {
             } else {
                 livroService.create(salvarLivro);
             }
+        } catch (CodigoDuplicadoExc e) {
+            FacesContext.getCurrentInstance().validationFailed();
+
+            mensagem(
+                    FacesMessage.SEVERITY_WARN,
+                    "Código já cadastrado",
+                    e.getMessage()
+            );
+            return;
         } catch (RuntimeException e) {
             LOG.log(Level.SEVERE, "Falha ao salvar livro.", e);
 

@@ -180,6 +180,38 @@ public class LivroController implements Serializable {
 
 </details>
 
+## 🖼️ Interface
+
+A tarefa deste módulo pediu prints que mostrasse a interface da aplicação, as mecânicas e os tratamentos de exceptions.
+Os prints estão separados por categoria, com suas principais exceptions.
+
+<details><summary>Prints - Cadastro</summary>
+<div>
+    <p>Primeiro teste de interface</p>
+    <img src="prints-projeto/print01.png">
+</div>
+<div>
+    <p>Interface com template primefaces 'luna-amber' aplicada</p>
+    <img src="prints-projeto/print02.png">
+</div>
+<div>
+    <p>Exception campo obrigatório - Código</p>
+    <img src="prints-projeto/print03.png">
+</div>
+<div>
+    <p>Exception campo obrigatório - Título e Autor</p>
+    <img src="prints-projeto/print04.png">
+</div>
+<div>
+    <p>Exception WARNING - Código já cadastrado</p>
+    <img src="prints-projeto/print05.png">
+</div>
+<div>
+    <p>Cadastro efetuado</p>
+    <img src="prints-projeto/print06.png">
+</div>
+</details>
+
 ## Contruindo Tomcat com [docker-compose](docker-compose.yaml)
 
 ```yaml
