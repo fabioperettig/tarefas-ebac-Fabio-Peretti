@@ -11,4 +11,3 @@ Este é meu primeiro projeto em arquitetura de Microsserviços (em desevolviment
 |ConfigServer|em desenvolv.|
 |ClienteService|em desenvolv.|
 |ProdutoService|em desenvolv.|
-|VendaService|em desenvolv.|
