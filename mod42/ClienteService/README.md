@@ -119,10 +119,23 @@ Mesmo com o corpo vazio, a interface já oferece operações herdadas:
 | `findAll()` | Buscar todos os clientes. |
 | `deleteById(id)` | Excluir pelo identificador. |
 
-A infraestrutura do Spring Data cria um objeto que implementa esse contrato e o registra como bean. Não precisamos escrever uma implementação manual para essas operações nem colocar `@Repository` nessa interface.
+A infraestrutura do Spring Data cria um objeto que implementa esse contrato e o registra como bean.
+Não precisamos escrever uma implementação manual para essas operações nem colocar `@Repository` nessa interface.
 
-Com a configuração automática padrão do Boot, o starter de Spring Data MongoDB e o pacote abaixo de `com.fabioperettig`, também não é necessário adicionar `@EnableMongoRepositories` manualmente.
+Com a configuração automática padrão do Boot, o starter de Spring Data MongoDB e o pacote abaixo de `com.fabioperettig`,
+também não é necessário adicionar `@EnableMongoRepositories` manualmente.
 
-**Declarar o repositório não dispara gravações.** Será necessário chamar suas operações e ter uma conexão válida com o banco. O `save` também não deve ser tratado como execução automática de todas as regras de Jakarta Validation.
+**Declarar o repositório não dispara gravações.** Será necessário chamar suas operações e ter uma conexão válida com
+o banco. O `save` também não deve ser tratado como execução automática de todas as regras de Jakarta Validation.
 
 A próxima etapa será conectar o repositório à camada de regras de negócio por injeção de dependências.
+
+## Divisão de responsabilidades
+
+Um projeto em Microsserviços também possui distribuição de responsabilidades, tal qual um projeto monolítico.
+
+| Camada                                       | Descrição                                                  | Usado no Curso                                                                                                                                                                                                                                                                                                                                                                       |
+|----------------------------------------------|------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [ClienteController](ClienteController.java)  | Recebe o HTTP request, chama o serviço e produz a resposta | Equivale ao package [ClienteResource](https://github.com/digaomilleniun/backend-java-ebac/blob/main/mod42/ClienteServiceAlunos/src/main/java/br/com/rpires/vendas/online/reources/ClienteResource.java)                                                                                                                                                                              |
+| [ClienteService](ClienteService.java)        | Coordenar a operação e aplicar as regras necessárias       | Equivale ao package [Usecase](https://github.com/digaomilleniun/backend-java-ebac/tree/main/mod42/ClienteServiceAlunos/src/main/java/br/com/rpires/vendas/online/usecase)                                                                                                                                                                                                            |      
+| [ClienteRepository](ClienteRepository.java)  | Executa o acesso à persistência                            | Equivale à Interface [IClienteRepository]([https://github.com/digaomilleniun/backend-java-ebac/blob/main/mod42/ClienteServiceAlunos/src/main/java/br/com/rpires/vendas/online/reources/ClienteResource.java](https://github.com/digaomilleniun/backend-java-ebac/blob/main/mod42/ClienteServiceAlunos/src/main/java/br/com/rpires/vendas/online/repository/IClienteRepository.java)) |
