@@ -3,11 +3,15 @@ server:
   wait-time-in-ms-when-sync-empty: 3000
 
 spring:
-  spring:
-    profiles:
-      active: native
+  mongodb:
+    host: 127.0.0.1
+    port: 27017
+    database: produto
+    authentication-database: admin
+    username: ${MONGO_INITDB_ROOT_USERNAME}
+    password: ${MONGO_INITDB_ROOT_PASSWORD}
   data:
     mongodb:
-      uri: mongodb://admin:admin@127.0.0.1:27017/ebac?authSource=admin&retryWrites=true&w=majority
-      database: produto
       auto-index-creation: true
+
+application-version: 1.0
