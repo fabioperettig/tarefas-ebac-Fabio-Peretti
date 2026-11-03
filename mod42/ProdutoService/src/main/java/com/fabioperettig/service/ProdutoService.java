@@ -11,6 +11,8 @@ public class ProdutoService {
 
     private final IProdutoRepository iProdutoRepository;
 
+
+
     public ProdutoService(IProdutoRepository iProdutoRepository) {
         this.iProdutoRepository = iProdutoRepository;
     }
@@ -24,7 +26,7 @@ public class ProdutoService {
     }
 
     public Produto buscarPorCodigo(String codigo) {
-        return iProdutoRepository.findByCode(codigo).orElseThrow();
+        return iProdutoRepository.findByCodigo(codigo).orElseThrow();
     }
 
     public Produto atualizar(Produto produto) {

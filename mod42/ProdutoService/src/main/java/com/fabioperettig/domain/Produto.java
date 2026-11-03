@@ -23,7 +23,7 @@ import lombok.Setter;
 public class Produto {
 
     @Id
-    @Schema(description ="Identificador único")
+    @Schema(description="Identificador único")
     private String id;
 
     @NotNull

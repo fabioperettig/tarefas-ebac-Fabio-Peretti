@@ -4,25 +4,35 @@
 
 # 📚☕️ Tarefa módulo 42 - Vendas Online em Arquitetura de Microsserviços
 
-Este é meu primeiro projeto em arquitetura de Microsserviços (em desevolvimento...) 🚧
+Este é meu primeiro projeto DAO, com cadastro e manipulaçõa de entidades e persistência de dados, construído
+em uma arquitetura de `Microsserviços`.
 
-|Package|Função|
-|-|-|
-|ConfigServer|em desenvolv.|
-|ClienteService|em desenvolv.|
-|ProdutoService|em desenvolv.|
+## 🧩 Estrutura e tecnologias
 
+O projeto é composto por dois microsserviços com métodos CRUD completos, que cadastram, buscam, alteram e excluem dados.
+Sendo um para manipulação de `Clientes` e outro para `Produtos`.
 
-> **Lembretes de aprendizado:** <br>
-> Um objeto gerenciado pelo Spring é chamado de `bean`; <br>
-> @RefreshScope pertence ao Spring Cloud; <br>
+Além disso, o projeto ainda conta com um `microsserviço` primordial para agregar ambos numa mesma interface `Swagger`.
 
-| Annotation             | Framework           | Descrição                                                                            |
-|------------------------|---------------------|--------------------------------------------------------------------------------------|
-| @SpringBootApplication | Spring Boot         | Configuração e inicialização da aplicação                                            |
-| @RestController        | Spring MVC          | Marca um componente que atende requisições HTTP e devolve dados no corpo da resposta |
-| @Service               | Spring              | Identifica um componente usado para regras de negócio                                |
-| @Document, @Id         | Spring Data         | Descrevem o mapeamento dos objetos para o MongoDB                                    |
-| @RefreshScope          | Spring Cloud        | Permite que um bean seja recriado quando ocorre uma atualização de configuração      |
-| @EnableConfigServer    | Spring Cloud Config | Habilita um servidor de configurações                                                |
-| @Schema                | Swagger/OpenAPI     | Descreve dados na documentação da API                                                |
+O projeto foi construído sob os frameworks `Spring Boot` e `Spring Data MongoDB`, além de libraries
+mais utilitárias como `Lombok`.
+
+| Microsserviços                                                   | Descrição                                                  | Porta |
+|------------------------------------------------------------------|------------------------------------------------------------|-------|
+| [ClienteService](ClienteService/src/main/java/com/fabioperettig) | Cadastro e manipulação de `Cliente`                        | 8081  |
+| [ProdutoService](ProdutoService/src/main/java/com/fabioperettig) | Cadastro e manipulação de `Produto`                        | 8082  |
+| [ConfigServer](ConfigServer/src/main/java/com/fabioperettig)     | Agregador de portas tanto de `Cleinte` quanto de `Produto` | 8888  |
+
+## 🔍 Detalhes de cada microsserviço
+
+ Dentro de cada microsserviço é possível conferir mais detalhes de sua implementação Spring, seu mapeamento de controle
+ e sua configuração YML.
+
+| Microsserviço  | Detalhes                              |
+|----------------|---------------------------------------|
+| ClienteService | [README.md](ClienteService/README.md) |
+| ProdutoService | [README.md](ProdutoService/README.md) |
+
+---
+
+**Fabio Peretti Guimarães | tarefa EBAC mod 42 | NOV 2026**

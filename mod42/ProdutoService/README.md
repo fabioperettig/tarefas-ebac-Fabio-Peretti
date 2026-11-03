@@ -147,7 +147,7 @@ spring:
 application-version: 1.0
 ```
 
-> `cliente-service.yml` agregado em `ConfigServer`
+> `produto-service.yml` agregado em `ConfigServer`
 
 ---
 
