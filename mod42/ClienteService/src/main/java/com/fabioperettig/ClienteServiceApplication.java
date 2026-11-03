@@ -10,6 +10,8 @@ public class ClienteServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ClienteServiceApplication.class, args);
+
+		System.out.println("Sitema no ar | http://localhost:8081/swagger-ui/index.html");
 	}
 
 }
