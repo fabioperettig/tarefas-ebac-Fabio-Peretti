@@ -27,13 +27,13 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteCadastro);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/id/{id}")
     @Operation(summary = "Busca um cliente pelo id")
     public ResponseEntity<Cliente> buscarPorId(@PathVariable(value = "id", required = true) String id) {
         return ResponseEntity.ok(clienteService.buscarPorId(id));
     }
 
-    @GetMapping(value = "/{cpf}")
+    @GetMapping(value = "/cpf/{cpf}")
     @Operation(summary = "Busca um cliente pelo cpf")
     public ResponseEntity<Cliente> buscarPorCpf(@PathVariable(value = "cpf", required = true) Long cpf) {
         return ResponseEntity.ok(clienteService.buscarPorCpf(cpf));
@@ -50,7 +50,7 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.atualizar(cliente));
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     @Operation(summary = "Remove um cliente pelo id")
     public ResponseEntity<String> remover(@PathVariable(value = "id") String id) {
         clienteService.deletarPorId(id);

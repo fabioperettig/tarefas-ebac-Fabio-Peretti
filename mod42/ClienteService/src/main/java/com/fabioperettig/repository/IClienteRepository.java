@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface ClienteRepository extends MongoRepository<Cliente, String> {
+public interface IClienteRepository extends MongoRepository<Cliente, String> {
 
     Optional<Cliente> findByCpf(Long cpf);
 

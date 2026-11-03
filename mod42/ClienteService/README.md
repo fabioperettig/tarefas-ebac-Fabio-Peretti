@@ -4,99 +4,38 @@
 
 # 📚☕️ Cliente Service
 
-Microsserviço responsável pelo cadastro de clientes no projeto [Vendas Online em Arquitetura de Microsserviços](../README.md),
-desenvolvido para o módulo 42 do curso. Esta microsserviço contém a inicialização da aplicação, o modelo `Cliente` e a
-interface de persistência `ClienteRepository`.
+Este é um Microsserviço responsável pelo cadastro e manipulação de dados de Clientes no projeto [Vendas Online em Arquitetura de Microsserviços](../README.md),
+desenvolvido para o módulo 42 do curso.
 
-> **Em desenvolvimento:**  regras de negócio e endpoints HTTP ainda serão construídos nas próximas etapas. 🚧
+Este é um microsserviço simples porém completo, conténdo a inicialização da aplicação, o modelo `Cliente` e a
+interface de persistência `IClienteRepository`.
 
-## Tecnologias e estrutura atual
+## 🧩 Estrutura e tecnologias
 
-O microsserviço foi desenolvido com Java 17, Spring Boot e Spring Data MongoDB. Portanto, o projeto executa persistência
-de forma não relacional.
+O microsserviço `ClienteService` foi construído sob os frameworks `Spring Boot` e `Spring Data MongoDB`, além de libraries
+mais utilitárias como `Lombok`.
 
 ```text
 com.fabioperettig
+├── controller
+|   └── ClienteController
 ├── domain
-|   └── Cliente   
+|   └── Cliente
 ├── repository
-|   └──ClienteRepository
+|   └── IClienteRepository
 └── ClienteServiceApplication
 ```
 
-## Spring, persistência e microsserviços
+Apesar de se tratar de um projeto Spring com arquitetura de Microsserviço, ele possui uma estrutura central ainda familiar
+a outros projetos DAO. Suas maiores mudanças são na forma de trabalhar na camada de persistência e na camada de controle.
 
-| Conceito            | Papel no projeto                                                                                                          |
-|---------------------|---------------------------------------------------------------------------------------------------------------------------|
-| Spring Framework    | Gerencia componentes e fornece suas dependências. Um objeto gerenciado pelo Spring é um **bean**.                         |
-| Spring Boot         | Facilita a inicialização e configura recursos automaticamente conforme as dependências e outras condições.                |
-| Spring Data MongoDB | Integra os objetos Java ao MongoDB e fornece suporte a repositórios.                                                      |
-| Persistência        | Grava dados no banco para recuperá-los depois.                                                                            |
-| Microsserviços      | Organiza o sistema em aplicações com responsabilidades delimitadas, que podem ser executadas e implantadas separadamente. |
+### 🖋️ Persistência com interfaces
 
-`ClienteService` é a aplicação inteira. Uma futura classe com `@Service` será um componente de regras de negócio dentro
-dela. **A anotação `@Service` não transforma uma classe em microsserviço.** A arquitetura depende da separação e da
-autonomia das aplicações.
+O uso do Spring permite trabalharmos com extensão de interfaces que já possuam um sistema de métodos CRUD pronto,
+delegando ao framework toda a manipulação do ciclo de vida do objeto via `IOC (Inversion of Control)`.
 
-O Maven resolve as **dependências** declaradas no `pom.xml`. Um **starter** reúne bibliotecas para uma funcionalidade.
-Um **import** permite usar um tipo pelo nome curto; não baixa nem ativa bibliotecas. Uma **anotação** fornece informações
-que o compilador ou uma biblioteca interpreta.
-
-## 1. Inicialização da aplicação
-
-Na [`ClienteServiceApplication`](src/main/java/com/fabioperettig/ClienteServiceApplication.java), duas partes trabalham
-juntas:
-
-```java
-@SpringBootApplication
-```
-
-Reúne a configuração da aplicação, a procura por componentes no pacote da classe e nos subpacotes e a configuração
-automática. A procura não transforma toda classe encontrada em bean: ela precisa ser reconhecida como componente ou
-registrada por outro mecanismo.
-
-```java
-SpringApplication.run(ClienteServiceApplication.class, args);
-```
-
-Inicia a aplicação Spring Boot usando essa classe como ponto de partida. Durante a inicialização, o Spring prepara o
-contexto que administra os beans.
-
-**O código atual também possui:**
-
-| Trecho                                                                                  | Utilidade                                                                                                                 |
-|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| excludeName = "org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration" | Exclui a configuração automática de um `DataSource` JDBC, usado com bancos relacionais. Não desativa o acesso ao MongoDB. |
-|@RefreshScope| Recurso do Spring Cloud que permite recriar o bean marcado quando um refresh é acionado. Não observa arquivos continuamente nem torna todos os beans atualizáveis por estar na classe principal.                                                                                                                         | 
-
-Esses recursos de configuração não definem a arquitetura de microsserviços.
-
-## 2. Modelo: os dados do cliente
-
-A classe [`Cliente`](src/main/java/com/fabioperettig/domain/Cliente.java) representa os campos `id`, `nome`, `cpf`, `tel` e `email`. Suas anotações têm origens e responsabilidades diferentes:
-
-| Anotação | Origem e função |
-| --- | --- |
-| `@Document(collection = "cliente")` | Spring Data MongoDB: associa o modelo à coleção `cliente`. |
-| `@Id` | Spring Data: identifica o campo mapeado para o `_id` do documento. |
-| `@Indexed(unique = true)` | Spring Data MongoDB: declara índices únicos separados para CPF e email. O banco garante a unicidade quando os índices existem. |
-| `@Getter`, `@Setter` | Lombok: gera métodos de leitura e alteração durante a compilação. |
-| `@NoArgsConstructor`, `@AllArgsConstructor` | Lombok: gera construtores sem argumentos e com todos os campos, respectivamente. |
-| `@Builder` | Lombok: permite construir o objeto por etapas, como `Cliente.builder().nome("Fabio").build()`. |
-| `@NotNull`, `@Size`, `@Pattern` | Jakarta Validation: declara regras de presença, tamanho e formato. |
-| `@Schema` | Swagger/OpenAPI: descreve o modelo na documentação da API. Não executa validações. |
-
-Pontos para lembrar ao reutilizar esse modelo:
-
-- `new Cliente()` e `.build()` criam objetos em memória. Não salvam nem executam as regras de validação por si mesmos.
-- `@NotNull` rejeita `null`, mas aceita texto vazio. `@Size(min = 1)` rejeita texto vazio, mas aceita espaços. A validação precisa ser acionada para aplicar as regras.
-- A anotação de índice não comprova que ele existe no banco. Sua criação depende da configuração ou de uma ação explícita.
-
-**Um objeto `Cliente` não precisa ser bean para ser persistido.** Gerenciamento pelo Spring e gravação no banco são questões diferentes.
-
-## 3. Repositório: acesso à persistência
-
-A interface [`ClienteRepository`](src/main/java/com/fabioperettig/repository/ClienteRepository.java) oferece operações para trabalhar com os clientes no MongoDB:
+Assim, o que antes seria uma camada DAO completa (via JPA/Hibernate) se resume a uma extensão com a interface do banco
+de dados escolhido. Sendo, neste caso, o `MongoRepository`.
 
 ```java
 package com.fabioperettig.repository;
@@ -104,49 +43,111 @@ package com.fabioperettig.repository;
 import com.fabioperettig.domain.Cliente;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ClienteRepository extends MongoRepository<Cliente, String> {
+import java.util.Optional;
+
+public interface IClienteRepository extends MongoRepository<Cliente, String> {
+
+    Optional<Cliente> findByCpf(Long cpf);
+
 }
 ```
 
-`extends` faz a interface herdar o contrato de `MongoRepository`. Os generics `<Cliente, String>` indicam o tipo de objeto persistido e o tipo do seu identificador. Usamos `String` porque esse é o tipo do campo marcado com `@Id` em `Cliente`.
+### 🖥️ Camada de controlle e mapeamento
 
-Mesmo com o corpo vazio, a interface já oferece operações herdadas:
+Aqui o código tem a mudança mais visivel em todo o projeto. Tanto o uso do `Springboot` quando a escolha de arquitetura
+em `microservices` possuem influência direta sobre o código, usando menos sintaxe Java e mais o uso de `@Annotations`.
 
-| Operação | Finalidade |
-| --- | --- |
-| `save(cliente)` | Salvar o cliente, inserindo ou gravando seu estado conforme a identificação do objeto. |
-| `findById(id)` | Buscar pelo identificador; retorna um `Optional<Cliente>`, que pode conter um cliente ou estar vazio. |
-| `findAll()` | Buscar todos os clientes. |
-| `deleteById(id)` | Excluir pelo identificador. |
+```java
+@RestController
+@RequestMapping("/clientes")
+public class ClienteController {
 
-A infraestrutura do Spring Data cria um objeto que implementa esse contrato e o registra como bean.
-Não precisamos escrever uma implementação manual para essas operações nem colocar `@Repository` nessa interface.
+    private final ClienteService clienteService;
 
-Com a configuração automática padrão do Boot, o starter de Spring Data MongoDB e o pacote abaixo de `com.fabioperettig`,
-também não é necessário adicionar `@EnableMongoRepositories` manualmente.
+    public ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
 
-**Declarar o repositório não dispara gravações.** Será necessário chamar suas operações e ter uma conexão válida com
-o banco. O `save` também não deve ser tratado como execução automática de todas as regras de Jakarta Validation.
+    @PostMapping
+    public ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente) {
+        Cliente clienteCadastro = clienteService.cadastrar(cliente);
 
-A próxima etapa será conectar o repositório à camada de regras de negócio por injeção de dependências.
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteCadastro);
+    }
 
-## Divisão de responsabilidades
+    @GetMapping(value = "/id/{id}")
+    @Operation(summary = "Busca um cliente pelo id")
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable(value = "id", required = true) String id) {
+        return ResponseEntity.ok(clienteService.buscarPorId(id));
+    }
 
-Um projeto em Microsserviços também possui distribuição de responsabilidades, tal qual um projeto monolítico.
+    @GetMapping(value = "/cpf/{cpf}")
+    @Operation(summary = "Busca um cliente pelo cpf")
+    public ResponseEntity<Cliente> buscarPorCpf(@PathVariable(value = "cpf", required = true) Long cpf) {
+        return ResponseEntity.ok(clienteService.buscarPorCpf(cpf));
+    }
 
-| Camada                                                                                                                                                                            | Descrição                                                  | Usado no Curso                                                                                                                                                                                                   |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [ClienteController](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod42/ClienteService/src/main/java/com/fabioperettig/controller/ClienteController.java) | Recebe o HTTP request, chama o serviço e produz a resposta | Equivale ao package [ClienteResource](https://github.com/digaomilleniun/backend-java-ebac/blob/main/mod42/ClienteServiceAlunos/src/main/java/br/com/rpires/vendas/online/reources/ClienteResource.java)          |
-| [ClienteService](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod42/ClienteService/src/main/java/com/fabioperettig/service/ClienteService.java)          | Coordenar a operação e aplicar as regras necessárias       | Equivale ao package [Usecase](https://github.com/digaomilleniun/backend-java-ebac/tree/main/mod42/ClienteServiceAlunos/src/main/java/br/com/rpires/vendas/online/usecase)                                        |      
-| [ClienteRepository](https://github.com/fabioperettig/tarefas-ebac-Fabio-Peretti/blob/main/mod42/ClienteService/src/main/java/com/fabioperettig/repository/ClienteRepository.java) | Executa o acesso à persistência                            | Equivale à Interface [IClienteRepository](https://github.com/digaomilleniun/backend-java-ebac/blob/main/mod42/ClienteServiceAlunos/src/main/java/br/com/rpires/vendas/online/repository/IClienteRepository.java) |
+    @GetMapping
+    public ResponseEntity<Page<Cliente>> buscarTodos(Pageable pageable) {
+        return ResponseEntity.ok(clienteService.buscarTodos(pageable));
+    }
 
-**@Valid** aciona as regras de validação declaradas no modelo. É aqui que entram @NotNull, @Size e outras anotações
-de requisitos definidas na Classe `Cliente`. Se os dados violarem essas regras, a resposta padrão será
-`HTTP 400 — Bad Request`, e o cadastro não chegará ao serviço. 
+    @PutMapping
+    @Operation(summary = "Atualiza um cliente")
+    public ResponseEntity<Cliente> atualizar(@Valid @RequestBody Cliente cliente) {
+        return ResponseEntity.ok(clienteService.atualizar(cliente));
+    }
 
-| Trecho      | Função                                                    |
-|-------------|-----------------------------------------------------------|
-| Método HTTP | POST: a operação que queremos solicitar                   |
-| URL         | http://localhost:8081/clientes: onde está a operação      |
-| Header      | Content-Type: application/json: informa o formato enviado |
-| Body        | O JSON contendo os dados do cliente                       |
+    @DeleteMapping(value = "/delete/{id}")
+    @Operation(summary = "Remove um cliente pelo id")
+    public ResponseEntity<String> remover(@PathVariable(value = "id") String id) {
+        clienteService.deletarPorId(id);
+        return ResponseEntity.ok("Cliente removido");
+    }
+}
+```
+
+| Anotação        | Papel no projeto                                               |
+|-----------------|----------------------------------------------------------------|
+| @RestController | Cria APIs RESTful de forma simples e direta                    |
+| @RequestMapping | Mapeia os métodos da camada de controle para requisições `HTTP`|
+
+| Anotação de Mapeamento | Função                                                      | Método requisitado               |
+|------------------------|-------------------------------------------------------------|----------------------------------|
+| @PostMapping           | Salvar novos dados no database                              | insert(entity)                   |
+| @GetMapping            | Buscar um dado espefícico ou todos os dados do servidor     | findById(id) / findAll(pageable) |
+| @PutMapping            | Atualizar um ou mais dados de um cadastro existente         | save(entity)                     |
+| @DeleteMapping         | Deletar um cadastro do database, geralmente através do `id` | deleteById(id)                   |
+
+
+## 🚀 Execução
+
+Para executar este microsserviço, primeiro é necessário executar o [ConfigServerApplication](../ConfigServer/src/main/java/com/fabioperettig/ConfigServerApplication.java),
+que fornece configurações centralizadas para `ClienteService` e `ProdutoService`. Cada microsserviço continua sendo uma
+aplicação independente, iniciada separadamente.
+
+```yaml
+server:
+  port: 8081
+  wait-time-in-ms-when-sync-empty: 3000
+
+spring:
+  mongodb:
+    host: 127.0.0.1
+    port: 27017
+    database: cliente
+    authentication-database: admin
+    username: ${MONGO_INITDB_ROOT_USERNAME}
+    password: ${MONGO_INITDB_ROOT_PASSWORD}
+  data:
+    mongodb:
+      auto-index-creation: true
+
+application-version: 1.0
+```
+
+> `cliente-service.yml` agregado em `ConfigServer`
+
+---
+
+**Fabio Peretti Guimarães | tarefa EBAC mod 42 | NOV 2026**
