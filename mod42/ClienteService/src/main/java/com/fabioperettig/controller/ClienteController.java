@@ -21,6 +21,7 @@ public class ClienteController {
     }
 
     @PostMapping
+    @Operation(summary = "Registrar um novo cliente")
     public ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente) {
         Cliente clienteCadastro = clienteService.cadastrar(cliente);
 
@@ -28,13 +29,13 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/id/{id}")
-    @Operation(summary = "Busca um cliente pelo id")
+    @Operation(summary = "Buscar um cliente pelo id")
     public ResponseEntity<Cliente> buscarPorId(@PathVariable(value = "id", required = true) String id) {
         return ResponseEntity.ok(clienteService.buscarPorId(id));
     }
 
     @GetMapping(value = "/cpf/{cpf}")
-    @Operation(summary = "Busca um cliente pelo cpf")
+    @Operation(summary = "Buscar um cliente pelo cpf")
     public ResponseEntity<Cliente> buscarPorCpf(@PathVariable(value = "cpf", required = true) Long cpf) {
         return ResponseEntity.ok(clienteService.buscarPorCpf(cpf));
     }
@@ -45,13 +46,13 @@ public class ClienteController {
     }
 
     @PutMapping
-    @Operation(summary = "Atualiza um cliente")
+    @Operation(summary = "Atualizar um cliente")
     public ResponseEntity<Cliente> atualizar(@Valid @RequestBody Cliente cliente) {
         return ResponseEntity.ok(clienteService.atualizar(cliente));
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    @Operation(summary = "Remove um cliente pelo id")
+    @Operation(summary = "Remover um cliente pelo id")
     public ResponseEntity<String> remover(@PathVariable(value = "id") String id) {
         clienteService.deletarPorId(id);
         return ResponseEntity.ok("Cliente removido");
